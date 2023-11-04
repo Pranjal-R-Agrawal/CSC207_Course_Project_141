@@ -2,6 +2,7 @@ package entity;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Comment {
@@ -15,9 +16,9 @@ public class Comment {
 
     public Comment() {}
 
-    public Comment(ObjectId parentId, List<ObjectId> childrenId, ObjectId authorId, String body, List<String> qualifications, List<String> collaborationRoles) {
+    public Comment(ObjectId parentId, ObjectId authorId, String body, List<String> qualifications, List<String> collaborationRoles) {
         this.parentId = parentId;
-        this.childrenId = childrenId;
+        this.childrenId = new ArrayList<ObjectId>();
         this.authorId = authorId;
         this.body = body;
         this.qualifications = qualifications;
