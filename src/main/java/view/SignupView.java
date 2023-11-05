@@ -5,14 +5,12 @@ import use_case.signup.interface_adapter.SignupState;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+public class SignupView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(20);
@@ -181,11 +179,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         panel.add(new JLabel(name));
         panel.add(textField);
         return panel;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
