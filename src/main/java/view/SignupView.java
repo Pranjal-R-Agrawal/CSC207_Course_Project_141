@@ -6,6 +6,8 @@ import use_case.signup.interface_adapter.SignupState;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -38,6 +40,118 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel emailPanel = createEntry(SignupViewModel.EMAIL_LABEL, emailInputField);
         JPanel optionalPanel = new JPanel();
         optionalPanel.add(new JLabel(SignupViewModel.OPTIONAL_LABEL));
+
+        signupButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(signupButton)) {
+                        SignupState currentState = signupViewModel.getState();
+                        signupController.execute(
+                                currentState.getUsername(),
+                                currentState.getPassword(),
+                                currentState.getRepeatPassword(),
+                                currentState.getName(),
+                                currentState.getPhoneNumber(),
+                                currentState.getEmail()
+                        );
+                    }
+                }
+        );
+
+        usernameInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setUsername(usernameInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
+
+        passwordInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
+
+        repeatPasswordInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setRepeatPassword(repeatPasswordInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
+
+        nameInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setName(nameInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
+
+        phoneNumberInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setPhoneNumber(phoneNumberInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
+
+        emailInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        currentState.setEmail(emailInputField.getText() + e.getKeyChar());
+                        signupViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {}
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                }
+        );
     }
 
     private JPanel createEntry(String name, JTextField textField) {
