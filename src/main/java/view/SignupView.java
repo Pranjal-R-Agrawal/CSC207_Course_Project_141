@@ -39,7 +39,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         JPanel phoneNumberPanel = createEntry(SignupViewModel.PHONE_NUMBER_LABEL, phoneNumberInputField);
         JPanel emailPanel = createEntry(SignupViewModel.EMAIL_LABEL, emailInputField);
         JPanel optionalPanel = new JPanel();
-        optionalPanel.add(new JLabel(SignupViewModel.OPTIONAL_LABEL));
+        JLabel optionalLabel = new JLabel(SignupViewModel.OPTIONAL_LABEL);
+        optionalLabel.setForeground(Color.RED);
+        optionalPanel.add(optionalLabel);
 
         signupButton.addActionListener(
                 e -> {
@@ -152,6 +154,25 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void keyReleased(KeyEvent e) {}
                 }
         );
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        addComponent(usernamePanel, c, 0, 0, GridBagConstraints.HORIZONTAL);
+        addComponent(passwordPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        addComponent(repeatPasswordPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        addComponent(namePanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        addComponent(phoneNumberPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        addComponent(emailPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        addComponent(optionalPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        add(signupButton, c);
+    }
+
+    private void addComponent(JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.fill = fill;
+        add(panel, c);
     }
 
     private JPanel createEntry(String name, JTextField textField) {
