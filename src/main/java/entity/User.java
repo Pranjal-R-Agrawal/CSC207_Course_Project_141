@@ -20,13 +20,13 @@ public class User {
     public User() {}
 
     public User(String username, String password, String name, String email, String phoneNumber) {
-        this.username = username;
-        this.password = password;
+        this.username = (username == null) ? "" : username.trim();
+        this.password = (password == null) ? "" : password.trim();
         this.postIDs = new ArrayList<ObjectId>();
         this.commentIDs = new ArrayList<ObjectId>();
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.name = (name == null) ? "" : name.trim();
+        this.email = (email == null) ? "" : email.trim();
+        this.phoneNumber = (phoneNumber == null) ? "" : phoneNumber.trim();
         this.rating = 0.0d;
         this.numRatings = 0;
     }
