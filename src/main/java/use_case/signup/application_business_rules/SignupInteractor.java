@@ -13,6 +13,7 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     public void execute(SignupInputData signupInputData) {
+        // TODO: Validate input data better.
         if (signupInputData.getUsername() == null) {
             userPresenter.prepareFailView("Please enter a username.");
         } else if (signupInputData.getPassword() == null || signupInputData.getRepeatPassword() == null) {
