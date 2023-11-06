@@ -19,6 +19,8 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import entity.*;
 
+import javax.swing.*;
+
 public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
     private MongoClient mongoClient;
     private MongoDatabase database;
@@ -27,13 +29,14 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
     private MongoCollection<Comment> comments;
 
     public MongoDBDataAccessObject(String databaseConnectionPath) {
-        String uri = null;
+        String uri;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
             uri = scanner.nextLine();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Couldn't read database connection string\nError: " + e.getMessage());
+            throw new RuntimeException();
         }
         try {
             mongoClient = MongoClients.create(uri);
@@ -45,6 +48,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
             posts = database.getCollection("Posts", Post.class).withCodecRegistry(pojoCodecRegistry);
             comments = database.getCollection("Comments", Comment.class).withCodecRegistry(pojoCodecRegistry);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Could not connect to the database\nError: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
