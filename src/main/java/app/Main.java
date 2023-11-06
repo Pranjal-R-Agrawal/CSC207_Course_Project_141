@@ -24,7 +24,12 @@ public class Main {
 
         SignupViewModel signupViewModel = new SignupViewModel();
 
-        MongoDBDataAccessObject mongoDBDataAccessObject = new MongoDBDataAccessObject();
+        MongoDBDataAccessObject mongoDBDataAccessObject;
+        if (args != null && args.length == 5)
+            mongoDBDataAccessObject = new MongoDBDataAccessObject(args[0], args[1], args[2], args[3], args[4]);
+        else {
+            mongoDBDataAccessObject = new MongoDBDataAccessObject();
+        }
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, mongoDBDataAccessObject);
         views.add(signupView, signupView.viewName);
