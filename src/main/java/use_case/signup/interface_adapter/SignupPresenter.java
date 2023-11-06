@@ -4,12 +4,16 @@ import use_case.signup.application_business_rules.SignupOutputBoundary;
 import use_case.signup.application_business_rules.SignupOutputData;
 
 import view.SignupViewModel;
+import view.ViewManagerModel;
 
 // TODO: Connect with LoginViewModel
 
 public class SignupPresenter implements SignupOutputBoundary {
+    private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
-    public SignupPresenter(SignupViewModel signupViewModel) {
+
+    public SignupPresenter(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel) {
+        this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
     }
 
