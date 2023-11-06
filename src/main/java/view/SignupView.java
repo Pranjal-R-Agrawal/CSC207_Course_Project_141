@@ -51,8 +51,8 @@ public class SignupView extends JPanel implements PropertyChangeListener {
                                 currentState.getPassword(),
                                 currentState.getRepeatPassword(),
                                 currentState.getName(),
-                                currentState.getPhoneNumber(),
-                                currentState.getEmail()
+                                currentState.getEmail(),
+                                currentState.getPhoneNumber()
                         );
                     }
                 }
