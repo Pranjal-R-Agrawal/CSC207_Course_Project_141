@@ -14,13 +14,8 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface signupUserDataAccessObject) {
-        try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, signupUserDataAccessObject);
-            return new SignupView(signupViewModel, signupController);
-        } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, "Could not connect to the database.");
-        }
-        return null;
+        SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, signupUserDataAccessObject);
+        return new SignupView(signupViewModel, signupController);
     }
 
     private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface signupUserDataAccessObject) {
