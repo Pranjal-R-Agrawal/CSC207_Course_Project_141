@@ -25,9 +25,9 @@ import javax.swing.*;
 public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
     private MongoClient mongoClient;
     private MongoDatabase database;
-    private MongoCollection<User> users;
-    private MongoCollection<Post> posts;
-    private MongoCollection<Comment> comments;
+    protected MongoCollection<User> users;
+    protected MongoCollection<Post> posts;
+    protected MongoCollection<Comment> comments;
 
     public MongoDBDataAccessObject(
             String databaseConnectionPath, String db, String usersCollection, String postsCollection, String commentsCollection
