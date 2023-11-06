@@ -183,7 +183,16 @@ public class SignupView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SignupState currentState = signupViewModel.getState();
-        JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        if (evt.getPropertyName().equals("sign_up_error")) {
+            SignupState currentState = signupViewModel.getState();
+            JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        } else if (evt.getPropertyName().equals("reset_input_fields")) {
+            usernameInputField.setText("");
+            passwordInputField.setText("");
+            repeatPasswordInputField.setText("");
+            nameInputField.setText("");
+            phoneNumberInputField.setText("");
+            emailInputField.setText("");
+        }
     }
 }

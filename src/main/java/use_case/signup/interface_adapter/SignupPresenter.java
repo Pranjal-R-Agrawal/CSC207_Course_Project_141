@@ -19,13 +19,13 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     @Override
     public void prepareSuccessView(SignupOutputData user) {
-
+        signupViewModel.firePropertyChanged("reset_input_fields");
     }
 
     @Override
     public void prepareFailView(String error) {
         SignupState signupState = signupViewModel.getState();
         signupState.setErrorMessage(error);
-        signupViewModel.firePropertyChanged("signup");
+        signupViewModel.firePropertyChanged("sign_up_error");
     }
 }
