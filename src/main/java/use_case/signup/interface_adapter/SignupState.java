@@ -13,56 +13,63 @@ public class SignupState {
         return username;
     }
 
-    public void setUsername(String username) {
+    public SignupState setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public SignupState setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getRepeatPassword() {
         return repeatPassword;
     }
 
-    public void setRepeatPassword(String repeatPassword) {
+    public SignupState setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public SignupState setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public SignupState setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public SignupState setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public SignupState setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+        return this;
     }
 
     @Override
