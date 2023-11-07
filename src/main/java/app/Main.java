@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+    protected static SignupViewModel signupViewModel;
+
     public static void main(String[] args) {
         JFrame application = new JFrame("Startup Generator");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,7 +24,7 @@ public class Main {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
-        SignupViewModel signupViewModel = new SignupViewModel();
+        signupViewModel = new SignupViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         if (args != null && args.length == 5)
