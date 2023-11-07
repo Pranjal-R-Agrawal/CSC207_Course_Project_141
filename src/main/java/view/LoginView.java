@@ -72,6 +72,13 @@ public class LoginView extends JPanel implements PropertyChangeListener {
             @Override
             public void keyReleased(KeyEvent e) {}
         });
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        addComponent(usernamePanel, constraints, 0, 0, GridBagConstraints.HORIZONTAL);
+        addComponent(passwordPanel, constraints, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        add(loginButton, constraints);
     }
 
     private void addComponent(JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
