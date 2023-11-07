@@ -3,6 +3,7 @@ package data_access;
 import entity.User;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class MongoDBDataAccessObjectTest extends MongoDBDataAccessObject {
@@ -25,6 +26,7 @@ public class MongoDBDataAccessObjectTest extends MongoDBDataAccessObject {
         assert usernameUsed("username");
     }
 
+    @Before
     @After
     public void resetDatabase() {
         users.drop();
