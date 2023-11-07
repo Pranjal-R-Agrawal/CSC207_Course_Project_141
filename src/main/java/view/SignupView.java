@@ -27,6 +27,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
         this.signupController = signupController;
 
         viewName = signupViewModel.getViewName();
+        setName(viewName);
         signupButton.setText(SignupViewModel.SIGNUP_BUTTON_LABEL);
 
         signupViewModel.addPropertyChangeListener(this);
