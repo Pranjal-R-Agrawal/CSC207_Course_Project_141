@@ -19,15 +19,17 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import entity.*;
+import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
     private MongoClient mongoClient;
     private MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
+    private ObjectId loggedInUserID;
 
     public MongoDBDataAccessObject(
             String databaseConnectionPath, String db, String usersCollection, String postsCollection, String commentsCollection
@@ -81,5 +83,28 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface {
 
     public void addUser(User user) {
         users.insertOne(user);
+    }
+
+    public boolean isValid(String username, String password) {
+        users.createIndex(Indexes.text("username"));
+        for (User user : users.find(Filters.text(username))) {
+            if (user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public User getUserByUsername(String username) {
+        users.createIndex(Indexes.text("username"));
+        return users.find(Filters.text(username)).first();
+    }
+
+    public void setLoggedInUserID(ObjectId id) {
+        loggedInUserID = id;
+    }
+
+    public User getLoggedInUser() {
+        return users.find(Filters.eq("_id", loggedInUserID)).first();
     }
 }
