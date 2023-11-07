@@ -100,6 +100,9 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("log_in_error")) {
             LoginState currentState = loginViewModel.getState();
             JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        } else if (evt.getPropertyName().equals("update_username")) {
+            LoginState currentState = loginViewModel.getState();
+            usernameInputField.setText(currentState.getUsername());
         }
     }
 }
