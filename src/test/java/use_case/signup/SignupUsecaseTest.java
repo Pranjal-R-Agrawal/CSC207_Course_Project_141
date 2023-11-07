@@ -1,6 +1,7 @@
 package use_case.signup;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import entity.User;
@@ -68,6 +69,12 @@ public class SignupUsecaseTest {
     }
 
     @Test
+    public void testPhoneNumberEmpty() {
+        signupController.execute("username", "password", "password", "name", "email", null);
+        assert signupViewModel.getState().getErrorMessage() == null;
+    }
+
+    @Test
     public void testUsernameUsedNoUsers() {
         signupController.execute("username", "password", "password", "name", "email", "phone");
         assert signupViewModel.getState().getErrorMessage() == null;
@@ -86,6 +93,7 @@ public class SignupUsecaseTest {
         assert signupViewModel.getState().getErrorMessage().equals("Passwords don't match.");
     }
 
+    @Before
     @After
     public void clear() {
         mongoDBDataAccessObject.resetDatabase();
