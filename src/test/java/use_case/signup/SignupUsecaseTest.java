@@ -15,6 +15,7 @@ import use_case.signup.application_business_rules.SignupOutputBoundary;
 import use_case.signup.interface_adapter.SignupController;
 import use_case.signup.interface_adapter.SignupPresenter;
 
+import view.LoginViewModel;
 import view.SignupViewModel;
 import view.ViewManagerModel;
 
@@ -27,7 +28,7 @@ public class SignupUsecaseTest {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         signupViewModel = new SignupViewModel();
         mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
-        SignupOutputBoundary signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel);
+        SignupOutputBoundary signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel, new LoginViewModel());
         SignupInputBoundary signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
         signupController = new SignupController(signupInteractor);
     }
