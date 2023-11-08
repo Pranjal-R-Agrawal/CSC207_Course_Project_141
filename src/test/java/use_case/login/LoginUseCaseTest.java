@@ -18,17 +18,8 @@ import view.ViewManagerModel;
 
 public class LoginUseCaseTest {
     LoginViewModel loginViewModel;
-    LoginController loginController;
     MongoDBDataAccessObjectTest mongoDBDataAccessObject;
-
-    public LoginUseCaseTest() {
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        loginViewModel = new LoginViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
-        LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel);
-        LoginInputBoundary loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginPresenter);
-        loginController = new LoginController(loginInteractor);
-    }
+    LoginController loginController;
 
     @Test
     public void testAllFieldsEmpty() {
@@ -56,14 +47,22 @@ public class LoginUseCaseTest {
 
     @Test
     public void testValidCredentials() {
-        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone"));
+        mongoDBDataAccessObject.addUser(new User(
+                "username", "password", "name", "email", "phone")
+        );
         loginController.execute("username", "password");
         assert loginViewModel.getState().getErrorMessage() == null;
     }
 
     @Before
-    @After
-    public void clearDatabase() {
+    public void setUpTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        loginViewModel = new LoginViewModel();
+        mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
+        loginController = new LoginController(
+                new LoginInteractor(mongoDBDataAccessObject, new LoginPresenter(viewManagerModel, loginViewModel))
+        );
+
         mongoDBDataAccessObject.resetDatabase();
     }
 }
