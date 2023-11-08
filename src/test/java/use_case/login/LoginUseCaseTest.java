@@ -3,12 +3,9 @@ package use_case.login;
 import data_access.MongoDBDataAccessObjectTest;
 
 import entity.User;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import use_case.login.application_business_rules.LoginInputBoundary;
 import use_case.login.application_business_rules.LoginInteractor;
-import use_case.login.application_business_rules.LoginOutputBoundary;
 
 import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginPresenter;
