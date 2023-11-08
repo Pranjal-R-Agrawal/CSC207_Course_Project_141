@@ -182,6 +182,13 @@ public class SignupView extends JPanel implements PropertyChangeListener {
             nameInputField.setText("");
             phoneNumberInputField.setText("");
             emailInputField.setText("");
+        } else if (evt.getPropertyName().equals("update_fields")) {
+            usernameInputField.setText(signupViewModel.getState().getUsername());
+            passwordInputField.setText(signupViewModel.getState().getPassword());
+            repeatPasswordInputField.setText(signupViewModel.getState().getRepeatPassword());
+            nameInputField.setText(signupViewModel.getState().getName());
+            phoneNumberInputField.setText(signupViewModel.getState().getPhoneNumber());
+            emailInputField.setText(signupViewModel.getState().getEmail());
         }
     }
 }
