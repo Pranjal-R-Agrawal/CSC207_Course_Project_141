@@ -103,6 +103,9 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         } else if (evt.getPropertyName().equals("update_username")) {
             LoginState currentState = loginViewModel.getState();
             usernameInputField.setText(currentState.getUsername());
+        } else if (evt.getPropertyName().equals("update_password")) {
+            LoginState currentState = loginViewModel.getState();
+            passwordInputField.setText(currentState.getPassword());
         }
     }
 }
