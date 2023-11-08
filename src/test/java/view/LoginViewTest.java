@@ -1,13 +1,12 @@
 package view;
 
 import entity.User;
-import org.junit.After;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import app.LoginUseCaseFactory;
 import data_access.MongoDBDataAccessObjectTest;
-import use_case.login.interface_adapter.LoginState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +15,9 @@ import java.awt.event.ActionListener;
 public class LoginViewTest {
     private static String message;
     private static boolean popUpDiscovered;
-    private final MongoDBDataAccessObjectTest dataAccessObject = new MongoDBDataAccessObjectTest();
-    private final LoginViewModel loginViewModel = new LoginViewModel();
-    private final LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, dataAccessObject);
-    private final JButton loginButton = (JButton) loginView.getComponent(2);
+    private MongoDBDataAccessObjectTest dataAccessObject;
+    private LoginViewModel loginViewModel;
+    private JButton loginButton;
 
     @Test
     public void testAllFieldsEmpty () {
@@ -46,8 +44,7 @@ public class LoginViewTest {
 
     @Test
     public void testInvalidCredentials () {
-        loginViewModel.getState().setUsername("invalid");
-        loginViewModel.getState().setPassword("credentials");
+        loginViewModel.getState().setUsername("invalid").setPassword("credentials");
         loginViewModel.firePropertyChanged("update_username");
         loginViewModel.firePropertyChanged("update_password");
         createCloseTimer().start();
@@ -60,8 +57,7 @@ public class LoginViewTest {
         dataAccessObject.addUser(
                 new User("username", "password", "name", "email", "phone")
         );
-        loginViewModel.getState().setUsername("username");
-        loginViewModel.getState().setPassword("password");
+        loginViewModel.getState().setUsername("username").setPassword("password");
         loginViewModel.firePropertyChanged("update_username");
         loginViewModel.firePropertyChanged("update_password");
         createCloseTimer().start();
@@ -96,10 +92,15 @@ public class LoginViewTest {
     }
 
     @Before
-    public void setupTest() {
+    public void setUpTest() {
+        dataAccessObject = new MongoDBDataAccessObjectTest();
+        loginViewModel = new LoginViewModel();
+        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, dataAccessObject);
+        loginButton = (JButton) loginView.getComponent(2);
+
         dataAccessObject.resetDatabase();
 
-        message = null;
+        message = "";
         popUpDiscovered = false;
 
         JFrame application = new JFrame("Startup Generator");
