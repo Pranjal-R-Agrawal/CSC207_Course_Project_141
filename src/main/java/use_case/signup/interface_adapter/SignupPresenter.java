@@ -22,9 +22,8 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void prepareSuccessView(SignupOutputData user) {
         signupViewModel.firePropertyChanged("reset_input_fields");
-        LoginState loginState = loginViewModel.getState();
-        loginState.setUsername(user.getUsername());
-        loginViewModel.setState(loginState);
+
+        loginViewModel.getState().setUsername(user.getUsername());
         loginViewModel.firePropertyChanged("update_username");
 
         viewManagerModel.setActiveView(loginViewModel.getViewName());
@@ -33,8 +32,7 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        SignupState signupState = signupViewModel.getState();
-        signupState.setErrorMessage(error);
+        signupViewModel.getState().setErrorMessage(error);
         signupViewModel.firePropertyChanged("sign_up_error");
     }
 }

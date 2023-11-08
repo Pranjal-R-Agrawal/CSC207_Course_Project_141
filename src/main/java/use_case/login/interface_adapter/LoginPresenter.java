@@ -3,7 +3,6 @@ package use_case.login.interface_adapter;
 import use_case.login.application_business_rules.LoginOutputBoundary;
 
 import view.LoginViewModel;
-import view.SignupView;
 import view.ViewManagerModel;
 
 // TODO: Connect with StartupGenerator Home Page
@@ -24,8 +23,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        LoginState loginState = loginViewModel.getState();
-        loginState.setErrorMessage(error);
+        loginViewModel.getState().setErrorMessage(error);
         loginViewModel.firePropertyChanged("log_in_error");
     }
 }
