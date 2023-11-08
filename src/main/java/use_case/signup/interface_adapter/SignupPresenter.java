@@ -21,6 +21,7 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     @Override
     public void prepareSuccessView(SignupOutputData user) {
+        signupViewModel.setState(new SignupState());
         signupViewModel.firePropertyChanged("reset_input_fields");
 
         loginViewModel.getState().setUsername(user.getUsername());
