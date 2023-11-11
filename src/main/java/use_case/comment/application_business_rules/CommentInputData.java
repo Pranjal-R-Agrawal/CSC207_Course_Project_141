@@ -1,4 +1,4 @@
-package use_case.comment;
+package use_case.comment.application_business_rules;
 
 import org.bson.types.ObjectId;
 
