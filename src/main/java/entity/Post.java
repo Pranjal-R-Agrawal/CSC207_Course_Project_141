@@ -12,20 +12,18 @@ public class Post {
     private List<ObjectId> collaboratorIDs;
     private String title;
     private String body;
-    private List<String> collaborationRoles;
     private List<String> suggestedCollaboratorQualifications;
     private boolean closed;
     private boolean completed;
 
     public Post() {}
 
-    public Post(ObjectId authorID, String title, String body, List<String> collaborationRoles, List<String> suggestedCollaboratorQualifications) {
+    public Post(ObjectId authorID, String title, String body, List<String> suggestedCollaboratorQualifications) {
         this.childrenId = new ArrayList<ObjectId>();
         this.authorID = authorID;
         this.collaboratorIDs = new ArrayList<ObjectId>();
         this.title = title;
         this.body = body;
-        this.collaborationRoles = collaborationRoles;
         this.suggestedCollaboratorQualifications = suggestedCollaboratorQualifications;
         this.closed = false;
         this.completed = false;
@@ -77,14 +75,6 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
-    }
-
-    public List<String> getCollaborationRoles() {
-        return collaborationRoles;
-    }
-
-    public void setCollaborationRoles(List<String> collaborationRoles) {
-        this.collaborationRoles = collaborationRoles;
     }
 
     public List<String> getSuggestedCollaboratorQualifications() {
