@@ -24,14 +24,14 @@ import org.bson.types.ObjectId;
 import javax.swing.*;
 
 public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
-    private MongoDatabase database;
+    private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
     private ObjectId loggedInUserID;
-    private String usersCollectionName;
-    private String postsCollectionName;
-    private String commentsCollectionName;
+    private final String usersCollectionName;
+    private final String postsCollectionName;
+    private final String commentsCollectionName;
 
     public MongoDBDataAccessObject(
             String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
@@ -88,16 +88,19 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     public boolean usernameUsed(String username) {
+        users = getUsersCollection();
         users.createIndex(Indexes.text("username"));
         for(User user : users.find(Filters.text(username))) return true;
         return false;
     }
 
     public void addUser(User user) {
+        users = getUsersCollection();
         users.insertOne(user);
     }
 
     public boolean isValid(String username, String password) {
+        users = getUsersCollection();
         users.createIndex(Indexes.text("username"));
         for (User user : users.find(Filters.text(username))) {
             if (user.getPassword().equals(password)) {
@@ -108,6 +111,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     public User getUserByUsername(String username) {
+        users = getUsersCollection();
         users.createIndex(Indexes.text("username"));
         return users.find(Filters.text(username)).first();
     }
@@ -117,6 +121,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     public User getLoggedInUser() {
+        users = getUsersCollection();
         return users.find(Filters.eq("_id", loggedInUserID)).first();
     }
 }
