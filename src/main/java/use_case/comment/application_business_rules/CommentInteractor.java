@@ -17,14 +17,11 @@ public class CommentInteractor implements CommentInputBoundary{
             commentPresenter.prepareFailureView("Please enter text in body.");
         } else if (commentInputData.getQualifications().isEmpty()) {
             commentPresenter.prepareFailureView("Please enter at least 1 qualification.");
-        } else if (commentInputData.getCollaborationRoles().isEmpty()) {
-            commentPresenter.prepareFailureView("Please enter at least 1 collaboration role.");
         } else {
             Comment comment = new Comment(commentInputData.getParentId(),
                     commentInputData.getAuthorId(),
                     commentInputData.getBody(),
-                    commentInputData.getQualifications(),
-                    commentInputData.getCollaborationRoles());
+                    commentInputData.getQualifications());
             commentDataAccessObject.addComment(comment);
             commentPresenter.prepareSuccessView();
         }

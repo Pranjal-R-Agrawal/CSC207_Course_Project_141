@@ -14,7 +14,7 @@ public class CommentController {
     }
 
     public void execute(ObjectId parentId, ObjectId authorId, String body, List<String> qualifications, List<String> collaborationRoles){
-        CommentInputData inputData = new CommentInputData(parentId, authorId, body, qualifications, collaborationRoles);
+        CommentInputData inputData = new CommentInputData(parentId, authorId, body, qualifications);
         commentInteractor.execute(inputData);
     }
 }
