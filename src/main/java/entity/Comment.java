@@ -12,17 +12,15 @@ public class Comment {
     private ObjectId authorId;
     private String body;
     private List<String> qualifications;
-    private List<String> collaborationRoles;
 
     public Comment() {}
 
-    public Comment(ObjectId parentId, ObjectId authorId, String body, List<String> qualifications, List<String> collaborationRoles) {
+    public Comment(ObjectId parentId, ObjectId authorId, String body, List<String> qualifications) {
         this.parentId = parentId;
         this.childrenId = new ArrayList<ObjectId>();
         this.authorId = authorId;
         this.body = body;
         this.qualifications = qualifications;
-        this.collaborationRoles = collaborationRoles;
     }
 
     public ObjectId getId() {
@@ -71,13 +69,5 @@ public class Comment {
 
     public void setQualifications(List<String> qualifications) {
         this.qualifications = qualifications;
-    }
-
-    public List<String> getCollaborationRoles() {
-        return collaborationRoles;
-    }
-
-    public void setCollaborationRoles(List<String> collaborationRoles) {
-        this.collaborationRoles = collaborationRoles;
     }
 }
