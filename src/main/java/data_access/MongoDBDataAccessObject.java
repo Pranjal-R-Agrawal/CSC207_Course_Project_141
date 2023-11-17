@@ -24,17 +24,22 @@ import org.bson.types.ObjectId;
 import javax.swing.*;
 
 public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
-    private MongoClient mongoClient;
     private MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
     private ObjectId loggedInUserID;
+    private String usersCollectionName;
+    private String postsCollectionName;
+    private String commentsCollectionName;
 
     public MongoDBDataAccessObject(
-            String databaseConnectionPath, String db, String usersCollection, String postsCollection, String commentsCollection
+            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
     ) {
         String uri;
+        this.usersCollectionName = usersCollectionName;
+        this.postsCollectionName = postsCollectionName;
+        this.commentsCollectionName = commentsCollectionName;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
@@ -44,35 +49,42 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
             throw new RuntimeException();
         }
         try {
-            mongoClient = MongoClients.create(uri);
+            MongoClient mongoClient = MongoClients.create(uri);
 
-            CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-            CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-
-            database = mongoClient.getDatabase(db);
+            database = mongoClient.getDatabase(databaseName);
 
             List<String> collections = database.listCollectionNames().into(new java.util.ArrayList<>());
 
-            if (!collections.contains(usersCollection)) database.createCollection(usersCollection);
-            users = database.getCollection(usersCollection, User.class).withCodecRegistry(pojoCodecRegistry);
+            if (!collections.contains(usersCollectionName)) database.createCollection(usersCollectionName);
+            users = getUsersCollection();
 
-            if (!collections.contains(postsCollection)) database.createCollection(postsCollection);
-            posts = database.getCollection(postsCollection, Post.class).withCodecRegistry(pojoCodecRegistry);
+            if (!collections.contains(postsCollectionName)) database.createCollection(postsCollectionName);
+            posts = getPostsCollection();
 
-            if (!collections.contains(commentsCollection)) database.createCollection(commentsCollection);
-            comments = database.getCollection(commentsCollection, Comment.class).withCodecRegistry(pojoCodecRegistry);
+            if (!collections.contains(commentsCollectionName)) database.createCollection(commentsCollectionName);
+            comments = getCommentsCollection();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Could not connect to the database\nError: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public MongoDBDataAccessObject(String databaseConnectionPath) {
-        this(databaseConnectionPath, "CSC207", "Users", "Posts", "Comments");
+    private MongoCollection<User> getUsersCollection() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(usersCollectionName, User.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    public MongoDBDataAccessObject() {
-        this("src/main/java/data_access/database_connection.txt");
+    private MongoCollection<Post> getPostsCollection() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(postsCollectionName, Post.class).withCodecRegistry(pojoCodecRegistry);
+    }
+
+    private MongoCollection<Comment> getCommentsCollection() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
 
     public boolean usernameUsed(String username) {
