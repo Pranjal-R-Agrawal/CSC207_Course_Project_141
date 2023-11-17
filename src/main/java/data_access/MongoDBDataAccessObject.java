@@ -87,6 +87,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
 
+    public void resetDatabase() {
+        users.drop();
+        posts.drop();
+        comments.drop();
+    }
+
     public boolean usernameUsed(String username) {
         users = getUsersCollection();
         users.createIndex(Indexes.text("username"));
