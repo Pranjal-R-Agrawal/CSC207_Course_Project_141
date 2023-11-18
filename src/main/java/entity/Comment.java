@@ -8,6 +8,7 @@ import java.util.List;
 public class Comment {
     private ObjectId id;
     private ObjectId parentId;
+    private ObjectId parentPostId;
     private List<ObjectId> childrenId;
     private ObjectId authorId;
     private String body;
@@ -15,8 +16,9 @@ public class Comment {
 
     public Comment() {}
 
-    public Comment(ObjectId parentId, ObjectId authorId, String body, List<String> qualifications) {
+    public Comment(ObjectId parentId, ObjectId parentPostId, ObjectId authorId, String body, List<String> qualifications) {
         this.parentId = parentId;
+        this.parentPostId = parentPostId;
         this.childrenId = new ArrayList<ObjectId>();
         this.authorId = authorId;
         this.body = body;
@@ -37,6 +39,14 @@ public class Comment {
 
     public void setParentId(ObjectId parentId) {
         this.parentId = parentId;
+    }
+
+    public ObjectId getParentPostId() {
+        return parentPostId;
+    }
+
+    public void setParentPostId(ObjectId parentPostId) {
+        this.parentPostId = parentPostId;
     }
 
     public List<ObjectId> getChildrenId() {
