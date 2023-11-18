@@ -1,0 +1,58 @@
+package data_access;
+
+public class MongoDBDataAccessObjectBuilder {
+    private String databaseConnectionPath;
+    private String databaseName;
+    private String usersCollectionName;
+    private String postsCollectionName;
+    private String commentsCollectionName;
+
+    public MongoDBDataAccessObjectBuilder setDatabaseConnectionPath(String databaseConnectionPath) {
+        this.databaseConnectionPath = databaseConnectionPath;
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setUsersCollectionName(String usersCollectionName) {
+        this.usersCollectionName = usersCollectionName;
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setPostsCollectionName(String postsCollectionName) {
+        this.postsCollectionName = postsCollectionName;
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setCommentsCollectionName(String commentsCollectionName) {
+        this.commentsCollectionName = commentsCollectionName;
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setStandadParameters() {
+        setDatabaseConnectionPath("src/main/java/data_access/database_connection.txt");
+        setDatabaseName("forum");
+        setUsersCollectionName("users");
+        setPostsCollectionName("posts");
+        setCommentsCollectionName("comments");
+        return this;
+    }
+
+    public MongoDBDataAccessObjectBuilder setTestParameters() {
+        setDatabaseConnectionPath("src/main/java/data_access/database_connection.txt");
+        setDatabaseName("forum_test");
+        setUsersCollectionName("users_test");
+        setPostsCollectionName("posts_test");
+        setCommentsCollectionName("comments_test");
+        return this;
+    }
+
+    public MongoDBDataAccessObject build() {
+        return new MongoDBDataAccessObject(
+                databaseConnectionPath, databaseName, usersCollectionName, postsCollectionName, commentsCollectionName
+        );
+    }
+}
