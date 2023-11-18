@@ -1,6 +1,7 @@
 package app;
 
 import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import view.*;
 
 import javax.swing.*;
@@ -27,9 +28,15 @@ public class Main {
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         if (args != null && args.length == 5)
-            mongoDBDataAccessObject = new MongoDBDataAccessObject(args[0], args[1], args[2], args[3], args[4]);
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder()
+                    .setDatabaseConnectionPath(args[0])
+                    .setDatabaseName(args[1])
+                    .setUsersCollectionName(args[2])
+                    .setCommentsCollectionName(args[3])
+                    .setPostsCollectionName(args[4])
+                    .build();
         else {
-            mongoDBDataAccessObject = new MongoDBDataAccessObject();
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setStandadParameters().build();
         }
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);

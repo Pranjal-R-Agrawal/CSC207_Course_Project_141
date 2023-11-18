@@ -1,11 +1,12 @@
 package use_case.signup;
 
+import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import entity.User;
 
-import data_access.MongoDBDataAccessObjectTest;
 
 import use_case.signup.application_business_rules.SignupInteractor;
 
@@ -19,7 +20,7 @@ import view.ViewManagerModel;
 public class SignupUseCaseTest {
     SignupViewModel signupViewModel;
     SignupController signupController;
-    MongoDBDataAccessObjectTest mongoDBDataAccessObject;
+    MongoDBDataAccessObject mongoDBDataAccessObject;
 
     @Test
     public void testAllFieldsEmpty() {
@@ -86,7 +87,7 @@ public class SignupUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         signupViewModel = new SignupViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
+        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
         signupController = new SignupController(
                 new SignupInteractor(
                         mongoDBDataAccessObject, new SignupPresenter(

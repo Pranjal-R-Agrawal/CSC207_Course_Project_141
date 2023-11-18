@@ -1,12 +1,13 @@
 package view;
 
+import data_access.MongoDBDataAccessObjectBuilder;
 import entity.User;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import app.LoginUseCaseFactory;
-import data_access.MongoDBDataAccessObjectTest;
+import data_access.MongoDBDataAccessObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
 public class LoginViewTest {
     private static String message;
     private static boolean popUpDiscovered;
-    private MongoDBDataAccessObjectTest dataAccessObject;
+    private MongoDBDataAccessObject mongoDBDataAccessObject;
     private LoginViewModel loginViewModel;
     private JButton loginButton;
 
@@ -54,7 +55,7 @@ public class LoginViewTest {
 
     @Test
     public void testValidCredentials () {
-        dataAccessObject.addUser(
+        mongoDBDataAccessObject.addUser(
                 new User("username", "password", "name", "email", "phone")
         );
         loginViewModel.getState().setUsername("username").setPassword("password");
@@ -93,12 +94,12 @@ public class LoginViewTest {
 
     @Before
     public void setUpTest() {
-        dataAccessObject = new MongoDBDataAccessObjectTest();
+        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
         loginViewModel = new LoginViewModel();
-        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, dataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, mongoDBDataAccessObject);
         loginButton = (JButton) loginView.getComponent(2);
 
-        dataAccessObject.resetDatabase();
+        mongoDBDataAccessObject.resetDatabase();
 
         message = "";
         popUpDiscovered = false;

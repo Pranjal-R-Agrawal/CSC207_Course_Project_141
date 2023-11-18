@@ -1,7 +1,7 @@
 package view;
 
 import app.MainTester;
-import data_access.MongoDBDataAccessObjectTest;
+import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class MainViewTest {
 
     @Before
     public void setUpTest() {
-        new MongoDBDataAccessObjectTest().resetDatabase();
+        new MongoDBDataAccessObjectBuilder().setTestParameters().build().resetDatabase();
         MainTester.main(null);
         signupViewModel = MainTester.getSignupViewModel();
         signupView = (MainTester.getCurrentView() instanceof SignupView)? (SignupView) MainTester.getCurrentView() : null;

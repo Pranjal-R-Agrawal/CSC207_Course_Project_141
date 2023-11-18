@@ -1,7 +1,8 @@
 package use_case.login;
 
-import data_access.MongoDBDataAccessObjectTest;
+import data_access.MongoDBDataAccessObject;
 
+import data_access.MongoDBDataAccessObjectBuilder;
 import entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import view.ViewManagerModel;
 
 public class LoginUseCaseTest {
     LoginViewModel loginViewModel;
-    MongoDBDataAccessObjectTest mongoDBDataAccessObject;
+    MongoDBDataAccessObject mongoDBDataAccessObject;
     LoginController loginController;
 
     @Test
@@ -55,7 +56,7 @@ public class LoginUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         loginViewModel = new LoginViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
+        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
         loginController = new LoginController(
                 new LoginInteractor(mongoDBDataAccessObject, new LoginPresenter(viewManagerModel, loginViewModel))
         );
