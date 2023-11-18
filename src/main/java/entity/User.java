@@ -11,6 +11,7 @@ public class User {
     private String password;
     private List<ObjectId> postIDs;
     private List<ObjectId> commentIDs;
+    private List<ObjectId> collaborationRequestIDs;
     private String name;
     private String email;
     private String phoneNumber;
@@ -26,6 +27,7 @@ public class User {
         this.password = (password == null) ? "" : password.trim();
         this.postIDs = new ArrayList<ObjectId>();
         this.commentIDs = new ArrayList<ObjectId>();
+        this.collaborationRequestIDs = new ArrayList<ObjectId>();
         this.name = (name == null) ? "" : name.trim();
         this.email = (email == null) ? "" : email.trim();
         this.phoneNumber = (phoneNumber == null) ? "" : phoneNumber.trim();
@@ -73,6 +75,14 @@ public class User {
 
     public void setCommentIDs(List<ObjectId> commentIDs) {
         this.commentIDs = commentIDs;
+    }
+
+    public List<ObjectId> getCollaborationRequestIDs() {
+        return collaborationRequestIDs;
+    }
+
+    public void setCollaborationRequestIDs(List<ObjectId> collaborationRequestIDs) {
+        this.collaborationRequestIDs = collaborationRequestIDs;
     }
 
     public String getName() {
