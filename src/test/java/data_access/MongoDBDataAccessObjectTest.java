@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.User;
+<<<<<<< HEAD
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,11 +18,23 @@ public class MongoDBDataAccessObjectTest extends MongoDBDataAccessObject {
     @Test
     public void testUsernameUsedEmptyCollection() {
         assert !usernameUsed("username");
+=======
+import org.junit.Before;
+import org.junit.Test;
+
+public class MongoDBDataAccessObjectTest {
+    MongoDBDataAccessObject dataAccessObject;
+
+    @Test
+    public void testUsernameUsedEmptyCollection() {
+        assert !dataAccessObject.usernameUsed("username");
+>>>>>>> shared
     }
 
     @Test
     public void testAddUserOne() {
         User user = new User("username", "password", "", "", "");
+<<<<<<< HEAD
         addUser(user);
         assert usernameUsed("username");
     }
@@ -34,3 +47,15 @@ public class MongoDBDataAccessObjectTest extends MongoDBDataAccessObject {
         comments.drop();
     }
 }
+=======
+        dataAccessObject.addUser(user);
+        assert dataAccessObject.usernameUsed("username");
+    }
+
+    @Before
+    public void setUpTest() {
+        dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        dataAccessObject.resetDatabase();
+    }
+}
+>>>>>>> shared
