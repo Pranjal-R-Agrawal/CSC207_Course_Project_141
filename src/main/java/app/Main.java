@@ -27,17 +27,22 @@ public class Main {
         loginViewModel = new LoginViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
-        if (args != null && args.length == 5) {
-            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder()
-                    .setDatabaseConnectionPath(args[0])
-                    .setDatabaseName(args[1])
-                    .setUsersCollectionName(args[2])
-                    .setCommentsCollectionName(args[3])
-                    .setPostsCollectionName(args[4])
-                    .build();
-        }
-        else {
-            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setStandadParameters().build();
+        try {
+            if (args != null && args.length == 5) {
+                mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder()
+                        .setDatabaseConnectionPath(args[0])
+                        .setDatabaseName(args[1])
+                        .setUsersCollectionName(args[2])
+                        .setCommentsCollectionName(args[3])
+                        .setPostsCollectionName(args[4])
+                        .build();
+            }
+            else {
+                mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setStandadParameters().build();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            throw new RuntimeException(e);
         }
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);

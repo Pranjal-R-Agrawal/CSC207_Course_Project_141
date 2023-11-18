@@ -29,7 +29,12 @@ public class MainViewTest {
 
     @Before
     public void setUpTest() {
-        new MongoDBDataAccessObjectBuilder().setTestParameters().build().resetDatabase();
+        try {
+            new MongoDBDataAccessObjectBuilder().setTestParameters().build().resetDatabase();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         MainTester.main(null);
         signupViewModel = MainTester.getSignupViewModel();
         signupView = (MainTester.getCurrentView() instanceof SignupView)? (SignupView) MainTester.getCurrentView() : null;
