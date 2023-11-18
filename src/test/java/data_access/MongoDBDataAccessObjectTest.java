@@ -21,7 +21,12 @@ public class MongoDBDataAccessObjectTest {
 
     @Before
     public void setUpTest() {
-        dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         dataAccessObject.resetDatabase();
     }
 }
