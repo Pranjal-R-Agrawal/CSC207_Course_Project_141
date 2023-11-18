@@ -14,7 +14,7 @@ public class MongoDBDataAccessObjectTest {
 
     @Test
     public void testAddUserOne() {
-        User user = new User("username", "password", "", "", "");
+        User user = new User("username", "password", "", "", "", "", "");
         dataAccessObject.addUser(user);
         assert dataAccessObject.usernameUsed("username");
     }

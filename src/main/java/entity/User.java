@@ -14,12 +14,14 @@ public class User {
     private String name;
     private String email;
     private String phoneNumber;
+    private String city;
+    private String fieldOfExpertise;
     private double rating;
     private int numRatings;
 
     public User() {}
 
-    public User(String username, String password, String name, String email, String phoneNumber) {
+    public User(String username, String password, String name, String email, String phoneNumber, String city, String fieldOfExpertise) {
         this.username = (username == null) ? "" : username.trim();
         this.password = (password == null) ? "" : password.trim();
         this.postIDs = new ArrayList<ObjectId>();
@@ -27,6 +29,8 @@ public class User {
         this.name = (name == null) ? "" : name.trim();
         this.email = (email == null) ? "" : email.trim();
         this.phoneNumber = (phoneNumber == null) ? "" : phoneNumber.trim();
+        this.city = (city == null) ? "" : city.trim();
+        this.fieldOfExpertise = (fieldOfExpertise == null) ? "" : fieldOfExpertise.trim();
         this.rating = 0.0d;
         this.numRatings = 0;
     }
@@ -93,6 +97,22 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getFieldOfExpertise() {
+        return fieldOfExpertise;
+    }
+
+    public void setFieldOfExpertise(String fieldOfExpertise) {
+        this.fieldOfExpertise = fieldOfExpertise;
     }
 
     public double getRating() {
