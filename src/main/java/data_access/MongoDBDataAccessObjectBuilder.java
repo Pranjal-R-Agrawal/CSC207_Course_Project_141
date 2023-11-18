@@ -1,5 +1,8 @@
 package data_access;
 
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
+
 public class MongoDBDataAccessObjectBuilder {
     private String databaseConnectionPath;
     private String databaseName;
@@ -50,7 +53,7 @@ public class MongoDBDataAccessObjectBuilder {
         return this;
     }
 
-    public MongoDBDataAccessObject build() {
+    public MongoDBDataAccessObject build() throws FileNotFoundException, NoSuchElementException {
         return new MongoDBDataAccessObject(
                 databaseConnectionPath, databaseName, usersCollectionName, postsCollectionName, commentsCollectionName
         );
