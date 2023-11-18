@@ -10,10 +10,4 @@ public class ViewProfileController {
         this.viewProfileUseCaseInteractor = viewProfileUseCaseInteractor;
     }
 
-    public void execute(String username, String name, String email, double rating) {
-        ViewProfileInputData viewProfileInputData = new ViewProfileInputData (
-                username, name, email, rating
-        );
-        viewProfileUseCaseInteractor.execute(viewProfileInputData);
-    }
 }
