@@ -71,17 +71,4 @@ public class SignupState {
         this.errorMessage = errorMessage;
         return this;
     }
-
-    @Override
-    public String toString() {
-        return "SignupState{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", repeatPassword='" + repeatPassword + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", errorMessage='" + errorMessage + '\'' +
-                '}';
-    }
 }

@@ -1,36 +1,26 @@
 package use_case.signup;
 
-import org.junit.After;
+import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import entity.User;
 
-import data_access.MongoDBDataAccessObjectTest;
+import data_access.MongoDBDataAccessObject;
 
-import use_case.signup.application_business_rules.SignupInputBoundary;
 import use_case.signup.application_business_rules.SignupInteractor;
-import use_case.signup.application_business_rules.SignupOutputBoundary;
 
 import use_case.signup.interface_adapter.SignupController;
 import use_case.signup.interface_adapter.SignupPresenter;
 
+import view.LoginViewModel;
 import view.SignupViewModel;
 import view.ViewManagerModel;
 
-public class SignupUsecaseTest {
+public class SignupUseCaseTest {
     SignupViewModel signupViewModel;
     SignupController signupController;
-    MongoDBDataAccessObjectTest mongoDBDataAccessObject;
-
-    public SignupUsecaseTest() {
-        ViewManagerModel viewManagerModel = new ViewManagerModel();
-        signupViewModel = new SignupViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectTest();
-        SignupOutputBoundary signupPresenter = new SignupPresenter(viewManagerModel, signupViewModel);
-        SignupInputBoundary signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
-        signupController = new SignupController(signupInteractor);
-    }
+    MongoDBDataAccessObject mongoDBDataAccessObject;
 
     @Test
     public void testAllFieldsEmpty() {
@@ -82,7 +72,7 @@ public class SignupUsecaseTest {
 
     @Test
     public void testUsernameUsedAddUser() {
-        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone"));
+        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone", "", ""));
         signupController.execute("username", "password", "password", "name", "email", "phone");
         assert signupViewModel.getState().getErrorMessage().equals("Username already used.");
     }
@@ -94,8 +84,23 @@ public class SignupUsecaseTest {
     }
 
     @Before
-    @After
-    public void clear() {
+    public void setUpTest() {
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        signupViewModel = new SignupViewModel();
+        try {
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        signupController = new SignupController(
+                new SignupInteractor(
+                        mongoDBDataAccessObject, new SignupPresenter(
+                                viewManagerModel, signupViewModel, new LoginViewModel()
+                        )
+                )
+        );
+
         mongoDBDataAccessObject.resetDatabase();
     }
 }
