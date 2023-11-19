@@ -1,0 +1,34 @@
+package use_case.view_profile.interface_adapter;
+
+import use_case.view_profile.application_business_rules.ViewProfileOutputBoundary;
+import use_case.view_profile.application_business_rules.ViewProfileOutputData;
+
+import view.ViewProfileViewModel;
+import view.ViewManagerModel;
+
+public class ViewProfilePresenter implements ViewProfileOutputBoundary {
+    private ViewManagerModel viewManagerModel;
+    private ViewProfileViewModel viewProfileViewModel;
+
+    public ViewProfilePresenter(ViewManagerModel viewManagerModel, ViewProfileViewModel viewProfileViewModel) {
+        this.viewProfileViewModel = viewProfileViewModel;
+
+        this.viewManagerModel = viewManagerModel;
+    }
+
+    @Override
+    public void prepareSuccessView(ViewProfileOutputData viewProfileOutputData) {
+        viewProfileViewModel.setState(new ViewProfileState());
+        viewProfileViewModel.firePropertyChanged("display_profile");
+
+        viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        viewProfileViewModel.getState().setErrorMessage(error);
+        viewProfileViewModel.firePropertyChanged("error");
+    }
+
+}
