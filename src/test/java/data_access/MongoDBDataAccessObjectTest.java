@@ -1,36 +1,32 @@
 package data_access;
 
 import entity.User;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MongoDBDataAccessObjectTest extends MongoDBDataAccessObject {
-    public MongoDBDataAccessObjectTest() {
-            super(
-                    "src/main/java/data_access/database_connection.txt",
-                    "Tests", "Users", "Posts", "Comments"
-            );
-    }
+public class MongoDBDataAccessObjectTest {
+    MongoDBDataAccessObject dataAccessObject;
 
     @Test
     public void testUsernameUsedEmptyCollection() {
-        assert !usernameUsed("username");
+        assert !dataAccessObject.usernameUsed("username");
     }
 
     @Test
     public void testAddUserOne() {
-        User user = new User("username", "password", "", "", "");
-        addUser(user);
-        assert usernameUsed("username");
+        User user = new User("username", "password", "", "", "", "", "");
+        dataAccessObject.addUser(user);
+        assert dataAccessObject.usernameUsed("username");
     }
 
     @Before
-    @After
-    public void resetDatabase() {
-        users.drop();
-        posts.drop();
-        comments.drop();
+    public void setUpTest() {
+        try {
+            dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        dataAccessObject.resetDatabase();
     }
 }
