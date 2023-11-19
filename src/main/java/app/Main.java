@@ -9,10 +9,9 @@ import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
 import view.*;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+
 
 public class Main {
     protected static SignupViewModel signupViewModel;
@@ -69,7 +68,7 @@ public class Main {
         {
             generateIdeaDataAccessObject = new IdeaDataFileDataAccessObject("src/main/java/data_access/ideas.csv",ideaFactory);
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
