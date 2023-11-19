@@ -4,7 +4,6 @@ import data_access.CommentDataAccessInterface;
 import entity.Comment;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,9 +1,8 @@
 package view;
 
-import entity.Comment;
 import use_case.comment.interface_adapter.CommentController;
 import use_case.comment.interface_adapter.CommentState;
-import use_case.login.interface_adapter.LoginState;
+
 
 import javax.swing.*;
 import java.awt.*;
