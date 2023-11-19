@@ -33,6 +33,17 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("display_profile")) {
+            ViewProfileState currentState = viewProfileViewModel.getState();
+            usernameDisplayField.setText(currentState.getUsername());
+            nameDisplayField.setText(currentState.getName());
+            emailDisplayField.setText(currentState.getEmail());
+            ratingsDisplayField.setText(String.valueOf(currentState.getRating()));
+        }
+        else if (evt.getPropertyName().equals("error")) {
+            ViewProfileState currentState = viewProfileViewModel.getState();
+            JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        }
 
     }
 }
