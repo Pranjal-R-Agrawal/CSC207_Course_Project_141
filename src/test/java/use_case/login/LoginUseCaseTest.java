@@ -46,7 +46,7 @@ public class LoginUseCaseTest {
     @Test
     public void testValidCredentials() {
         mongoDBDataAccessObject.addUser(new User(
-                "username", "password", "name", "email", "phone")
+                "username", "password", "name", "email", "phone", "", "")
         );
         loginController.execute("username", "password");
         assert loginViewModel.getState().getErrorMessage() == null;
@@ -56,7 +56,12 @@ public class LoginUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         loginViewModel = new LoginViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         loginController = new LoginController(
                 new LoginInteractor(mongoDBDataAccessObject, new LoginPresenter(viewManagerModel, loginViewModel))
         );

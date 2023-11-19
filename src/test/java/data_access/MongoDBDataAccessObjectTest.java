@@ -14,14 +14,19 @@ public class MongoDBDataAccessObjectTest {
 
     @Test
     public void testAddUserOne() {
-        User user = new User("username", "password", "", "", "");
+        User user = new User("username", "password", "", "", "", "", "");
         dataAccessObject.addUser(user);
         assert dataAccessObject.usernameUsed("username");
     }
 
     @Before
     public void setUpTest() {
-        dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            dataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         dataAccessObject.resetDatabase();
     }
 }

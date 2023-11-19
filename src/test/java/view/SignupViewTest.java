@@ -1,8 +1,8 @@
 package view;
 
 import app.SignupUseCaseFactory;
-import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
+import data_access.MongoDBDataAccessObject;
 import entity.User;
 
 import org.junit.Before;
@@ -94,7 +94,7 @@ public class SignupViewTest {
     @Test
     public void testUsernameUsedAddUser() {
         mongoDBDataAccessObject.addUser(
-                new User("username", "password", "name", "email", "phone")
+                new User("username", "password", "name", "email", "phone", "", "")
         );
         signupViewModel.getState().setUsername("username").setPassword("password")
                 .setRepeatPassword("password").setName("name").setEmail("email");
@@ -142,9 +142,14 @@ public class SignupViewTest {
 
     @Before
     public void setUpTest() {
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         signupViewModel = new SignupViewModel();
-        SignupView signupView = SignupUseCaseFactory.create(new ViewManagerModel(), signupViewModel, new LoginViewModel(),mongoDBDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(new ViewManagerModel(), signupViewModel, new LoginViewModel(), mongoDBDataAccessObject);
         signupButton = (JButton) signupView.getComponent(7);
 
         mongoDBDataAccessObject.resetDatabase();

@@ -56,7 +56,7 @@ public class LoginViewTest {
     @Test
     public void testValidCredentials () {
         mongoDBDataAccessObject.addUser(
-                new User("username", "password", "name", "email", "phone")
+                new User("username", "password", "name", "email", "phone", "", "")
         );
         loginViewModel.getState().setUsername("username").setPassword("password");
         loginViewModel.firePropertyChanged("update_username");
@@ -94,7 +94,12 @@ public class LoginViewTest {
 
     @Before
     public void setUpTest() {
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         loginViewModel = new LoginViewModel();
         LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, mongoDBDataAccessObject);
         loginButton = (JButton) loginView.getComponent(2);

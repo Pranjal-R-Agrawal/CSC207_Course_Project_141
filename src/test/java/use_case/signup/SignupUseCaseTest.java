@@ -1,12 +1,12 @@
 package use_case.signup;
 
-import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import entity.User;
 
+import data_access.MongoDBDataAccessObject;
 
 import use_case.signup.application_business_rules.SignupInteractor;
 
@@ -72,7 +72,7 @@ public class SignupUseCaseTest {
 
     @Test
     public void testUsernameUsedAddUser() {
-        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone"));
+        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone", "", ""));
         signupController.execute("username", "password", "password", "name", "email", "phone");
         assert signupViewModel.getState().getErrorMessage().equals("Username already used.");
     }
@@ -87,7 +87,12 @@ public class SignupUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         signupViewModel = new SignupViewModel();
-        mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        try {
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         signupController = new SignupController(
                 new SignupInteractor(
                         mongoDBDataAccessObject, new SignupPresenter(
