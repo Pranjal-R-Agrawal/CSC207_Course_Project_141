@@ -11,7 +11,9 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
@@ -35,7 +37,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
     public MongoDBDataAccessObject(
             String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
-    ) {
+    ) throws FileNotFoundException, NoSuchElementException {
         String uri;
         this.usersCollectionName = usersCollectionName;
         this.postsCollectionName = postsCollectionName;
@@ -44,9 +46,10 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
             uri = scanner.nextLine();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Couldn't read database connection string\nError: " + e.getMessage());
-            throw new RuntimeException();
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Could not find database connection file" + System.lineSeparator() + e.getMessage());
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Database connection file is empty" + System.lineSeparator() + e.getMessage());
         }
         try {
             MongoClient mongoClient = MongoClients.create(uri);
