@@ -24,6 +24,7 @@ public class CommentInteractor implements CommentInputBoundary{
         } else {
             List<String> qualifications = Arrays.asList(commentInputData.getQualifications().split(";"));
             Comment comment = new Comment(commentInputData.getParentId(),
+                    commentInputData.getParentPostId(),
                     commentInputData.getAuthorId(),
                     commentInputData.getBody(),
                     qualifications);

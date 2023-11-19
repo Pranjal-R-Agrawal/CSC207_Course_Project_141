@@ -13,8 +13,8 @@ public class CommentController {
         this.commentInteractor = commentInteractor;
     }
 
-    public void execute(ObjectId parentId, ObjectId authorId, String body, String qualifications, List<String> collaborationRoles){
-        CommentInputData inputData = new CommentInputData(parentId, authorId, body, qualifications);
+    public void execute(ObjectId parentId, ObjectId parentPostId, ObjectId authorId, String body, String qualifications){
+        CommentInputData inputData = new CommentInputData(parentId, parentPostId, authorId, body, qualifications);
         commentInteractor.execute(inputData);
     }
 }
