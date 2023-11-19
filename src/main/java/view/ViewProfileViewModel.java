@@ -8,6 +8,8 @@ public class ViewProfileViewModel extends ViewModel {
     public static final String NAME_LABEL = "";
     public static final String EMAIL_LABEL = "";
     public static final double RATINGS_LABEL = 0.0d;
+    public static final String LOGOUT_BUTTON_LABEL = "Log out";
+    public static final String BACK_BUTTON_LABEL = "Back";
     private ViewProfileState state = new ViewProfileState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
