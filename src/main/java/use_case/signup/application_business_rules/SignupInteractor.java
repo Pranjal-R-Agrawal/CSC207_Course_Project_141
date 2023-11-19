@@ -22,7 +22,7 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Please enter your name.");
         } else if (signupInputData.getEmail() == null) {
             userPresenter.prepareFailView("Please enter your email-id.");
-        }else if (userDataAccessObject.usernameUsed(signupInputData.getUsername())) {
+        } else if (userDataAccessObject.usernameUsed(signupInputData.getUsername())) {
             userPresenter.prepareFailView("Username already used.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
@@ -31,9 +31,12 @@ public class SignupInteractor implements SignupInputBoundary {
                     signupInputData.getPassword(),
                     signupInputData.getName(),
                     signupInputData.getEmail(),
-                    signupInputData.getPhoneNumber());
+                    signupInputData.getPhoneNumber(),
+                    "",
+                    ""
+            );
             userDataAccessObject.addUser(user);
-            SignupOutputData signupOutputData = new SignupOutputData(user.getId(), user.getUsername());
+            SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
