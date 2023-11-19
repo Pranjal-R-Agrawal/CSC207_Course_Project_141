@@ -32,6 +32,7 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
         backButton.setText(ViewProfileViewModel.BACK_BUTTON_LABEL);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("display_profile")) {
             ViewProfileState currentState = viewProfileViewModel.getState();
