@@ -2,6 +2,7 @@ package use_case.comment.application_business_rules;
 
 import data_access.CommentDataAccessInterface;
 import entity.Comment;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,9 +24,10 @@ public class CommentInteractor implements CommentInputBoundary{
             commentPresenter.prepareFailureView("Please enter at least 1 qualification.");
         } else {
             List<String> qualifications = Arrays.asList(commentInputData.getQualifications().split(";"));
+            ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
             Comment comment = new Comment(commentInputData.getParentId(),
                     commentInputData.getParentPostId(),
-                    commentInputData.getAuthorId(),
+                    authorId,
                     commentInputData.getBody(),
                     qualifications);
             commentDataAccessObject.addComment(comment);
