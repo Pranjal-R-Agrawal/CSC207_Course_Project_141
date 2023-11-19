@@ -5,6 +5,7 @@ public class ViewProfileState {
     private String name;
     private String email;
     private double rating;
+    private String errorMessage;
 
     public String getUsername() {
         return username;
@@ -38,6 +39,15 @@ public class ViewProfileState {
 
     public ViewProfileState setRating() {
         this.rating = rating;
+        return this;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public ViewProfileState setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
         return this;
     }
 
