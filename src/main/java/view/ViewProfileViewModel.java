@@ -27,4 +27,9 @@ public class ViewProfileViewModel extends ViewModel {
         support.firePropertyChange(propertyName, null, this.state);
     }
 
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
 }
