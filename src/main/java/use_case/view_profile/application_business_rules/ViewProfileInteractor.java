@@ -17,7 +17,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
         this.viewProfilePresenter = viewProfilePresenter;
     }
 
-    public void execute(ViewProfileInputData viewProfileInputData) {
+    public void execute() {
         // TODO: Maybe change the rating to a string for displaying purposes?
         if (viewProfileDataAccessObject.getLoggedInUser() != null) {
             String username = viewProfileDataAccessObject.getLoggedInUser().getUsername();
