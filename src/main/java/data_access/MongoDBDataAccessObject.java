@@ -25,7 +25,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CommentDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -132,5 +132,16 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public User getLoggedInUser() {
         users = getUsersCollection();
         return users.find(Filters.eq("_id", loggedInUserID)).first();
+    }
+
+    @Override
+    public void addComment(Comment comment) {
+        comments = getCommentsCollection();
+        comments.insertOne(comment);
+    }
+
+    @Override
+    public ObjectId getLoggedInUserId() {
+        return loggedInUserID;
     }
 }
