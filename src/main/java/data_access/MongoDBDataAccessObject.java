@@ -12,9 +12,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -25,7 +23,8 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class MongoDBDataAccessObject implements
+        SignupUserDataAccessInterface, LoginUserDataAccessInterface, DisplayCommentDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -132,5 +131,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public User getLoggedInUser() {
         users = getUsersCollection();
         return users.find(Filters.eq("_id", loggedInUserID)).first();
+    }
+
+    public List<Comment> getCommentsByParentPostID(ObjectId id) {
+        comments = getCommentsCollection();
+        comments.createIndex(Indexes.text("parentPostId"));
+        return comments.find(Filters.eq("parentPostId", id)).into(new ArrayList<Comment>());
     }
 }
