@@ -124,6 +124,11 @@ public class MongoDBDataAccessObject implements
         return users.find(Filters.text(username)).first();
     }
 
+    public User getUserById(ObjectId id) {
+        users = getUsersCollection();
+        return users.find(Filters.eq("_id", id)).first();
+    }
+
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
