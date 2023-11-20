@@ -10,4 +10,8 @@ public class ViewProfileController {
         this.viewProfileUseCaseInteractor = viewProfileUseCaseInteractor;
     }
 
+    public void execute() {
+        viewProfileUseCaseInteractor.execute();
+    }
+
 }
