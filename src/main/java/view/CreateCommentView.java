@@ -1,7 +1,7 @@
 package view;
 
-import use_case.comment.interface_adapter.CommentController;
-import use_case.comment.interface_adapter.CommentState;
+import use_case.comment.interface_adapter.CreateCommentController;
+import use_case.comment.interface_adapter.CreateCommentState;
 
 
 import javax.swing.*;
@@ -11,36 +11,36 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class CommentView extends JPanel implements PropertyChangeListener {
+public class CreateCommentView extends JPanel implements PropertyChangeListener {
     public final String viewName;
-    private final CommentViewModel commentViewModel;
+    private final CreateCommentViewModel createCommentViewModel;
     private final JTextArea bodyInputArea = new JTextArea(5, 20);
     private final JTextField qualificationInputField = new JTextField(20);
-    private final CommentController commentController;
+    private final CreateCommentController createCommentController;
     private final JButton commentButton = new JButton();
-    public CommentView(CommentViewModel commentViewModel, CommentController commentController){
-        this.commentViewModel = commentViewModel;
-        this.commentController = commentController;
+    public CreateCommentView(CreateCommentViewModel createCommentViewModel, CreateCommentController createCommentController){
+        this.createCommentViewModel = createCommentViewModel;
+        this.createCommentController = createCommentController;
 
-        viewName = commentViewModel.getViewName();
+        viewName = createCommentViewModel.getViewName();
         setName(viewName);
-        commentButton.setText(CommentViewModel.COMMENT_BUTTON_LABEL);
+        commentButton.setText(CreateCommentViewModel.COMMENT_BUTTON_LABEL);
 
-        commentViewModel.addPropertyChangeListener(this);
+        createCommentViewModel.addPropertyChangeListener(this);
 
         JPanel bodyPanel = new JPanel();
-        bodyPanel.add(new JLabel(CommentViewModel.BODY_LABEL));
+        bodyPanel.add(new JLabel(CreateCommentViewModel.BODY_LABEL));
         bodyPanel.add(bodyInputArea);
 
         JPanel qualificationPanel = new JPanel();
-        qualificationPanel.add(new JLabel(CommentViewModel.QUALIFICATIONS_LABEL));
+        qualificationPanel.add(new JLabel(CreateCommentViewModel.QUALIFICATIONS_LABEL));
         qualificationPanel.add(qualificationInputField);
 
         commentButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(commentButton)) {
-                        CommentState currentState = commentViewModel.getState();
-                        commentController.execute(
+                        CreateCommentState currentState = createCommentViewModel.getState();
+                        createCommentController.execute(
                                 currentState.getParentId(),
                                 currentState.getParentPostId(),
                                 currentState.getBody(),
@@ -53,7 +53,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         bodyInputArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                commentViewModel.getState().setBody(bodyInputArea.getText() + e.getKeyChar());
+                createCommentViewModel.getState().setBody(bodyInputArea.getText() + e.getKeyChar());
             }
 
             @Override
@@ -66,7 +66,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
         qualificationInputField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-               commentViewModel.getState().setQualifications(qualificationInputField.getText() + e.getKeyChar());
+               createCommentViewModel.getState().setQualifications(qualificationInputField.getText() + e.getKeyChar());
             }
 
             @Override
@@ -96,7 +96,7 @@ public class CommentView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("comment_error")){
-            CommentState currentState = commentViewModel.getState();
+            CreateCommentState currentState = createCommentViewModel.getState();
             JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
         } else if (evt.getPropertyName().equals("reset_input_fields")) {
             bodyInputArea.setText("");

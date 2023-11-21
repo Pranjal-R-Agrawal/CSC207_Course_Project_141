@@ -7,27 +7,27 @@ import org.bson.types.ObjectId;
 import java.util.Arrays;
 import java.util.List;
 
-public class CommentInteractor implements CommentInputBoundary{
+public class CreateCommentInteractor implements CreateCommentInputBoundary {
     final CommentDataAccessInterface commentDataAccessObject;
-    final CommentOutputBoundary commentPresenter;
+    final CreateCommentOutputBoundary commentPresenter;
 
-    public CommentInteractor(CommentOutputBoundary commentPresenter, CommentDataAccessInterface commentDataAccessObject){
+    public CreateCommentInteractor(CreateCommentOutputBoundary commentPresenter, CommentDataAccessInterface commentDataAccessObject){
         this.commentDataAccessObject = commentDataAccessObject;
         this.commentPresenter = commentPresenter;
     }
 
-    public void execute(CommentInputData commentInputData){
-        if (commentInputData.getBody() == null){
+    public void execute(CreateCommentInputData createCommentInputData){
+        if (createCommentInputData.getBody() == null){
             commentPresenter.prepareFailureView("Please enter text in body.");
-        } else if (commentInputData.getQualifications().isEmpty()) {
+        } else if (createCommentInputData.getQualifications().isEmpty()) {
             commentPresenter.prepareFailureView("Please enter at least 1 qualification.");
         } else {
-            List<String> qualifications = Arrays.asList(commentInputData.getQualifications().split(";"));
+            List<String> qualifications = Arrays.asList(createCommentInputData.getQualifications().split(";"));
             ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
-            Comment comment = new Comment(commentInputData.getParentId(),
-                    commentInputData.getParentPostId(),
+            Comment comment = new Comment(createCommentInputData.getParentId(),
+                    createCommentInputData.getParentPostId(),
                     authorId,
-                    commentInputData.getBody(),
+                    createCommentInputData.getBody(),
                     qualifications);
             commentDataAccessObject.addComment(comment);
             commentPresenter.prepareSuccessView();

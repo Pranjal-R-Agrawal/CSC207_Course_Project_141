@@ -3,13 +3,13 @@ package use_case.comment.application_business_rules;
 import org.bson.types.ObjectId;
 
 
-public class CommentInputData {
+public class CreateCommentInputData {
     final private ObjectId parentId;
     private final ObjectId parentPostId;
     final private String body;
     final private String qualifications;
 
-    public CommentInputData(ObjectId parentId, ObjectId parentPostId, String body, String qualifications){
+    public CreateCommentInputData(ObjectId parentId, ObjectId parentPostId, String body, String qualifications){
         this.parentId = parentId;
         this.parentPostId = parentPostId;
         this.body = body;

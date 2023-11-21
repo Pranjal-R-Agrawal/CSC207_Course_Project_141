@@ -3,7 +3,7 @@ package use_case.comment.interface_adapter;
 
 import org.bson.types.ObjectId;
 
-public class CommentState {
+public class CreateCommentState {
     private String body;
     private String qualifications;
     private ObjectId parentId;
@@ -12,32 +12,32 @@ public class CommentState {
 
     public String getBody(){return body;}
 
-    public CommentState setBody(String body) {
+    public CreateCommentState setBody(String body) {
         this.body = body;
         return this;
     }
     public String getQualifications(){return qualifications;}
-    public CommentState setQualifications(String qualifications){
+    public CreateCommentState setQualifications(String qualifications){
         this.qualifications = qualifications;
         return this;
     }
 
     public ObjectId getParentId() {return parentId;}
 
-    public CommentState setParentId(ObjectId parentId) {
+    public CreateCommentState setParentId(ObjectId parentId) {
         this.parentId = parentId;
         return this;
     }
 
     public ObjectId getParentPostId() {return parentPostId;}
 
-    public CommentState setParentPostId(ObjectId parentPostId) {
+    public CreateCommentState setParentPostId(ObjectId parentPostId) {
         this.parentPostId = parentPostId;
         return this;
     }
 
     public String getErrorMessage(){return errorMessage;}
-    public CommentState setErrorMessage(String errorMessage){
+    public CreateCommentState setErrorMessage(String errorMessage){
         this.errorMessage = errorMessage;
         return this;
     }
