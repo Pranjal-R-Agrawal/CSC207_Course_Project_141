@@ -22,7 +22,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
     public void execute(CreateCommentInputData createCommentInputData){
         if (createCommentInputData.getBody() == null){
             commentPresenter.prepareFailureView("Please enter text in body.");
-        } else if (createCommentInputData.getQualifications().isEmpty()) {
+        } else if (createCommentInputData.getQualifications() == null) {
             commentPresenter.prepareFailureView("Please enter at least 1 qualification.");
         } else {
             List<String> qualifications = Arrays.asList(createCommentInputData.getQualifications().split(";"));
