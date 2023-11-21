@@ -1,6 +1,6 @@
-package use_case.comment.interface_adapter;
+package use_case.create_comment.interface_adapter;
 
-import use_case.comment.application_business_rules.CreateCommentOutputBoundary;
+import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
 import view.CreateCommentViewModel;
 import view.ViewManagerModel;
 

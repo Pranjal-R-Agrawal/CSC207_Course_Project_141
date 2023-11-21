@@ -1,4 +1,4 @@
-package use_case.comment.interface_adapter;
+package use_case.create_comment.interface_adapter;
 
 
 import org.bson.types.ObjectId;

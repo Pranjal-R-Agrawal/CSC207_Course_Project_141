@@ -1,6 +1,6 @@
 package view;
 
-import use_case.comment.interface_adapter.CreateCommentState;
+import use_case.create_comment.interface_adapter.CreateCommentState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

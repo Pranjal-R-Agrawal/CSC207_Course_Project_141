@@ -1,8 +1,8 @@
-package use_case.comment.interface_adapter;
+package use_case.create_comment.interface_adapter;
 
 import org.bson.types.ObjectId;
-import use_case.comment.application_business_rules.CreateCommentInputBoundary;
-import use_case.comment.application_business_rules.CreateCommentInputData;
+import use_case.create_comment.application_business_rules.CreateCommentInputBoundary;
+import use_case.create_comment.application_business_rules.CreateCommentInputData;
 
 public class CreateCommentController {
     final CreateCommentInputBoundary commentInteractor;
