@@ -1,5 +1,8 @@
 package view;
 
+import app.CreateCommentUseCaseFactory;
+import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentState;
 
@@ -101,6 +104,9 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
         } else if (evt.getPropertyName().equals("reset_input_fields")) {
             bodyInputArea.setText("");
             qualificationInputField.setText("");
+        } else if (evt.getPropertyName().equals("update_fields")) {
+            bodyInputArea.setText(createCommentViewModel.getState().getBody());
+            qualificationInputField.setText(createCommentViewModel.getState().getQualifications());
         }
     }
 }
