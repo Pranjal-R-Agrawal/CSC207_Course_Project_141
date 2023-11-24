@@ -36,19 +36,19 @@ public class CreateCommentUseCaseTest {
     @Test
     public void testAllFieldsEmpty(){
 
-        createCommentController.execute(null, null, "", "");
+        createCommentController.execute(null, null, null, null);
         assert createCommentViewModel.getState().getErrorMessage().equals("Please enter text in body.");
     }
 
     @Test
     public void testBodyEmpty(){
-        createCommentController.execute(null, null, "", "test");
+        createCommentController.execute(null, null, null, "test");
         assert createCommentViewModel.getState().getErrorMessage().equals("Please enter text in body.");
     }
 
     @Test
     public void testQualificationsEmpty(){
-        createCommentController.execute(null, null, "body", "");
+        createCommentController.execute(null, null, "body", null);
         assert createCommentViewModel.getState().getErrorMessage().equals("Please enter at least 1 qualification.");
     }
 
