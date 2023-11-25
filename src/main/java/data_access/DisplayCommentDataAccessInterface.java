@@ -12,4 +12,5 @@ public interface DisplayCommentDataAccessInterface {
     Post getPostByPostID(ObjectId id);
     List<Comment> getCommentsByParentPostID(ObjectId id);
     User getUserById(ObjectId id);
+    ObjectId getLoggedInUserId();
 }
