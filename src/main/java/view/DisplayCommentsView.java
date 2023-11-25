@@ -76,6 +76,8 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
         } else if(evt.getPropertyName().equals("reset_view")) {
             this.removeAll();
             comments.clear();
+        } else if (evt.getPropertyName().equals("resize_reply_frame")) {
+            replyFrame.pack();
         }
     }
 }

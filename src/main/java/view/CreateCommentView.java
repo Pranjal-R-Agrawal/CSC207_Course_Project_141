@@ -10,19 +10,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Objects;
 
 public class CreateCommentView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final CreateCommentViewModel createCommentViewModel;
     private final JTextArea bodyInputArea = new JTextArea();
     private final JTextField qualificationInputField = new JTextField(20);
-    private final CreateCommentController createCommentController;
     private final JButton commentButton = new JButton();
 
     public CreateCommentView(CreateCommentViewModel createCommentViewModel, DisplayCommentsViewModel displayCommentsViewModel, CreateCommentController createCommentController){
         this.createCommentViewModel = createCommentViewModel;
-        this.createCommentController = createCommentController;
 
         viewName = createCommentViewModel.getViewName();
         setName(viewName);
@@ -64,6 +61,7 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
         bodyInputArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
+                displayCommentsViewModel.firePropertyChanged("resize_reply_frame");
                 createCommentViewModel.getState().setBody(bodyInputArea.getText() + e.getKeyChar());
             }
 
