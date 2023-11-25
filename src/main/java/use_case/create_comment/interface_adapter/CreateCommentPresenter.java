@@ -19,6 +19,7 @@ public class CreateCommentPresenter implements CreateCommentOutputBoundary {
         createCommentViewModel.setState(new CreateCommentState());
         displayCommentsViewModel.getState().setCommentId(commentId);
         displayCommentsViewModel.firePropertyChanged("display_single_comment");
+        displayCommentsViewModel.firePropertyChanged("close_reply_frame");
     }
 
     @Override

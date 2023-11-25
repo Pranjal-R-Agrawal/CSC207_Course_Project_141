@@ -7,6 +7,8 @@ import java.util.Map;
 public class DisplayCommentState {
     private  Map<ObjectId, Map<String, Object>> comments;
     private ObjectId commentId;
+    private ObjectId replyParentId;
+    private ObjectId replyParentPostId;
     private String errorMessage;
 
     public Map<ObjectId, Map<String, Object>> getComments() {
@@ -20,6 +22,24 @@ public class DisplayCommentState {
 
     public ObjectId getCommentId() {
         return commentId;
+    }
+
+    public ObjectId getReplyParentId() {
+        return replyParentId;
+    }
+
+    public DisplayCommentState setReplyParentId(ObjectId replyParentId) {
+        this.replyParentId = replyParentId;
+        return this;
+    }
+
+    public ObjectId getReplyParentPostId() {
+        return replyParentPostId;
+    }
+
+    public DisplayCommentState setReplyParentPostId(ObjectId replyParentPostId) {
+        this.replyParentPostId = replyParentPostId;
+        return this;
     }
 
     public DisplayCommentState setCommentId(ObjectId commentId) {
