@@ -162,6 +162,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         comments.insertOne(comment);
     }
 
+    public void addPost(Post post) {
+        posts = getPostsCollection();
+        posts.insertOne(post);
+    }
+
     @Override
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
