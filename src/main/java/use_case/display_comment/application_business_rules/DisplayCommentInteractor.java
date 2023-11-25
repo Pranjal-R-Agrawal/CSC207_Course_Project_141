@@ -32,7 +32,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         processedComment.put("parentPostId", comment.getParentPostId());
         processedComment.put("parentId", comment.getParentId());
         processedComment.put("authorId", comment.getAuthorId());
-        processedComment.put("authorName", displayCommentDataAccessObject.getUserById(comment.getAuthorId()).getId());
+        processedComment.put("authorName", displayCommentDataAccessObject.getUserById(comment.getAuthorId()).getUsername());
         processedComment.put("body", comment.getBody());
         processedComment.put("qualifications", comment.getQualifications());
         return processedComment;
