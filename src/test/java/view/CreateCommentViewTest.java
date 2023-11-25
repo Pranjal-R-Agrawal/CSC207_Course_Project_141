@@ -22,7 +22,7 @@ public class CreateCommentViewTest {
     public void testAllFieldsEmpty(){
         createCloseTimer().start();
         createCommentButton.doClick();
-        assert message.contains("Please enter text in body.");
+        assert message.equals("Please enter text in body.");
     }
 
     @Test
@@ -31,7 +31,16 @@ public class CreateCommentViewTest {
         createCommentViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         createCommentButton.doClick();
-        assert message.contains("Please enter text in body.");
+        assert message.equals("Please enter text in body.");
+    }
+
+    @Test
+    public void testBodySpaces(){
+        createCommentViewModel.getState().setBody("       ").setQualifications("test;test1");
+        createCommentViewModel.firePropertyChanged("update_fields");
+        createCloseTimer().start();
+        createCommentButton.doClick();
+        assert message.equals("Please enter text in body.");
     }
 
     @Test
@@ -40,7 +49,16 @@ public class CreateCommentViewTest {
         createCommentViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         createCommentButton.doClick();
-        assert message.contains("Please enter at least 1 qualification.");
+        assert message.equals("Please enter at least 1 qualification.");
+    }
+
+    @Test
+    public void testQualificationsSpaces(){
+        createCommentViewModel.getState().setBody("body").setQualifications("       ");
+        createCommentViewModel.firePropertyChanged("update_fields");
+        createCloseTimer().start();
+        createCommentButton.doClick();
+        assert message.equals("Please enter at least 1 qualification.");
     }
 
     @Test
