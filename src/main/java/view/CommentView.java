@@ -93,17 +93,29 @@ public class CommentView extends JPanel {
             qualificationsRow.setVisible(qualificationsVisibility);
         });
 
+        JButton viewMoreInfoButton = new JButton("More Info");
+        viewMoreInfoButton.addActionListener(e -> {
+            // TODO: Implement similar to reply button
+        });
+
+        JButton collaborationRequestButton = new JButton("Request Collaboration");
+        collaborationRequestButton.addActionListener(e -> {
+            // TODO: Implement similar to reply button
+        });
+
         initialiseConstraints();
         setConstraintWeight(1, 1);
         addComponent(buttonRow, replyButton, 0, 0, 1, 1);
         addComponent(buttonRow, qualificationsButton, GridBagConstraints.RELATIVE, 0, 1, 1);
+        addComponent(buttonRow, viewMoreInfoButton, GridBagConstraints.RELATIVE, 0, 1, 1);
+        addComponent(buttonRow, collaborationRequestButton, GridBagConstraints.RELATIVE, 0, 1, 1);
 
         initialiseConstraints();
         setConstraintWeight(1, 0.1);
         addPanel(this, buttonRow, 0, GridBagConstraints.RELATIVE, 1, 1);
 
         initialiseConstraints();
-        setConstraintInset(3, 3);
+        setConstraintInset(7, 7);
         setConstraintWeight(1, 0.45);
         addComponent(qualificationsRow, createMultiLineText(String.join(System.lineSeparator(), qualifications)), 0, 0, 1, 1);
 
@@ -113,6 +125,8 @@ public class CommentView extends JPanel {
         addPanel(this, qualificationsRow, 0, GridBagConstraints.RELATIVE, 1, 1);
 
         qualificationsButton.setVisible(!qualifications.isEmpty());
+        collaborationRequestButton.setVisible(comment.get("logged_in_user_is_post_author") != null && (boolean) comment.get("logged_in_user_is_post_author"));
+        viewMoreInfoButton.setVisible(comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button"));
         qualificationsRow.setVisible(qualificationsVisibility);
 
         JSeparator verticalSeparator = new JSeparator();
