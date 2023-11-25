@@ -20,12 +20,13 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
     }
 
     public void execute(CreateCommentInputData createCommentInputData){
-        if (createCommentInputData.getBody() == null){
+        if (createCommentInputData.getBody() == null || createCommentInputData.getBody().trim().isEmpty()){
             commentPresenter.prepareFailureView("Please enter text in body.");
-        } else if (createCommentInputData.getQualifications() == null) {
+        } else if (createCommentInputData.getQualifications() == null || createCommentInputData.getQualifications().trim().isEmpty()) {
             commentPresenter.prepareFailureView("Please enter at least 1 qualification.");
         } else {
             List<String> qualifications = Arrays.asList(createCommentInputData.getQualifications().split(";"));
+            qualifications.replaceAll(String::trim);
             ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
             Comment comment = commentFactory.create(createCommentInputData.getParentId(),
                     createCommentInputData.getParentPostId(),
