@@ -10,7 +10,11 @@ public class DisplayCommentController {
         this.displayCommentUseCaseInteractor = displayCommentUseCaseInteractor;
     }
 
-    public void execute(ObjectId parentPostId) {
-        displayCommentUseCaseInteractor.execute(parentPostId);
+    public void execute(ObjectId parentPostId, String config) {
+        if (config.equals("comment")) {
+            displayCommentUseCaseInteractor.execute(parentPostId, 0);
+        } else if (config.equals("post")) {
+            displayCommentUseCaseInteractor.execute(parentPostId, 1);
+        }
     }
 }

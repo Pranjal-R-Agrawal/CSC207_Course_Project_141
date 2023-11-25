@@ -53,7 +53,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
 
         } else if (evt.getPropertyName().equals("display_post_comments")) {
             ObjectId postId = displayCommentsViewModel.getPostId();
-            displayCommentController.execute(postId);
+            displayCommentController.execute(postId, "post");
         }
     }
 }

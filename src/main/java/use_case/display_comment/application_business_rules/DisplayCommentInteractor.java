@@ -4,6 +4,7 @@ import data_access.DisplayCommentDataAccessInterface;
 import entity.Comment;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,14 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         this.displayCommentPresenter = displayCommentOutputBoundary;
     }
 
-    public void execute(ObjectId parentPostID) {
-        List<Comment> comments = displayCommentDataAccessObject.getCommentsByParentPostID(parentPostID);
+    public void execute(ObjectId id, int config) {
+        List<Comment> comments;
+        if (config == 0) {
+            comments = new ArrayList<>();
+            comments.add(displayCommentDataAccessObject.getCommentsByCommentID(id));
+        } else {
+            comments = displayCommentDataAccessObject.getCommentsByParentPostID(id);
+        }
         DisplayCommentOutputData outputData = new DisplayCommentOutputData(comments.size());
         for (Comment comment : comments) {
             outputData.getComments().put(comment.getId(), processComment(comment));
