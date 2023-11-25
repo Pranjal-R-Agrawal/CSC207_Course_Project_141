@@ -98,17 +98,16 @@ public class CommentView extends JPanel {
         addPanel(this, qualificationsRow, 0, GridBagConstraints.RELATIVE, 1, 1);
         qualificationsRow.setVisible(false);
 
-        JSeparator separatorVertical = new JSeparator();
-        separatorVertical.setOrientation(1);
+        JSeparator verticalSeparator = new JSeparator();
+        verticalSeparator.setOrientation(SwingConstants.VERTICAL);
 
-        JSeparator separatorHorizontal = new JSeparator();
-
-        commentContainerHorizontal.add(separatorVertical);
+        commentContainerHorizontal.add(verticalSeparator);
         commentContainerHorizontal.add(commentContainerVertical);
 
         commentContainerVertical.add(this);
-        commentContainerVertical.add(separatorHorizontal);
         commentContainerVertical.add(children);
+
+        setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.lightGray));
 
         children.setVisible(false);
     }
@@ -170,9 +169,5 @@ public class CommentView extends JPanel {
 
     public void addChild(CommentView child) {
         addChild(child.getComment());
-    }
-
-    public ObjectId getParentId() {
-        return parentId;
     }
 }
