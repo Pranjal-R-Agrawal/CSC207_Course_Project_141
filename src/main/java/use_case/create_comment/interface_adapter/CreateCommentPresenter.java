@@ -17,8 +17,8 @@ public class CreateCommentPresenter implements CreateCommentOutputBoundary {
     @Override
     public void prepareSuccessView(ObjectId commentId) {
         createCommentViewModel.setState(new CreateCommentState());
-        // TODO: Switch to PostView and clear all fields
-
+        displayCommentsViewModel.getState().setCommentId(commentId);
+        displayCommentsViewModel.firePropertyChanged("display_single_comment");
     }
 
     @Override
