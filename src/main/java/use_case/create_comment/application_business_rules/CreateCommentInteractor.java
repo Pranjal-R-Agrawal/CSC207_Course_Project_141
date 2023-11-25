@@ -27,6 +27,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
         } else {
             List<String> qualifications = Arrays.asList(createCommentInputData.getQualifications().split(";"));
             qualifications.replaceAll(String::trim);
+            qualifications.removeIf(String::isEmpty);
             ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
             Comment comment = commentFactory.create(createCommentInputData.getParentId(),
                     createCommentInputData.getParentPostId(),
