@@ -61,18 +61,22 @@ public class CommentView extends JPanel {
             usernameLabel.setForeground(Color.RED);
         }
 
+        initialiseConstraints();
         setConstraintInset(0, 0);
         setConstraintWeight(0.1, 1);
         addComponent(informationRow, collapseButton, 0, 0, 1, 1);
         setConstraintWeight(10, 1);
         addComponent(informationRow, usernameLabel, GridBagConstraints.RELATIVE, 0, 1, 1);
 
+        initialiseConstraints();
         setConstraintWeight(1, 0.1);
         addPanel(this, informationRow, 0, GridBagConstraints.RELATIVE, 1, 1);
 
+        initialiseConstraints();
         setConstraintInset(7, 7);
         addComponent(commentRow, createMultiLineText(body), 0, 0, 1, 1);
 
+        initialiseConstraints();
         setConstraintInset(0, 0);
         setConstraintWeight(1, 2);
         addPanel(this, commentRow, 0, GridBagConstraints.RELATIVE, 1, 1);
@@ -83,27 +87,33 @@ public class CommentView extends JPanel {
             displayCommentsViewModel.firePropertyChanged("reply_to_comment");
         });
 
-        JButton qualificationsButton = new JButton("View Qualifications");
+        JButton qualificationsButton = new JButton("Qualifications");
         qualificationsButton.addActionListener(e -> {
             qualificationsVisibility = !qualificationsVisibility;
             qualificationsRow.setVisible(qualificationsVisibility);
         });
 
+        initialiseConstraints();
         setConstraintWeight(1, 1);
         addComponent(buttonRow, replyButton, 0, 0, 1, 1);
         addComponent(buttonRow, qualificationsButton, GridBagConstraints.RELATIVE, 0, 1, 1);
 
+        initialiseConstraints();
         setConstraintWeight(1, 0.1);
         addPanel(this, buttonRow, 0, GridBagConstraints.RELATIVE, 1, 1);
 
+        initialiseConstraints();
         setConstraintInset(3, 3);
         setConstraintWeight(1, 0.45);
         addComponent(qualificationsRow, createMultiLineText(String.join(System.lineSeparator(), qualifications)), 0, 0, 1, 1);
 
+        initialiseConstraints();
         setConstraintInset(0, 0);
         setConstraintWeight(1, 0.3);
         addPanel(this, qualificationsRow, 0, GridBagConstraints.RELATIVE, 1, 1);
-        qualificationsRow.setVisible(false);
+
+        qualificationsButton.setVisible(!qualifications.isEmpty());
+        qualificationsRow.setVisible(qualificationsVisibility);
 
         JSeparator verticalSeparator = new JSeparator();
         verticalSeparator.setOrientation(SwingConstants.VERTICAL);
@@ -116,7 +126,7 @@ public class CommentView extends JPanel {
 
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.lightGray));
 
-        children.setVisible(false);
+        children.setVisible(childrenVisibility);
     }
 
     private void addComponent(JPanel panel, JComponent component, int x, int y, int width, int height) {
