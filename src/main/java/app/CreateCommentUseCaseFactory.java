@@ -33,7 +33,7 @@ public class CreateCommentUseCaseFactory {
                                            CreateCommentDataAccessInterface createCommentDataAccessObject){
         CreateCommentController createCommentController = createCreateCommentUseCase(displayCommentsViewModel,
                 createCommentViewModel, createCommentDataAccessObject);
-        return new CreateCommentView(createCommentViewModel, createCommentController);
+        return new CreateCommentView(createCommentViewModel, displayCommentsViewModel, createCommentController);
     }
 
     public static CreateCommentController createCreateCommentUseCase(DisplayCommentsViewModel displayCommentsViewModel,
