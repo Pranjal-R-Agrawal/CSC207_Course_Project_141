@@ -61,6 +61,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
 
         processedComment.put("comment_author_is_post_author", commentAuthorIsPostAuthor);
         processedComment.put("logged_in_user_is_comment_author", loggedInUserIsCommentAuthor);
+        processedComment.put("logged_in_user_is_post_author", loggedInUserIsPostAuthor);
         processedComment.put("show_more_info_button", (commentAuthorIsPostAuthor || commentAuthorIsCollaborator) && (loggedInUserIsPostAuthor || loggedInUserIsCollaborator));
 
         return processedComment;
