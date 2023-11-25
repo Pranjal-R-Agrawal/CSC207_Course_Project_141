@@ -20,19 +20,27 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
     }
 
     public void execute(ObjectId id, int config) {
-        Post post = displayCommentDataAccessObject.getPostByPostID(id);
+        Post post;
         List<Comment> comments;
+
         if (config == 0) {
             comments = new ArrayList<>();
             comments.add(displayCommentDataAccessObject.getCommentByCommentID(id));
         } else {
             comments = displayCommentDataAccessObject.getCommentsByParentPostID(id);
         }
+
         DisplayCommentOutputData outputData = new DisplayCommentOutputData(comments.size());
-        for (Comment comment : comments) {
-            outputData.getComments().put(comment.getId(), processComment(post, comment));
+
+        if (!comments.isEmpty()) {
+            post = displayCommentDataAccessObject.getPostByPostID(comments.get(0).getParentPostId());
+            for (Comment comment : comments) {
+                outputData.getComments().put(comment.getId(), processComment(post, comment));
+            }
+            displayCommentPresenter.prepareSuccessView(outputData);
+        } else {
+            displayCommentPresenter.prepareFailView("No comments found");
         }
-        displayCommentPresenter.prepareSuccessView(outputData);
     }
 
     private Map<String, Object> processComment(Post post, Comment comment) {
