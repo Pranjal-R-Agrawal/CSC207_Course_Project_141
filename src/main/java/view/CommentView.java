@@ -43,15 +43,15 @@ public class CommentView extends JPanel {
         JPanel buttonRow = new JPanel(new GridBagLayout());
         JPanel qualificationsRow = new JPanel(new GridBagLayout());
 
-        collapseButton = new JButton(" Expand ");
+        collapseButton = new JButton("Expand");
         collapseButton.setVisible(false);
         collapseButton.addActionListener(e -> {
             if (numChildren > 0) {
                 childrenVisibility = !childrenVisibility;
                 children.setVisible(childrenVisibility);
             }
-            if (childrenVisibility) collapseButton.setText(" Collapse ");
-            else collapseButton.setText(" Expand ");
+            if (childrenVisibility) collapseButton.setText("Collapse");
+            else collapseButton.setText("Expand");
         });
 
         JLabel usernameLabel = new JLabel(username);
@@ -64,6 +64,7 @@ public class CommentView extends JPanel {
         setConstraintInset(0, 0);
         setConstraintWeight(0.1, 1);
         addComponent(informationRow, collapseButton, 0, 0, 1, 1);
+        setConstraintWeight(10, 1);
         addComponent(informationRow, usernameLabel, GridBagConstraints.RELATIVE, 0, 1, 1);
 
         setConstraintWeight(1, 0.1);
@@ -167,7 +168,7 @@ public class CommentView extends JPanel {
         setConstraintWeight(1, 1);
         addComponent(children, (JComponent) child, 1, GridBagConstraints.RELATIVE, 1, 1);
         childrenVisibility = true;
-        collapseButton.setText(" Collapse ");
+        collapseButton.setText("Collapse");
         children.setVisible(true);
         collapseButton.setVisible(true);
         numChildren++;
