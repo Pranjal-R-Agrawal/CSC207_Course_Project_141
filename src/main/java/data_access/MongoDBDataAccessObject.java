@@ -146,9 +146,14 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return comments.find(Filters.eq("parentPostId", id)).into(new ArrayList<Comment>());
     }
 
-    public Comment getCommentsByCommentID(ObjectId id) {
+    public Comment getCommentByCommentID(ObjectId id) {
         comments = getCommentsCollection();
         return comments.find(Filters.eq("_id", id)).first();
+    }
+
+    public Post getPostByPostID(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
     }
 
     @Override
