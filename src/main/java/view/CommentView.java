@@ -151,7 +151,7 @@ public class CommentView extends JPanel {
         return textArea;
     }
 
-    private Container getComment() {
+    public Container getComment() {
         return commentContainerHorizontal;
     }
 
