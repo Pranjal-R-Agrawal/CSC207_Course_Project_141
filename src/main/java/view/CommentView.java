@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class CommentView extends JPanel {
     final ObjectId parentId;
     final ObjectId parentPostId;
     final ObjectId authorId;
-    final String authorName;
+    final String username;
     final String body;
     final List<String> qualifications;
     private final Container commentContainerVertical = Box.createVerticalBox();
@@ -29,9 +30,9 @@ public class CommentView extends JPanel {
         this.parentId = (ObjectId) comment.get("parentId");
         this.parentPostId = (ObjectId) comment.get("parentPostId");
         this.authorId = (ObjectId) comment.get("authorId");
-        this.authorName = (String) comment.get("authorName");
+        this.username = (String) comment.get("username");
         this.body = (String) comment.get("body");
-        this.qualifications = (List<String>) comment.get("qualifications");
+        this.qualifications = (comment.get("qualifications") != null)? (ArrayList<String>) comment.get("qualifications") : new ArrayList<String>();
 
         setLayout(new GridBagLayout());
 
@@ -53,7 +54,12 @@ public class CommentView extends JPanel {
             else collapseButton.setText(" Expand ");
         });
 
-        JLabel usernameLabel = new JLabel(authorName);
+        JLabel usernameLabel = new JLabel(username);
+        if (comment.get("comment_author_is_post_author") != null && (boolean) comment.get("comment_author_is_post_author")) {
+            usernameLabel.setForeground(Color.BLUE);
+        } if (comment.get("logged_in_user_is_comment_author") != null && (boolean) comment.get("logged_in_user_is_comment_author")) {
+            usernameLabel.setForeground(Color.RED);
+        }
 
         setConstraintInset(0, 0);
         setConstraintWeight(0.1, 1);
@@ -107,7 +113,7 @@ public class CommentView extends JPanel {
         commentContainerVertical.add(this);
         commentContainerVertical.add(children);
 
-        setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.lightGray));
+        setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.lightGray));
 
         children.setVisible(false);
     }
