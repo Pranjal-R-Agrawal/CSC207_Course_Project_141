@@ -26,6 +26,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         if (config == 0) {
             comments = new ArrayList<>();
             comments.add(displayCommentDataAccessObject.getCommentByCommentID(id));
+            if (comments.get(0) == null) comments.clear();
         } else {
             comments = displayCommentDataAccessObject.getCommentsByParentPostID(id);
         }
