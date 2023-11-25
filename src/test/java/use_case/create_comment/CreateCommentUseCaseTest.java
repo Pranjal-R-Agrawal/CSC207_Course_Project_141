@@ -54,7 +54,7 @@ public class CreateCommentUseCaseTest {
 
     @Test
     public void testValidInputs(){
-        createCommentController.execute(null, null, "body", "");
+        createCommentController.execute(null, null, "body", "qualification");
         assert createCommentViewModel.getState().getErrorMessage() == null;
     }
 }
