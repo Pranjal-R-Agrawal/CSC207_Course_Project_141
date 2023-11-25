@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class DisplayCommentState {
     private  Map<ObjectId, Map<String, Object>> comments;
+    private ObjectId commentId;
     private String errorMessage;
 
     public Map<ObjectId, Map<String, Object>> getComments() {
@@ -14,6 +15,15 @@ public class DisplayCommentState {
 
     public DisplayCommentState setComments(Map<ObjectId, Map<String, Object>> comments) {
         this.comments = comments;
+        return this;
+    }
+
+    public ObjectId getCommentId() {
+        return commentId;
+    }
+
+    public DisplayCommentState setCommentId(ObjectId commentId) {
+        this.commentId = commentId;
         return this;
     }
 
