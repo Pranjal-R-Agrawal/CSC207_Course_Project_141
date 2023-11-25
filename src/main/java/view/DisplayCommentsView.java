@@ -50,7 +50,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
             displayCommentsViewModel.getState().setComments(new HashMap<>());
 
         } else if (evt.getPropertyName().equals("display_comment_error")) {
-
+            JOptionPane.showMessageDialog(this, "Error displaying comments\n" + displayCommentsViewModel.getState().getErrorMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } else if (evt.getPropertyName().equals("display_post_comments")) {
             ObjectId postId = displayCommentsViewModel.getPostId();
             displayCommentController.execute(postId, "post");
