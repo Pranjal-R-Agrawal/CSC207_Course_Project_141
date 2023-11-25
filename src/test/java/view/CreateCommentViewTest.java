@@ -104,7 +104,7 @@ public class CreateCommentViewTest {
             throw new RuntimeException(e);
         }
         createCommentViewModel = new CreateCommentViewModel();
-        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new ViewManagerModel(), createCommentViewModel, mongoDBDataAccessObject);
+        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new DisplayCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
         createCommentButton = (JButton) createCommentView.getComponent(2); // Make sure it is correct n
 
         message = "";

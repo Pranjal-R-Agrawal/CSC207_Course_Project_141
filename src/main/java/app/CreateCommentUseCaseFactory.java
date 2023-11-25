@@ -9,25 +9,23 @@ import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentPresenter;
 import view.CreateCommentView;
 import view.CreateCommentViewModel;
-import view.ViewManagerModel;
+import view.DisplayCommentsViewModel;
 
 public class CreateCommentUseCaseFactory {
 
     private CreateCommentUseCaseFactory() {}
 
-    public static CreateCommentView create(ViewManagerModel viewManagerModel, CreateCommentViewModel createCommentViewModel,
+    public static CreateCommentView create(DisplayCommentsViewModel displayCommentsViewModel, CreateCommentViewModel createCommentViewModel,
                                            CreateCommentDataAccessInterface createCommentDataAccessObject){
-        // TODO: Add in PostViewModel when implemented since its needed for a Presenter Method
-        CreateCommentController createCommentController = createCreateCommentUseCase(viewManagerModel,
+        CreateCommentController createCommentController = createCreateCommentUseCase(displayCommentsViewModel,
                 createCommentViewModel, createCommentDataAccessObject);
         return new CreateCommentView(createCommentViewModel, createCommentController);
     }
 
-    public static CreateCommentController createCreateCommentUseCase(ViewManagerModel viewManagerModel,
+    public static CreateCommentController createCreateCommentUseCase(DisplayCommentsViewModel displayCommentsViewModel,
                                                                      CreateCommentViewModel createCommentViewModel,
                                                                      CreateCommentDataAccessInterface createCommentDataAccessObject ){
-        // TODO: Add in PostViewModel when implemented since its needed for a Presenter Method
-        CreateCommentOutputBoundary createCommentPresenter = new CreateCommentPresenter(viewManagerModel, createCommentViewModel);
+        CreateCommentOutputBoundary createCommentPresenter = new CreateCommentPresenter(displayCommentsViewModel, createCommentViewModel);
         CreateCommentInputBoundary createCommentInteractor = new CreateCommentInteractor(createCommentPresenter, createCommentDataAccessObject, new CommentFactory());
         return new CreateCommentController(createCommentInteractor);
     }

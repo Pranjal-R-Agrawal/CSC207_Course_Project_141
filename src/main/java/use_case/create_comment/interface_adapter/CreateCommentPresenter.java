@@ -3,14 +3,14 @@ package use_case.create_comment.interface_adapter;
 import org.bson.types.ObjectId;
 import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
 import view.CreateCommentViewModel;
-import view.ViewManagerModel;
+import view.DisplayCommentsViewModel;
 
 public class CreateCommentPresenter implements CreateCommentOutputBoundary {
-    private final ViewManagerModel viewManagerModel;
+    private final DisplayCommentsViewModel displayCommentsViewModel;
     private final CreateCommentViewModel createCommentViewModel;
-    // TODO: Add PostViewModel instance variable
-    public CreateCommentPresenter(ViewManagerModel viewManagerModel, CreateCommentViewModel createCommentViewModel){
-        this.viewManagerModel = viewManagerModel;
+
+    public CreateCommentPresenter(DisplayCommentsViewModel displayCommentsViewModel, CreateCommentViewModel createCommentViewModel){
+        this.displayCommentsViewModel = displayCommentsViewModel;
         this.createCommentViewModel = createCommentViewModel;
     }
 
