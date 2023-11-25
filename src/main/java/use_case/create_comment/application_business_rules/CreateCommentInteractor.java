@@ -34,7 +34,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
                     createCommentInputData.getBody(),
                     qualifications);
             commentDataAccessObject.addComment(comment);
-            commentPresenter.prepareSuccessView();
+            commentPresenter.prepareSuccessView(comment.getId());
         }
     }
 }

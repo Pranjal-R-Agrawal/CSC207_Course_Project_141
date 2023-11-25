@@ -1,5 +1,6 @@
 package use_case.create_comment.interface_adapter;
 
+import org.bson.types.ObjectId;
 import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
 import view.CreateCommentViewModel;
 import view.ViewManagerModel;
@@ -14,7 +15,7 @@ public class CreateCommentPresenter implements CreateCommentOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView() {
+    public void prepareSuccessView(ObjectId commentId) {
         createCommentViewModel.setState(new CreateCommentState());
         // TODO: Switch to PostView and clear all fields
 
