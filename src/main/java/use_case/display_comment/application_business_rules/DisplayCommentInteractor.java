@@ -27,8 +27,9 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
     }
 
     private Map<String, Object> processComment(Comment comment) {
-        Map<String, Object> processedComment = new HashMap<>(7, 1);
+        Map<String, Object> processedComment = new HashMap<>(8, 1);
         processedComment.put("id", comment.getId());
+        processedComment.put("parentPostId", comment.getParentPostId());
         processedComment.put("parentId", comment.getParentId());
         processedComment.put("authorId", comment.getAuthorId());
         processedComment.put("authorName", displayCommentDataAccessObject.getUserById(comment.getAuthorId()).getId());
