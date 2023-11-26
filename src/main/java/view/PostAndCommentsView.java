@@ -1,6 +1,6 @@
 package view;
 
-import app.CreateCommentUseCaseFactory;
+import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
 
@@ -17,14 +17,14 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     private ObjectId postId;
     private final PostAndCommentsViewModel postAndCommentsViewModel;
     private final DisplayPostController displayPostController;
-    private final CreateCommentUseCaseFactory createCommentUseCaseFactory;
+    private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
     private final Map<ObjectId, CommentView> comments = new HashMap<>();
     private JFrame replyFrame;
     private JPanel replyPanel;
     boolean postAdded = false;
     public String title;
 
-    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, DisplayPostController displayPostController, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
@@ -33,7 +33,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
         this.postAndCommentsViewModel = postAndCommentsViewModel;
         postAndCommentsViewModel.addPropertyChangeListener(this);
 
-        this.createCommentUseCaseFactory = createCommentUseCaseFactory;
+        this.createCommentUseCaseBuilder = createCommentUseCaseBuilder;
 
         this.viewName = postAndCommentsViewModel.getViewName();
         setName(viewName);
@@ -76,7 +76,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             displayPostController.execute(commentId, "comment");
         } else if (evt.getPropertyName().equals("reply_to_comment")) {
             replyFrame = new JFrame("Reply to comment");
-            replyPanel = createCommentUseCaseFactory.create(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
+            replyPanel = createCommentUseCaseBuilder.build(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
             replyFrame.add(replyPanel);
             replyFrame.pack();
             replyFrame.setVisible(true);

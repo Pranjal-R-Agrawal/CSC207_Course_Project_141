@@ -1,6 +1,6 @@
 package view;
 
-import app.CreateCommentUseCaseFactory;
+import app.CreateCommentUseCaseBuilder;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
@@ -103,7 +103,7 @@ public class CreateCommentViewTest {
             throw new RuntimeException(e);
         }
         createCommentViewModel = new CreateCommentViewModel();
-        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new PostAndCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
+        CreateCommentView createCommentView = CreateCommentUseCaseBuilder.create(new PostAndCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
 
         createCommentButton = createCommentView.getCommentButton();
 

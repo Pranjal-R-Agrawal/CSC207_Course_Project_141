@@ -11,9 +11,9 @@ import view.PostAndCommentsViewModel;
 public class DisplayPostUseCaseFactory {
     private DisplayPostUseCaseFactory() {}
 
-    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
+    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
-        return new PostAndCommentsView(displayCommentViewModel, displayPostController, createCommentUseCaseFactory);
+        return new PostAndCommentsView(displayCommentViewModel, displayPostController, createCommentUseCaseBuilder);
     }
 
     private static DisplayPostController createDisplayCommentUseCase(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject) {

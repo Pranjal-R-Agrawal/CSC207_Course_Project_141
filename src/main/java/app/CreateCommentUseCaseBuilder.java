@@ -12,21 +12,19 @@ import view.CreateCommentView;
 import view.CreateCommentViewModel;
 import view.PostAndCommentsViewModel;
 
-public class CreateCommentUseCaseFactory {
-    private PostAndCommentsViewModel postAndCommentsViewModel;
-    private CreateCommentDataAccessInterface createCommentDataAccessObject;
+public class CreateCommentUseCaseBuilder {
+    private final PostAndCommentsViewModel postAndCommentsViewModel;
+    private final CreateCommentDataAccessInterface createCommentDataAccessObject;
 
-    private CreateCommentUseCaseFactory() {}
-
-    public CreateCommentUseCaseFactory(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentDataAccessInterface createCommentDataAccessObject) {
+    public CreateCommentUseCaseBuilder(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentDataAccessInterface createCommentDataAccessObject) {
         this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.createCommentDataAccessObject = createCommentDataAccessObject;
     }
 
-    public CreateCommentView create(ObjectId parentPostId, ObjectId parentID) {
+    public CreateCommentView build(ObjectId parentPostId, ObjectId parentID) {
         CreateCommentViewModel createCommentViewModel = new CreateCommentViewModel();
         createCommentViewModel.getState().setParentPostId(parentPostId).setParentId(parentID);
-        return CreateCommentUseCaseFactory.create(postAndCommentsViewModel, createCommentViewModel, createCommentDataAccessObject);
+        return CreateCommentUseCaseBuilder.create(postAndCommentsViewModel, createCommentViewModel, createCommentDataAccessObject);
     }
 
     public static CreateCommentView create(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentViewModel createCommentViewModel,

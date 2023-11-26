@@ -51,10 +51,10 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        DisplayCommentsViewModel displayCommentsViewModel = new DisplayCommentsViewModel();
-        CreateCommentUseCaseFactory createCommentUseCaseFactory = new CreateCommentUseCaseFactory(displayCommentsViewModel, mongoDBDataAccessObject);
-        DisplayCommentsView displayCommentsView = DisplayCommentUseCaseFactory.create(displayCommentsViewModel, mongoDBDataAccessObject, createCommentUseCaseFactory);
-        viewManager.setupDisplayComments(displayCommentsViewModel, displayCommentsView);
+        PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
+        CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
