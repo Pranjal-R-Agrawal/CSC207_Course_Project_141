@@ -20,7 +20,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
     }
 
     public void execute(DisplayCommentInputData displayCommentInputData) {
-        ObjectId id = displayCommentInputData.getParentPostId();
+        ObjectId id = displayCommentInputData.getId();
         int config = displayCommentInputData.getConfig();
         
         Post post;
