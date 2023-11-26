@@ -19,7 +19,10 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         this.displayCommentPresenter = displayCommentOutputBoundary;
     }
 
-    public void execute(ObjectId id, int config) {
+    public void execute(DisplayCommentInputData displayCommentInputData) {
+        ObjectId id = displayCommentInputData.getParentPostId();
+        int config = displayCommentInputData.getConfig();
+        
         Post post;
         List<Comment> comments;
 
