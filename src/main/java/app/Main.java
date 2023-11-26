@@ -21,7 +21,7 @@ public class Main {
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
+        ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
@@ -50,6 +50,11 @@ public class Main {
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
+
+        DisplayCommentsViewModel displayCommentsViewModel = new DisplayCommentsViewModel();
+        CreateCommentUseCaseFactory createCommentUseCaseFactory = new CreateCommentUseCaseFactory(displayCommentsViewModel, mongoDBDataAccessObject);
+        DisplayCommentsView displayCommentsView = DisplayCommentUseCaseFactory.create(displayCommentsViewModel, mongoDBDataAccessObject, createCommentUseCaseFactory);
+        viewManager.setupDisplayComments(displayCommentsViewModel, displayCommentsView);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
