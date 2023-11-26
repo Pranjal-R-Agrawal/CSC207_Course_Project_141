@@ -36,7 +36,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("comments_retrieved")) {
+        if (evt.getPropertyName().equals("retrieved")) {
             postId = displayCommentsViewModel.getPostId();
             Map<ObjectId, Map<String, Object>> newComments = displayCommentsViewModel.getState().getComments();
             Set<ObjectId> newCommentIds = newComments.keySet();
@@ -55,9 +55,9 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
 
             displayCommentsViewModel.getState().setComments(new HashMap<>());
 
-        } else if (evt.getPropertyName().equals("display_comment_error")) {
+        } else if (evt.getPropertyName().equals("display_error")) {
             this.add(new JLabel(displayCommentsViewModel.getState().getErrorMessage()));
-        } else if (evt.getPropertyName().equals("display_post_comments")) {
+        } else if (evt.getPropertyName().equals("display_post")) {
             ObjectId postId = displayCommentsViewModel.getPostId();
             displayCommentController.execute(postId, "post");
         } else if (evt.getPropertyName().equals("display_single_comment")) {

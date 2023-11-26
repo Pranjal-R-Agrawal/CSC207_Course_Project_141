@@ -27,7 +27,7 @@ public class ViewManager implements PropertyChangeListener {
     public DisplayCommentsView getDisplayCommentsView(ObjectId id) {
         displayCommentsViewModel.setPostId(id);
         displayCommentsViewModel.firePropertyChanged("reset_view");
-        displayCommentsViewModel.firePropertyChanged("display_post_comments");
+        displayCommentsViewModel.firePropertyChanged("display_post");
         return displayCommentsView;
     }
 

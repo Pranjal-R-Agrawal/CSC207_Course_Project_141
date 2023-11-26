@@ -14,12 +14,12 @@ public class DisplayCommentPresenter implements DisplayCommentOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
         displayCommentViewModel.getState().setErrorMessage(errorMessage);
-        displayCommentViewModel.firePropertyChanged("display_comment_error");
+        displayCommentViewModel.firePropertyChanged("display_error");
     }
 
     @Override
     public void prepareSuccessView(DisplayCommentOutputData displayCommentOutputData) {
         displayCommentViewModel.getState().setComments(displayCommentOutputData.getComments());
-        displayCommentViewModel.firePropertyChanged("comments_retrieved");
+        displayCommentViewModel.firePropertyChanged("retrieved");
     }
 }
