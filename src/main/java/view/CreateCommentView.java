@@ -126,4 +126,8 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
             qualificationInputField.setText(createCommentViewModel.getState().getQualifications());
         }
     }
+
+    public JButton getCommentButton() {
+        return commentButton;
+    }
 }

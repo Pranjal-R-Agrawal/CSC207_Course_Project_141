@@ -105,7 +105,8 @@ public class CreateCommentViewTest {
         }
         createCommentViewModel = new CreateCommentViewModel();
         CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new DisplayCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
-        createCommentButton = (JButton) createCommentView.getComponent(2); // Make sure it is correct n
+
+        createCommentButton = createCommentView.getCommentButton();
 
         message = "";
         popUpDiscovered = false;
