@@ -26,14 +26,14 @@ public class DisplayPostUseCaseTest {
     public void testInvalidCommentID() {
         ObjectId commentID = new ObjectId();
         displayPostController.execute(commentID, "comment");
-        assert postAndCommentsViewModel.getState().getErrorMessage().equals("No comments found");
+        assert postAndCommentsViewModel.getState().getErrorMessage().equals("Comment not found");
     }
 
     @Test
     public void testInvalidPostID() {
         ObjectId postID = new ObjectId();
         displayPostController.execute(postID, "post");
-        assert postAndCommentsViewModel.getState().getErrorMessage().equals("No comments found");
+        assert postAndCommentsViewModel.getState().getErrorMessage().equals("Post not found");
     }
 
     @Test
@@ -149,6 +149,29 @@ public class DisplayPostUseCaseTest {
         assert postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_comment_author").equals(true);
         assert postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_post_author").equals(true);
         assert postAndCommentsViewModel.getState().getComments().get(commentID).get("show_more_info_button").equals(true);
+    }
+
+    @Test
+    public void testProcessedPostData() {
+        User user = new User("username", "password", "name", "email", "phone", "city", "field");
+        mongoDBDataAccessObject.addUser(user);
+
+        Post post = new Post(user.getId(), "title", "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
+        mongoDBDataAccessObject.addPost(post);
+
+        mongoDBDataAccessObject.setLoggedInUserID(user.getId());
+
+        ObjectId postId = post.getId();
+
+        displayPostController.execute(postId, "post");
+
+        assert postAndCommentsViewModel.getState().getPost().get("id").equals(postId);
+        assert postAndCommentsViewModel.getState().getPost().get("authorId").equals(user.getId());
+        assert postAndCommentsViewModel.getState().getPost().get("username").equals(user.getUsername());
+        assert postAndCommentsViewModel.getState().getPost().get("title").equals("title");
+        assert postAndCommentsViewModel.getState().getPost().get("body").equals("body");
+        assert postAndCommentsViewModel.getState().getPost().get("suggested_collaborator_qualifications").equals(new ArrayList<String>(Arrays.asList("qual1", "qual2")));
+        assert postAndCommentsViewModel.getState().getPost().get("logged_in_user_is_post_author").equals(true);
     }
 
     @Before
