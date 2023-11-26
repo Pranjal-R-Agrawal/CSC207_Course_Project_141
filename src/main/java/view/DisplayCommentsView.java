@@ -5,13 +5,14 @@ import org.bson.types.ObjectId;
 import use_case.display_comment.interface_adapter.DisplayCommentController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-public class DisplayCommentsView extends JPanel implements PropertyChangeListener {
+public class DisplayCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private ObjectId postId;
     private final DisplayCommentsViewModel displayCommentsViewModel;
@@ -21,9 +22,11 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
     private JFrame replyFrame;
     private JPanel replyPanel;
     boolean postAdded = false;
+    public String title;
 
     public DisplayCommentsView(DisplayCommentsViewModel displayCommentsViewModel, DisplayCommentController displayCommentController, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
+        setName("display_posts");
 
         this.displayCommentController = displayCommentController;
 
@@ -59,6 +62,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
                 }
             }
 
+            title = (String) displayCommentsViewModel.getState().getPost().get("title");
             displayCommentsViewModel.getState().setComments(new HashMap<>());
             displayCommentsViewModel.getState().setPost(new HashMap<>());
 
@@ -88,4 +92,10 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
             replyFrame.pack();
         }
     }
+
+    public Dimension getPreferredScrollableViewportSize() {return getPreferredSize();}
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {return 1;}
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height : visibleRect.width) - 10;}
+    public boolean getScrollableTracksViewportWidth() {return true;}
+    public boolean getScrollableTracksViewportHeight() {return false;}
 }
