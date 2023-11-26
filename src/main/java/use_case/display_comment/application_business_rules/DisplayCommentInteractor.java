@@ -23,7 +23,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         ObjectId id = displayCommentInputData.getId();
         int config = displayCommentInputData.getConfig();
         
-        Post post;
+        Post post = null;
         List<Comment> comments;
 
         if (config == 0) {
@@ -31,6 +31,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
             comments.add(displayCommentDataAccessObject.getCommentByCommentID(id));
             if (comments.get(0) == null) comments.clear();
         } else {
+            post = displayCommentDataAccessObject.getPostByPostID(id);
             comments = displayCommentDataAccessObject.getCommentsByParentPostID(id);
         }
 
@@ -41,10 +42,17 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
             for (Comment comment : comments) {
                 outputData.getComments().put(comment.getId(), processComment(post, comment));
             }
-            displayCommentPresenter.prepareSuccessView(outputData);
-        } else {
-            displayCommentPresenter.prepareFailView("No comments found");
+        } else if (config == 0) {
+            displayCommentPresenter.prepareFailView("Comment not found");
+            return;
         }
+
+        if (post == null) {
+            displayCommentPresenter.prepareFailView("Post not found");
+        } else if (config == 1) {
+            outputData.getPost().putAll(processPost(post));
+        }
+        displayCommentPresenter.prepareSuccessView(outputData);
     }
 
     private Map<String, Object> processComment(Post post, Comment comment) {
@@ -69,5 +77,22 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
         processedComment.put("show_more_info_button", (commentAuthorIsPostAuthor || commentAuthorIsCollaborator) && (loggedInUserIsPostAuthor || loggedInUserIsCollaborator));
 
         return processedComment;
+    }
+
+    private Map<String, Object> processPost(Post post) {
+        Map<String, Object> processedPost = new HashMap<>(8, 1);
+
+        processedPost.put("id", post.getId());
+        processedPost.put("authorId", post.getAuthorID());
+        processedPost.put("username", displayCommentDataAccessObject.getUserById(post.getAuthorID()).getUsername());
+        processedPost.put("title", post.getTitle());
+        processedPost.put("body", post.getBody());
+        processedPost.put("suggested_collaborator_qualifications", post.getSuggestedCollaboratorQualifications());
+
+        boolean loggedInUserIsPostAuthor = post.getAuthorID().equals(displayCommentDataAccessObject.getLoggedInUserId());
+
+        processedPost.put("logged_in_user_is_post_author", loggedInUserIsPostAuthor);
+
+        return processedPost;
     }
 }
