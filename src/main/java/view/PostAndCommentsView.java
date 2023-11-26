@@ -2,7 +2,7 @@ package view;
 
 import app.CreateCommentUseCaseFactory;
 import org.bson.types.ObjectId;
-import use_case.display_comment.interface_adapter.DisplayCommentController;
+import use_case.display_post.interface_adapter.DisplayPostController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 
-public class DisplayCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
+public class PostAndCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private ObjectId postId;
-    private final DisplayCommentsViewModel displayCommentsViewModel;
-    private final DisplayCommentController displayCommentController;
+    private final PostAndCommentsViewModel postAndCommentsViewModel;
+    private final DisplayPostController displayPostController;
     private final CreateCommentUseCaseFactory createCommentUseCaseFactory;
     private final Map<ObjectId, CommentView> comments = new HashMap<>();
     private JFrame replyFrame;
@@ -24,33 +24,33 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
     boolean postAdded = false;
     public String title;
 
-    public DisplayCommentsView(DisplayCommentsViewModel displayCommentsViewModel, DisplayCommentController displayCommentController, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, DisplayPostController displayPostController, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
-        this.displayCommentController = displayCommentController;
+        this.displayPostController = displayPostController;
 
-        this.displayCommentsViewModel = displayCommentsViewModel;
-        displayCommentsViewModel.addPropertyChangeListener(this);
+        this.postAndCommentsViewModel = postAndCommentsViewModel;
+        postAndCommentsViewModel.addPropertyChangeListener(this);
 
         this.createCommentUseCaseFactory = createCommentUseCaseFactory;
 
-        this.viewName = displayCommentsViewModel.getViewName();
+        this.viewName = postAndCommentsViewModel.getViewName();
         setName(viewName);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("retrieved")) {
-            postId = displayCommentsViewModel.getPostId();
-            Map<ObjectId, Map<String, Object>> newComments = displayCommentsViewModel.getState().getComments();
+            postId = postAndCommentsViewModel.getPostId();
+            Map<ObjectId, Map<String, Object>> newComments = postAndCommentsViewModel.getState().getComments();
             Set<ObjectId> newCommentIds = newComments.keySet();
 
             for (ObjectId id : newCommentIds) {
-                comments.put(id, new CommentView(newComments.get(id), displayCommentsViewModel));
+                comments.put(id, new CommentView(newComments.get(id), postAndCommentsViewModel));
             }
 
             if (!postAdded) {
-                this.add(new PostView(displayCommentsViewModel.getState().getPost(), displayCommentsViewModel));
+                this.add(new PostView(postAndCommentsViewModel.getState().getPost(), postAndCommentsViewModel));
                 postAdded = true;
             }
 
@@ -62,21 +62,21 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
                 }
             }
 
-            title = (String) displayCommentsViewModel.getState().getPost().get("title");
-            displayCommentsViewModel.getState().setComments(new HashMap<>());
-            displayCommentsViewModel.getState().setPost(new HashMap<>());
+            title = (String) postAndCommentsViewModel.getState().getPost().get("title");
+            postAndCommentsViewModel.getState().setComments(new HashMap<>());
+            postAndCommentsViewModel.getState().setPost(new HashMap<>());
 
         } else if (evt.getPropertyName().equals("display_error")) {
-            this.add(new JLabel(displayCommentsViewModel.getState().getErrorMessage()));
+            this.add(new JLabel(postAndCommentsViewModel.getState().getErrorMessage()));
         } else if (evt.getPropertyName().equals("display_post")) {
-            ObjectId postId = displayCommentsViewModel.getPostId();
-            displayCommentController.execute(postId, "post");
+            ObjectId postId = postAndCommentsViewModel.getPostId();
+            displayPostController.execute(postId, "post");
         } else if (evt.getPropertyName().equals("display_single_comment")) {
-            ObjectId commentId = displayCommentsViewModel.getState().getCommentId();
-            displayCommentController.execute(commentId, "comment");
+            ObjectId commentId = postAndCommentsViewModel.getState().getCommentId();
+            displayPostController.execute(commentId, "comment");
         } else if (evt.getPropertyName().equals("reply_to_comment")) {
             replyFrame = new JFrame("Reply to comment");
-            replyPanel = createCommentUseCaseFactory.create(displayCommentsViewModel.getState().getReplyParentPostId(), displayCommentsViewModel.getState().getReplyParentId());
+            replyPanel = createCommentUseCaseFactory.create(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
             replyFrame.add(replyPanel);
             replyFrame.pack();
             replyFrame.setVisible(true);

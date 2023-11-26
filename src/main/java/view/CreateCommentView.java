@@ -18,7 +18,7 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
     private final JTextField qualificationInputField = new JTextField(20);
     private final JButton commentButton = new JButton();
 
-    public CreateCommentView(CreateCommentViewModel createCommentViewModel, DisplayCommentsViewModel displayCommentsViewModel, CreateCommentController createCommentController){
+    public CreateCommentView(CreateCommentViewModel createCommentViewModel, PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentController createCommentController){
         this.createCommentViewModel = createCommentViewModel;
 
         viewName = createCommentViewModel.getViewName();
@@ -61,7 +61,7 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
         bodyInputArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                displayCommentsViewModel.firePropertyChanged("resize_reply_frame");
+                postAndCommentsViewModel.firePropertyChanged("resize_reply_frame");
                 createCommentViewModel.getState().setBody(bodyInputArea.getText() + e.getKeyChar());
             }
 

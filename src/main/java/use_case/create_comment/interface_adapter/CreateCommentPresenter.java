@@ -3,23 +3,23 @@ package use_case.create_comment.interface_adapter;
 import org.bson.types.ObjectId;
 import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
 import view.CreateCommentViewModel;
-import view.DisplayCommentsViewModel;
+import view.PostAndCommentsViewModel;
 
 public class CreateCommentPresenter implements CreateCommentOutputBoundary {
-    private final DisplayCommentsViewModel displayCommentsViewModel;
+    private final PostAndCommentsViewModel postAndCommentsViewModel;
     private final CreateCommentViewModel createCommentViewModel;
 
-    public CreateCommentPresenter(DisplayCommentsViewModel displayCommentsViewModel, CreateCommentViewModel createCommentViewModel){
-        this.displayCommentsViewModel = displayCommentsViewModel;
+    public CreateCommentPresenter(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentViewModel createCommentViewModel){
+        this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.createCommentViewModel = createCommentViewModel;
     }
 
     @Override
     public void prepareSuccessView(ObjectId commentId) {
         createCommentViewModel.setState(new CreateCommentState());
-        displayCommentsViewModel.getState().setCommentId(commentId);
-        displayCommentsViewModel.firePropertyChanged("display_single_comment");
-        displayCommentsViewModel.firePropertyChanged("close_reply_frame");
+        postAndCommentsViewModel.getState().setCommentId(commentId);
+        postAndCommentsViewModel.firePropertyChanged("display_single_comment");
+        postAndCommentsViewModel.firePropertyChanged("close_reply_frame");
     }
 
     @Override

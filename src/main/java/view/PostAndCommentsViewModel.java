@@ -1,24 +1,24 @@
 package view;
 
 import org.bson.types.ObjectId;
-import use_case.display_comment.interface_adapter.DisplayCommentState;
+import use_case.display_post.interface_adapter.DisplayPostState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class DisplayCommentsViewModel extends ViewModel {
-    private DisplayCommentState state = new DisplayCommentState();
+public class PostAndCommentsViewModel extends ViewModel {
+    private DisplayPostState state = new DisplayPostState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private ObjectId postId;
-    public DisplayCommentsViewModel() {
+    public PostAndCommentsViewModel() {
         super("display_comments");
     }
 
-    public DisplayCommentState getState() {
+    public DisplayPostState getState() {
         return state;
     }
 
-    public void setState(DisplayCommentState state) {
+    public void setState(DisplayPostState state) {
         this.state = state;
     }
 

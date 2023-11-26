@@ -9,7 +9,7 @@ import use_case.create_comment.application_business_rules.CreateCommentInteracto
 import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentPresenter;
 import view.CreateCommentViewModel;
-import view.DisplayCommentsViewModel;
+import view.PostAndCommentsViewModel;
 
 public class CreateCommentUseCaseTest {
     CreateCommentViewModel createCommentViewModel;
@@ -26,7 +26,7 @@ public class CreateCommentUseCaseTest {
             throw new RuntimeException(e);
         }
         createCommentController = new CreateCommentController(
-                new CreateCommentInteractor(new CreateCommentPresenter(new DisplayCommentsViewModel(), createCommentViewModel), mongoDBDataAccessObject, new CommentFactory())
+                new CreateCommentInteractor(new CreateCommentPresenter(new PostAndCommentsViewModel(), createCommentViewModel), mongoDBDataAccessObject, new CommentFactory())
         );
 
         mongoDBDataAccessObject.resetDatabase();

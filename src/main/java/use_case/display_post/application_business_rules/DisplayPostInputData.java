@@ -1,12 +1,12 @@
-package use_case.display_comment.application_business_rules;
+package use_case.display_post.application_business_rules;
 
 import org.bson.types.ObjectId;
 
-public class DisplayCommentInputData {
+public class DisplayPostInputData {
     private final ObjectId id;
     private final int config;
 
-    public DisplayCommentInputData(ObjectId id, int config) {
+    public DisplayPostInputData(ObjectId id, int config) {
         this.id = id;
         this.config = config;
     }

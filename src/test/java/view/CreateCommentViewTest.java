@@ -5,7 +5,6 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import use_case.create_comment.CreateCommentUseCaseTest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,7 +103,7 @@ public class CreateCommentViewTest {
             throw new RuntimeException(e);
         }
         createCommentViewModel = new CreateCommentViewModel();
-        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new DisplayCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
+        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new PostAndCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
 
         createCommentButton = createCommentView.getCommentButton();
 

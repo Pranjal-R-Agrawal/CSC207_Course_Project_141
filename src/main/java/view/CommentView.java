@@ -25,7 +25,7 @@ public class CommentView extends JPanel {
     private boolean qualificationsVisibility = false;
     private boolean childrenVisibility = false;
 
-    public CommentView(Map<String, Object> comment, DisplayCommentsViewModel displayCommentsViewModel) {
+    public CommentView(Map<String, Object> comment, PostAndCommentsViewModel postAndCommentsViewModel) {
         this.id = (ObjectId) comment.get("id");
         this.parentId = (ObjectId) comment.get("parentId");
         this.parentPostId = (ObjectId) comment.get("parentPostId");
@@ -83,8 +83,8 @@ public class CommentView extends JPanel {
 
         JButton replyButton = new JButton("Reply");
         replyButton.addActionListener(e -> {
-            displayCommentsViewModel.getState().setReplyParentId(id).setReplyParentPostId(parentPostId);
-            displayCommentsViewModel.firePropertyChanged("reply_to_comment");
+            postAndCommentsViewModel.getState().setReplyParentId(id).setReplyParentPostId(parentPostId);
+            postAndCommentsViewModel.firePropertyChanged("reply_to_comment");
         });
 
         JButton qualificationsButton = new JButton("Qualifications");

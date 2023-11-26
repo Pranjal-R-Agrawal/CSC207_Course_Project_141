@@ -1,10 +1,10 @@
-package use_case.display_comment.interface_adapter;
+package use_case.display_post.interface_adapter;
 
 import org.bson.types.ObjectId;
 
 import java.util.Map;
 
-public class DisplayCommentState {
+public class DisplayPostState {
     private  Map<ObjectId, Map<String, Object>> comments;
     private Map<String, Object> post;
     private ObjectId commentId;
@@ -16,7 +16,7 @@ public class DisplayCommentState {
         return comments;
     }
 
-    public DisplayCommentState setComments(Map<ObjectId, Map<String, Object>> comments) {
+    public DisplayPostState setComments(Map<ObjectId, Map<String, Object>> comments) {
         this.comments = comments;
         return this;
     }
@@ -25,7 +25,7 @@ public class DisplayCommentState {
         return post;
     }
 
-    public DisplayCommentState setPost(Map<String, Object> post) {
+    public DisplayPostState setPost(Map<String, Object> post) {
         this.post = post;
         return this;
     }
@@ -38,7 +38,7 @@ public class DisplayCommentState {
         return replyParentId;
     }
 
-    public DisplayCommentState setReplyParentId(ObjectId replyParentId) {
+    public DisplayPostState setReplyParentId(ObjectId replyParentId) {
         this.replyParentId = replyParentId;
         return this;
     }
@@ -47,12 +47,12 @@ public class DisplayCommentState {
         return replyParentPostId;
     }
 
-    public DisplayCommentState setReplyParentPostId(ObjectId replyParentPostId) {
+    public DisplayPostState setReplyParentPostId(ObjectId replyParentPostId) {
         this.replyParentPostId = replyParentPostId;
         return this;
     }
 
-    public DisplayCommentState setCommentId(ObjectId commentId) {
+    public DisplayPostState setCommentId(ObjectId commentId) {
         this.commentId = commentId;
         return this;
     }
@@ -61,7 +61,7 @@ public class DisplayCommentState {
         return errorMessage;
     }
 
-    public DisplayCommentState setErrorMessage(String errorMessage) {
+    public DisplayPostState setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
         return this;
     }

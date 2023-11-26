@@ -1,4 +1,4 @@
-package use_case.display_comment.application_business_rules;
+package use_case.display_post.application_business_rules;
 
 import data_access.DisplayCommentDataAccessInterface;
 import entity.Comment;
@@ -10,18 +10,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
+public class DisplayPostInteractor implements DisplayPostInputBoundary {
     final DisplayCommentDataAccessInterface displayCommentDataAccessObject;
-    final DisplayCommentOutputBoundary displayCommentPresenter;
+    final DisplayPostOutputBoundary displayCommentPresenter;
 
-    public DisplayCommentInteractor(DisplayCommentDataAccessInterface displayCommentDataAccessObject, DisplayCommentOutputBoundary displayCommentOutputBoundary) {
+    public DisplayPostInteractor(DisplayCommentDataAccessInterface displayCommentDataAccessObject, DisplayPostOutputBoundary displayPostOutputBoundary) {
         this.displayCommentDataAccessObject = displayCommentDataAccessObject;
-        this.displayCommentPresenter = displayCommentOutputBoundary;
+        this.displayCommentPresenter = displayPostOutputBoundary;
     }
 
-    public void execute(DisplayCommentInputData displayCommentInputData) {
-        ObjectId id = displayCommentInputData.getId();
-        int config = displayCommentInputData.getConfig();
+    public void execute(DisplayPostInputData displayPostInputData) {
+        ObjectId id = displayPostInputData.getId();
+        int config = displayPostInputData.getConfig();
         
         Post post = null;
         List<Comment> comments;
@@ -35,7 +35,7 @@ public class DisplayCommentInteractor implements DisplayCommentInputBoundary {
             comments = displayCommentDataAccessObject.getCommentsByParentPostID(id);
         }
 
-        DisplayCommentOutputData outputData = new DisplayCommentOutputData(comments.size());
+        DisplayPostOutputData outputData = new DisplayPostOutputData(comments.size());
 
         if (!comments.isEmpty()) {
             post = displayCommentDataAccessObject.getPostByPostID(comments.get(0).getParentPostId());

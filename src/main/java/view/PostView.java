@@ -16,7 +16,7 @@ public class PostView extends JPanel {
     final String body;
     final List<String> qualifications;
 
-    public PostView(Map<String, Object> post, DisplayCommentsViewModel displayCommentsViewModel) {
+    public PostView(Map<String, Object> post, PostAndCommentsViewModel postAndCommentsViewModel) {
         this.id = (ObjectId) post.get("id");
         this.authorId = (ObjectId) post.get("authorId");
         this.username = (String) post.get("username");
@@ -60,8 +60,8 @@ public class PostView extends JPanel {
 
         JButton commentButton = new JButton("Comment");
         commentButton.addActionListener(e -> {
-            displayCommentsViewModel.getState().setReplyParentId(id).setReplyParentPostId(id);
-            displayCommentsViewModel.firePropertyChanged("reply_to_comment");
+            postAndCommentsViewModel.getState().setReplyParentId(id).setReplyParentPostId(id);
+            postAndCommentsViewModel.firePropertyChanged("reply_to_comment");
         });
 
         JButton viewAuthorInformationButton = new JButton("View Poster's Information");

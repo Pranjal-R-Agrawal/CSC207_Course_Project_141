@@ -10,36 +10,36 @@ import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentPresenter;
 import view.CreateCommentView;
 import view.CreateCommentViewModel;
-import view.DisplayCommentsViewModel;
+import view.PostAndCommentsViewModel;
 
 public class CreateCommentUseCaseFactory {
-    private DisplayCommentsViewModel displayCommentsViewModel;
+    private PostAndCommentsViewModel postAndCommentsViewModel;
     private CreateCommentDataAccessInterface createCommentDataAccessObject;
 
     private CreateCommentUseCaseFactory() {}
 
-    public CreateCommentUseCaseFactory(DisplayCommentsViewModel displayCommentsViewModel, CreateCommentDataAccessInterface createCommentDataAccessObject) {
-        this.displayCommentsViewModel = displayCommentsViewModel;
+    public CreateCommentUseCaseFactory(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentDataAccessInterface createCommentDataAccessObject) {
+        this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.createCommentDataAccessObject = createCommentDataAccessObject;
     }
 
     public CreateCommentView create(ObjectId parentPostId, ObjectId parentID) {
         CreateCommentViewModel createCommentViewModel = new CreateCommentViewModel();
         createCommentViewModel.getState().setParentPostId(parentPostId).setParentId(parentID);
-        return CreateCommentUseCaseFactory.create(displayCommentsViewModel, createCommentViewModel, createCommentDataAccessObject);
+        return CreateCommentUseCaseFactory.create(postAndCommentsViewModel, createCommentViewModel, createCommentDataAccessObject);
     }
 
-    public static CreateCommentView create(DisplayCommentsViewModel displayCommentsViewModel, CreateCommentViewModel createCommentViewModel,
+    public static CreateCommentView create(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentViewModel createCommentViewModel,
                                            CreateCommentDataAccessInterface createCommentDataAccessObject){
-        CreateCommentController createCommentController = createCreateCommentUseCase(displayCommentsViewModel,
+        CreateCommentController createCommentController = createCreateCommentUseCase(postAndCommentsViewModel,
                 createCommentViewModel, createCommentDataAccessObject);
-        return new CreateCommentView(createCommentViewModel, displayCommentsViewModel, createCommentController);
+        return new CreateCommentView(createCommentViewModel, postAndCommentsViewModel, createCommentController);
     }
 
-    public static CreateCommentController createCreateCommentUseCase(DisplayCommentsViewModel displayCommentsViewModel,
+    public static CreateCommentController createCreateCommentUseCase(PostAndCommentsViewModel postAndCommentsViewModel,
                                                                      CreateCommentViewModel createCommentViewModel,
                                                                      CreateCommentDataAccessInterface createCommentDataAccessObject ){
-        CreateCommentOutputBoundary createCommentPresenter = new CreateCommentPresenter(displayCommentsViewModel, createCommentViewModel);
+        CreateCommentOutputBoundary createCommentPresenter = new CreateCommentPresenter(postAndCommentsViewModel, createCommentViewModel);
         CreateCommentInputBoundary createCommentInteractor = new CreateCommentInteractor(createCommentPresenter, createCommentDataAccessObject, new CommentFactory());
         return new CreateCommentController(createCommentInteractor);
     }
