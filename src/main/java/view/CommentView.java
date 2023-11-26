@@ -16,8 +16,8 @@ public class CommentView extends JPanel {
     final String username;
     final String body;
     final List<String> qualifications;
-    private final Container commentContainerVertical = Box.createVerticalBox();
-    private final Container commentContainerHorizontal = Box.createHorizontalBox();
+    private final JPanel commentContainerVertical = new JPanel(new GridBagLayout());
+    private final JPanel commentContainerHorizontal = new JPanel(new GridBagLayout());
     private final JPanel children = new JPanel(new GridBagLayout());
     private final JButton collapseButton;
     private int numChildren = 0;
@@ -132,11 +132,11 @@ public class CommentView extends JPanel {
         JSeparator verticalSeparator = new JSeparator();
         verticalSeparator.setOrientation(SwingConstants.VERTICAL);
 
-        commentContainerHorizontal.add(verticalSeparator);
-        commentContainerHorizontal.add(commentContainerVertical);
+        addComponent(commentContainerHorizontal, verticalSeparator, 0, 0, 1, 1);
+        addPanel(commentContainerHorizontal, commentContainerVertical, 1, 0, 1, 1);
 
-        commentContainerVertical.add(this);
-        commentContainerVertical.add(children);
+        addPanel(commentContainerVertical, this, 0, 0 ,1 ,1);
+        addPanel(commentContainerVertical, children, 0, 1, 1, 1);
 
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.lightGray));
 
