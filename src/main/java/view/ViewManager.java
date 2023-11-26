@@ -39,6 +39,19 @@ public class ViewManager implements PropertyChangeListener {
                 component.setVisible(component.getName().equals(viewModelName));
             }
             cardLayout.show(views, viewModelName);
+        } else if (evt.getPropertyName().equals("display_post")) {
+            ObjectId id = (ObjectId) evt.getNewValue();
+            DisplayCommentsView displayCommentsView = getDisplayCommentsView(id);
+            JFrame postFrame = new JFrame();
+            postFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            postFrame.getContentPane().setLayout(new BoxLayout(postFrame.getContentPane(), BoxLayout.Y_AXIS));
+            JScrollPane scrollPane = new JScrollPane(displayCommentsView);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            postFrame.getContentPane().add(scrollPane);
+            postFrame.pack();
+            postFrame.setTitle(displayCommentsView.title);
+            postFrame.setVisible(true);
         }
     }
 }
