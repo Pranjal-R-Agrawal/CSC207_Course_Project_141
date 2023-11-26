@@ -20,6 +20,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
     private final Map<ObjectId, CommentView> comments = new HashMap<>();
     private JFrame replyFrame;
     private JPanel replyPanel;
+    boolean postAdded = false;
 
     public DisplayCommentsView(DisplayCommentsViewModel displayCommentsViewModel, DisplayCommentController displayCommentController, CreateCommentUseCaseFactory createCommentUseCaseFactory) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
@@ -45,6 +46,11 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
                 comments.put(id, new CommentView(newComments.get(id), displayCommentsViewModel));
             }
 
+            if (!postAdded) {
+                this.add(new PostView(displayCommentsViewModel.getState().getPost(), displayCommentsViewModel));
+                postAdded = true;
+            }
+
             for (ObjectId id : newCommentIds) {
                 if (postId.equals(newComments.get(id).get("parentId"))) {
                     this.add(comments.get(id).getComment());
@@ -54,6 +60,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
             }
 
             displayCommentsViewModel.getState().setComments(new HashMap<>());
+            displayCommentsViewModel.getState().setPost(new HashMap<>());
 
         } else if (evt.getPropertyName().equals("display_error")) {
             this.add(new JLabel(displayCommentsViewModel.getState().getErrorMessage()));
@@ -74,6 +81,7 @@ public class DisplayCommentsView extends JPanel implements PropertyChangeListene
             replyFrame.dispose();
             replyPanel = null;
         } else if(evt.getPropertyName().equals("reset_view")) {
+            postAdded = false;
             this.removeAll();
             comments.clear();
         } else if (evt.getPropertyName().equals("resize_reply_frame")) {

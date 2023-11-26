@@ -20,6 +20,7 @@ public class DisplayCommentPresenter implements DisplayCommentOutputBoundary {
     @Override
     public void prepareSuccessView(DisplayCommentOutputData displayCommentOutputData) {
         displayCommentViewModel.getState().setComments(displayCommentOutputData.getComments());
+        displayCommentViewModel.getState().setPost(displayCommentOutputData.getPost());
         displayCommentViewModel.firePropertyChanged("retrieved");
     }
 }
