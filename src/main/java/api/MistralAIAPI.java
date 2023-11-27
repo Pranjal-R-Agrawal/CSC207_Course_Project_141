@@ -24,45 +24,58 @@ public class MistralAIAPI implements GenerativeAIAPI {
         MediaType mediaType = MediaType.parse("application/json");
         BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/java/api/API_TOKEN"));
         API_TOKEN = bufferedReader.readLine();
+        int i =0;
+        JSONObject generatedText = null;
         JSONObject requestBodyJson = new JSONObject();
+        requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
 
-        requestBodyJson.put("inputs", idea.getIdea()+"Write a Business model for this idea?");
+        while(i < 50) {
 
-        RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());
-        Request request = new Request.Builder()
-                .url("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1")
-                .post(body)
-                .addHeader("Authorization", API_TOKEN)
-                .addHeader("Content-Type", "application/json")
-                .build();
+            RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());
+            Request request = new Request.Builder()
+                    .url("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1")
+                    .post(body)
+                    .addHeader("Authorization", API_TOKEN)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
 
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                String responseBody = response.body().string();
-                JSONArray responseArray = new JSONArray(responseBody);
+            try {
+                Response response = client.newCall(request).execute();
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    JSONArray responseArray = new JSONArray(responseBody);
 
-                if (!responseArray.isEmpty()) {
-                    JSONObject generatedText = responseArray.getJSONObject(0);
+                    if (!responseArray.isEmpty()) {
+                         generatedText = responseArray.getJSONObject(0);
 
-                    return generatedText.getString("generated_text");
+                         if (generatedText.getString("generated_text").equals(requestBodyJson.getString("inputs")))
+                         {
+                             return "";
+                         }
+                    } else {
+                        return "Empty response array.";
+                    }
                 } else {
-                    return "Empty response array.";
+                    return "Request failed with code: " + response.code();
                 }
-            } else {
-                return "Request failed with code: " + response.code();
+
+            } catch (IOException | NullPointerException | JSONException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                throw new Exception("Couldn't generate business model");
             }
 
-        } catch (IOException | NullPointerException | JSONException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-            throw new Exception("Couldn't generate business model");
+            requestBodyJson.remove("inputs");
+            requestBodyJson.put("inputs", generatedText.getString("generated_text"));
+            i++;
         }
+        return generatedText.getString("generated_text");
     }
 
 
     public static void main(String[] args)
     {
-        Idea idea = new ConcreteIdea("A 3D printing platform that helps business owners create 3D-printed products.");
+        Idea idea = new ConcreteIdea("A “social” or “dynamic” sales and marketing platform for small business owners. The startup offers an online platform for users to create customized sales and marketing campaigns. The platform then connects them with their target audience, encouraging the user to talk about their products and services, which the startup claims is more effective than most traditional marketing platforms.");
+
 
         GenerativeAIAPI obj = new MistralAIAPI();
         try {

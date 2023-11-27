@@ -39,7 +39,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
-      //  ideaButton.doClick();
+  //     ideaButton.doClick();
 
 
         backButton.addActionListener(
@@ -73,7 +73,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        if (generateIdeaViewModel.getState().getBusinessModel().equals(""))
+        if (generateIdeaViewModel.getState().getBusinessModel().isEmpty())
         {
             addComponent(ideaButton, c,0, 0, GridBagConstraints.HORIZONTAL);
             addComponent(backButton, c,0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
@@ -105,9 +105,6 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
 
     private JPanel create() {
         JPanel panel = new JPanel();
-        ideaButton.setBounds(100, 5, 10, 10);
-        backButton.setBounds(5, 50, 10, 10);
-        postButton.setBounds(100, 50, 10, 10);
 
         JTextArea textArea = new JTextArea(10, 25);
         textArea.setLineWrap(true);
@@ -116,10 +113,8 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         textArea.setEditable(false); // read only mode
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        add(ideaButton);
+
         panel.add(scrollPane);
-        add(backButton);
-        add(postButton);
 
         return panel;
     }
