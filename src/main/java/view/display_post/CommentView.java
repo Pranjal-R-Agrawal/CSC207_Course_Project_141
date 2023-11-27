@@ -1,6 +1,7 @@
 package view.display_post;
 
 import org.bson.types.ObjectId;
+import view.AbstractGridBagLayoutView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CommentView extends JPanel {
+public class CommentView extends AbstractGridBagLayoutView {
     final ObjectId id;
     final ObjectId parentId;
     final ObjectId parentPostId;
@@ -21,11 +22,12 @@ public class CommentView extends JPanel {
     private final JPanel children = new JPanel(new GridBagLayout());
     private final JButton collapseButton;
     private int numChildren = 0;
-    private final GridBagConstraints constraints = new GridBagConstraints();
     private boolean qualificationsVisibility = false;
     private boolean childrenVisibility = false;
 
     public CommentView(Map<String, Object> comment, PostAndCommentsViewModel postAndCommentsViewModel) {
+        super("Comment" + (ObjectId) comment.get("id"));
+
         this.id = (ObjectId) comment.get("id");
         this.parentId = (ObjectId) comment.get("parentId");
         this.parentPostId = (ObjectId) comment.get("parentPostId");
@@ -34,9 +36,9 @@ public class CommentView extends JPanel {
         this.body = (String) comment.get("body");
         this.qualifications = (comment.get("qualifications") != null)? (ArrayList<String>) comment.get("qualifications") : new ArrayList<String>();
 
-        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
 
-        initialiseConstraints();
+        initialiseConstraints(constraints);
 
         JPanel informationRow = new JPanel(new GridBagLayout());
         JPanel commentRow = new JPanel(new GridBagLayout());
@@ -61,25 +63,25 @@ public class CommentView extends JPanel {
             usernameLabel.setForeground(Color.RED);
         }
 
-        initialiseConstraints();
-        setConstraintInset(0, 0);
-        setConstraintWeight(0.1, 1);
-        addComponent(informationRow, collapseButton, 0, 0, 1, 1);
-        setConstraintWeight(10, 1);
-        addComponent(informationRow, usernameLabel, GridBagConstraints.RELATIVE, 0, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintInset(constraints, 2, 0, 2, 0);
+        setConstraintWeight(constraints, 0.1, 1);
+        addComponent(constraints, informationRow, collapseButton, 0, 0);
+        setConstraintWeight(constraints, 10, 1);
+        addComponent(constraints, informationRow, usernameLabel, GridBagConstraints.RELATIVE, 0);
 
-        initialiseConstraints();
-        setConstraintWeight(1, 0.1);
-        addPanel(this, informationRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintWeight(constraints, 1, 0.1);
+        addPanel(constraints, this, informationRow, 0, GridBagConstraints.RELATIVE);
 
-        initialiseConstraints();
-        setConstraintInset(7, 7);
-        addComponent(commentRow, createMultiLineText(body), 0, 0, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintInset(constraints, 2, 7, 2, 7);
+        addComponent(constraints, commentRow, createMultiLineText(body, false), 0, 0);
 
-        initialiseConstraints();
-        setConstraintInset(0, 0);
-        setConstraintWeight(1, 2);
-        addPanel(this, commentRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintInset(constraints, 2, 0, 2, 0);
+        setConstraintWeight(constraints, 1, 2);
+        addPanel(constraints, this, commentRow, 0, GridBagConstraints.RELATIVE);
 
         JButton replyButton = new JButton("Reply");
         replyButton.addActionListener(e -> {
@@ -103,26 +105,26 @@ public class CommentView extends JPanel {
             // TODO: Implement similar to reply button
         });
 
-        initialiseConstraints();
-        setConstraintWeight(1, 1);
-        addComponent(buttonRow, replyButton, 0, 0, 1, 1);
-        addComponent(buttonRow, qualificationsButton, GridBagConstraints.RELATIVE, 0, 1, 1);
-        addComponent(buttonRow, viewMoreInfoButton, GridBagConstraints.RELATIVE, 0, 1, 1);
-        addComponent(buttonRow, collaborationRequestButton, GridBagConstraints.RELATIVE, 0, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintWeight(constraints, 1, 1);
+        addComponent(constraints, buttonRow, replyButton, 0, 0);
+        addComponent(constraints, buttonRow, qualificationsButton, GridBagConstraints.RELATIVE, 0);
+        addComponent(constraints, buttonRow, viewMoreInfoButton, GridBagConstraints.RELATIVE, 0);
+        addComponent(constraints, buttonRow, collaborationRequestButton, GridBagConstraints.RELATIVE, 0);
 
-        initialiseConstraints();
-        setConstraintWeight(1, 0.1);
-        addPanel(this, buttonRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintWeight(constraints, 1, 0.1);
+        addPanel(constraints, this, buttonRow, 0, GridBagConstraints.RELATIVE);
 
-        initialiseConstraints();
-        setConstraintInset(7, 7);
-        setConstraintWeight(1, 0.45);
-        addComponent(qualificationsRow, createMultiLineText(String.join(System.lineSeparator(), qualifications)), 0, 0, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintInset(constraints, 2, 7, 3, 7);
+        setConstraintWeight(constraints, 1, 0.45);
+        addComponent(constraints, qualificationsRow, createMultiLineText(String.join(System.lineSeparator(), qualifications), false), 0, 0);
 
-        initialiseConstraints();
-        setConstraintInset(0, 0);
-        setConstraintWeight(1, 0.3);
-        addPanel(this, qualificationsRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        initialiseConstraints(constraints);
+        setConstraintInset(constraints, 2, 0, 2, 0);
+        setConstraintWeight(constraints, 1, 0.3);
+        addPanel(constraints, this, qualificationsRow, 0, GridBagConstraints.RELATIVE);
 
         qualificationsButton.setVisible(!qualifications.isEmpty());
         collaborationRequestButton.setVisible(comment.get("logged_in_user_is_post_author") != null && (boolean) comment.get("logged_in_user_is_post_author"));
@@ -132,54 +134,15 @@ public class CommentView extends JPanel {
         JSeparator verticalSeparator = new JSeparator();
         verticalSeparator.setOrientation(SwingConstants.VERTICAL);
 
-        addComponent(commentContainerHorizontal, verticalSeparator, 0, 0, 1, 1);
-        addPanel(commentContainerHorizontal, commentContainerVertical, 1, 0, 1, 1);
+        addComponent(constraints, commentContainerHorizontal, verticalSeparator, 0, 0);
+        addPanel(constraints, commentContainerHorizontal, commentContainerVertical, 1, 0);
 
-        addPanel(commentContainerVertical, this, 0, 0 ,1 ,1);
-        addPanel(commentContainerVertical, children, 0, 1, 1, 1);
+        addPanel(constraints, commentContainerVertical, this, 0, 0);
+        addPanel(constraints, commentContainerVertical, children, 0, 1);
 
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.lightGray));
 
         children.setVisible(childrenVisibility);
-    }
-
-    private void addComponent(JPanel panel, JComponent component, int x, int y, int width, int height) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = width;
-        constraints.gridheight = height;
-        panel.add(component, constraints);
-    }
-
-    private void addPanel(JPanel parent, JPanel panel, int x, int y, int width, int height) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = width;
-        constraints.gridheight = height;
-        parent.add(panel, constraints);
-    }
-
-    private void initialiseConstraints() {
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.insets = new Insets(0, 0, 0, 0);
-    }
-
-    private void setConstraintWeight(double weightx, double weighty) {
-        constraints.weightx = weightx;
-        constraints.weighty = weighty;
-    }
-
-    private void setConstraintInset(int left, int right) {
-        constraints.insets = new Insets(2, left, 2, right);
-    }
-
-    private JTextArea createMultiLineText(String text) {
-        JTextArea textArea = new JTextArea(text);
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        return textArea;
     }
 
     public Container getComment() {
@@ -187,10 +150,12 @@ public class CommentView extends JPanel {
     }
 
     private void addChild(Container child) {
-        setConstraintWeight(1, 0.1);
-        addComponent(children, new JLabel("     "), 0, GridBagConstraints.RELATIVE, 1, 1);
-        setConstraintWeight(1, 1);
-        addComponent(children, (JComponent) child, 1, GridBagConstraints.RELATIVE, 1, 1);
+        GridBagConstraints constraints = new GridBagConstraints();
+        initialiseConstraints(constraints);
+        setConstraintWeight(constraints, 1, 0.1);
+        addComponent(constraints, children, new JLabel("     "), 0, GridBagConstraints.RELATIVE);
+        setConstraintWeight(constraints, 1, 1);
+        addComponent(constraints, children, (JComponent) child, 1, GridBagConstraints.RELATIVE);
         childrenVisibility = true;
         collapseButton.setText("Collapse");
         children.setVisible(true);

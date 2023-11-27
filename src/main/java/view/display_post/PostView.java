@@ -1,6 +1,7 @@
 package view.display_post;
 
 import org.bson.types.ObjectId;
+import view.AbstractGridBagLayoutView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PostView extends JPanel {
+public class PostView extends AbstractGridBagLayoutView {
     final ObjectId id;
     final ObjectId authorId;
     final String username;
@@ -17,6 +18,8 @@ public class PostView extends JPanel {
     final List<String> qualifications;
 
     public PostView(Map<String, Object> post, PostAndCommentsViewModel postAndCommentsViewModel) {
+        super("Post" + (ObjectId) post.get("id"));
+
         this.id = (ObjectId) post.get("id");
         this.authorId = (ObjectId) post.get("authorId");
         this.username = (String) post.get("username");
@@ -42,21 +45,21 @@ public class PostView extends JPanel {
             usernameLabel.setForeground(Color.RED);
         }
 
-        JTextArea titleArea = createMultiLineText("Title: " + title);
+        JTextArea titleArea = createMultiLineText("Title: " + title, false);
         titleArea.setCaretColor(titleArea.getBackground());
 
         initialiseConstraints(constraints);
-        addComponent(constraints, titleRow, usernameLabel, 0, 0, 1, 1);
+        addComponent(constraints, titleRow, usernameLabel, 0, 0);
         setConstraintInset(constraints, 3, 0, 0, 0);
 
-        addComponent(constraints, titleRow, titleArea, 0, GridBagConstraints.RELATIVE, 1, 1);
+        addComponent(constraints, titleRow, titleArea, 0, GridBagConstraints.RELATIVE);
 
         initialiseConstraints(constraints);
-        addComponent(constraints, bodyRow, createMultiLineText(body), 0, 0, 1, 1);
+        addComponent(constraints, bodyRow, createMultiLineText(body, false), 0, 0);
 
         initialiseConstraints(constraints);
-        JTextArea qualificationsArea = createMultiLineText(String.join(System.lineSeparator(), this.qualifications));
-        addComponent(constraints, qualificationsRow, qualificationsArea, 0, 0, 1, 1);
+        JTextArea qualificationsArea = createMultiLineText(String.join(System.lineSeparator(), this.qualifications), false);
+        addComponent(constraints, qualificationsRow, qualificationsArea, 0, 0);
 
         JButton commentButton = new JButton("Comment");
         commentButton.addActionListener(e -> {
@@ -71,68 +74,26 @@ public class PostView extends JPanel {
 
         initialiseConstraints(constraints);
         setConstraintWeight(constraints, 1.3, 1);
-        addComponent(constraints, buttonRow, commentButton, 0, 0, 1, 1);
+        addComponent(constraints, buttonRow, commentButton, 0, 0);
         setConstraintWeight(constraints, 1, 1);
         setConstraintInset(constraints, 0, 3, 0, 0);
-        addComponent(constraints, buttonRow, viewAuthorInformationButton, GridBagConstraints.RELATIVE, 0, 1, 1);
+        addComponent(constraints, buttonRow, viewAuthorInformationButton, GridBagConstraints.RELATIVE, 0);
 
         viewAuthorInformationButton.setVisible(viewAuthorInformationButtonVisibility);
 
         initialiseConstraints(constraints);
         setConstraintWeight(constraints, 1, 0.1);
         setConstraintInset(constraints, 3, 5, 3, 5);
-        addPanel(constraints, this, titleRow, 0, 0, 1, 1);
+        addPanel(constraints, this, titleRow, 0, 0);
         setConstraintWeight(constraints, 1, 2);
         setConstraintInset(constraints, 0, 5, 3, 5);
-        addPanel(constraints, this, bodyRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        addPanel(constraints, this, bodyRow, 0, GridBagConstraints.RELATIVE);
         setConstraintWeight(constraints, 1, 0.1);
-        addPanel(constraints, this, qualificationsRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        addPanel(constraints, this, qualificationsRow, 0, GridBagConstraints.RELATIVE);
         setConstraintWeight(constraints, 1, 0.1);
         setConstraintInset(constraints, 0, 3, 3, 3);
-        addPanel(constraints, this, buttonRow, 0, GridBagConstraints.RELATIVE, 1, 1);
+        addPanel(constraints, this, buttonRow, 0, GridBagConstraints.RELATIVE);
 
         qualificationsRow.setVisible(qualificationsVisibility);
-    }
-
-    private void addComponent(GridBagConstraints constraints, JPanel panel, JComponent component, int x, int y, int width, int height) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = width;
-        constraints.gridheight = height;
-        panel.add(component, constraints);
-    }
-
-    private void addPanel(GridBagConstraints constraints, JPanel parent, JPanel panel, int x, int y, int width, int height) {
-        constraints.gridx = x;
-        constraints.gridy = y;
-        constraints.gridwidth = width;
-        constraints.gridheight = height;
-        parent.add(panel, constraints);
-    }
-
-    private void initialiseConstraints(GridBagConstraints constraints) {
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.insets = new Insets(0, 0, 0, 0);
-    }
-
-    private void setConstraintWeight(GridBagConstraints constraints, double weightx, double weighty) {
-        constraints.weightx = weightx;
-        constraints.weighty = weighty;
-    }
-
-    private void setConstraintInset(GridBagConstraints constraints, int top, int left, int bottom, int right) {
-        constraints.insets = new Insets(top, left, bottom, right);
-    }
-
-    private JTextArea createMultiLineText(String text) {
-        JTextArea textArea = new JTextArea(text);
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setCaretColor(textArea.getBackground());
-        textArea.setBackground(this.getBackground());
-        textArea.setWrapStyleWord(true);
-        return textArea;
     }
 }

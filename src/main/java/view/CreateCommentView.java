@@ -12,14 +12,15 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class CreateCommentView extends JPanel implements PropertyChangeListener {
+public class CreateCommentView extends AbstractGridBagLayoutView implements PropertyChangeListener {
     public final String viewName;
     private final CreateCommentViewModel createCommentViewModel;
-    private final JTextArea bodyInputArea = new JTextArea();
+    private final JTextArea bodyInputArea = createMultiLineText("", true);
     private final JTextField qualificationInputField = new JTextField(20);
     private final JButton commentButton = new JButton();
 
     public CreateCommentView(CreateCommentViewModel createCommentViewModel, PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentController createCommentController){
+        super(createCommentViewModel.getViewName());
         this.createCommentViewModel = createCommentViewModel;
 
         viewName = createCommentViewModel.getViewName();
@@ -30,20 +31,22 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
 
         JPanel bodyPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(0, 0, 0, 5); constraints.weightx = 0.1;
-        addComponent(bodyPanel, new JLabel(CreateCommentViewModel.BODY_LABEL), constraints, 0, 0, GridBagConstraints.HORIZONTAL);
-        constraints.insets = new Insets(0, 0, 0, 0);
-        constraints.weightx = 1;
-        bodyInputArea.setLineWrap(true);
-        addComponent(bodyPanel, bodyInputArea, constraints, GridBagConstraints.RELATIVE, 0, GridBagConstraints.HORIZONTAL);
+        initialiseConstraints(constraints);
+
+        setConstraintInset(constraints, 0, 0, 0, 5);
+        setConstraintWeight(constraints, 0.1, 1);
+        addComponent(constraints, bodyPanel, new JLabel(CreateCommentViewModel.BODY_LABEL), 0, 0);
+        setConstraintInset(constraints, 0, 0, 0, 0);
+        setConstraintWeight(constraints, 1, 1);
+        addComponent(constraints, bodyPanel, bodyInputArea, GridBagConstraints.RELATIVE, 0);
 
         JPanel qualificationPanel = new JPanel(new GridBagLayout());
-        constraints.insets = new Insets(0, 0, 0, 5);
-        constraints.weightx = 0.1;
-        addComponent(qualificationPanel, new JLabel(CreateCommentViewModel.QUALIFICATIONS_LABEL), constraints, 0, 0, GridBagConstraints.HORIZONTAL);
-        constraints.insets = new Insets(0, 0, 0, 0);
-        constraints.weightx = 1;
-        addComponent(qualificationPanel, qualificationInputField, constraints, GridBagConstraints.RELATIVE, 0, GridBagConstraints.HORIZONTAL);
+        setConstraintInset(constraints, 0, 0, 0, 5);
+        setConstraintWeight(constraints, 0.1, 1);
+        addComponent(constraints, qualificationPanel, new JLabel(CreateCommentViewModel.QUALIFICATIONS_LABEL), 0, 0);
+        setConstraintInset(constraints, 0, 0, 0, 0);
+        setConstraintWeight(constraints, 1, 1);
+        addComponent(constraints, qualificationPanel, qualificationInputField, GridBagConstraints.RELATIVE, 0);
 
         commentButton.addActionListener(
                 e -> {
@@ -89,29 +92,15 @@ public class CreateCommentView extends JPanel implements PropertyChangeListener 
         setLayout(new GridBagLayout());
 
         JPanel commentButtonPanel = new JPanel(new GridBagLayout());
-        constraints.insets = new Insets(0, 0, 0, 0);
-        addComponent(commentButtonPanel, commentButton, constraints, 0, 0, GridBagConstraints.HORIZONTAL);
+        setConstraintInset(constraints, 0, 0, 0, 0);
+        addComponent(constraints, commentButtonPanel, commentButton, 0, 0);
 
-        constraints.insets = new Insets(0, 5, 0, 5);
-        constraints.weightx = 1; constraints.weighty = 1;
-        addPanel(this, bodyPanel, constraints, 0, 0, GridBagConstraints.HORIZONTAL);
-        addPanel(this, qualificationPanel, constraints, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
-        addPanel(this, commentButtonPanel, constraints, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+        setConstraintInset(constraints, 0, 5, 0, 5);
+        setConstraintWeight(constraints, 1, 1);
+        addPanel(constraints, this, bodyPanel, 0, 0);
+        addPanel(constraints, this, qualificationPanel, 0, GridBagConstraints.RELATIVE);
+        addPanel(constraints, this, commentButtonPanel, 0, GridBagConstraints.RELATIVE);
         add(commentButton, constraints);
-    }
-
-    private void addPanel(JPanel parent, JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
-        c.gridx = gridx;
-        c.gridy = gridy;
-        c.fill = fill;
-        parent.add(panel, c);
-    }
-
-    private void addComponent(JPanel panel, JComponent component, GridBagConstraints c, int gridx, int gridy, int fill) {
-        c.gridx = gridx;
-        c.gridy = gridy;
-        c.fill = fill;
-        panel.add(component, c);
     }
 
     @Override
