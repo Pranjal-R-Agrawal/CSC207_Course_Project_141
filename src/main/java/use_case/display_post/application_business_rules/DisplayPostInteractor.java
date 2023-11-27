@@ -49,6 +49,7 @@ public class DisplayPostInteractor implements DisplayPostInputBoundary {
 
         if (post == null) {
             displayCommentPresenter.prepareFailView("Post not found");
+            return;
         } else if (config == 1) {
             outputData.getPost().putAll(processPost(post));
         }
