@@ -39,6 +39,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+      //  ideaButton.doClick();
 
 
         backButton.addActionListener(
@@ -74,15 +75,18 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
 
         if (generateIdeaViewModel.getState().getBusinessModel().equals(""))
         {
-            add(ideaButton, c);
-            add(backButton, c);
+            addComponent(ideaButton, c,0, 0, GridBagConstraints.HORIZONTAL);
+            addComponent(backButton, c,0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         }
         else {
-            add(ideaButton, c);
+
             JPanel ideaOutputData = create();
-            addComponent(ideaOutputData, c, 0, 0, GridBagConstraints.HORIZONTAL);
-            add(backButton, c);
-            add(postButton, c);
+            addComponent(ideaButton, c, 0, 0, GridBagConstraints.HORIZONTAL);
+            addComponent(ideaOutputData, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+            addComponent(backButton, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+            addComponent(postButton, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+
+
         }
     }
 
@@ -92,26 +96,30 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         c.fill = fill;
         add(panel, c);
     }
+    private void addComponent(JButton jButton, GridBagConstraints c, int gridx, int gridy, int fill) {
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.fill = fill;
+        add(jButton, c);
+    }
 
     private JPanel create() {
         JPanel panel = new JPanel();
+        ideaButton.setBounds(100, 5, 10, 10);
+        backButton.setBounds(5, 50, 10, 10);
+        postButton.setBounds(100, 50, 10, 10);
 
-        JTextArea textArea1 = new JTextArea(3, 20);
-        textArea1.setLineWrap(true);
-        textArea1.setWrapStyleWord(true);
-        textArea1.setText(generateIdeaViewModel.getState().getIdea());
-        textArea1.setEditable(false); // read only mode
-        JScrollPane scrollPane1 = new JScrollPane(textArea1);
+        JTextArea textArea = new JTextArea(10, 25);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setText(generateIdeaViewModel.getState().getBusinessModel());
+        textArea.setEditable(false); // read only mode
+        JScrollPane scrollPane = new JScrollPane(textArea);
 
-        JTextArea textArea2 = new JTextArea(20, 50);
-        textArea2.setLineWrap(true);
-        textArea2.setWrapStyleWord(true);
-        textArea2.setText(generateIdeaViewModel.getState().getBusinessModel());
-        textArea2.setEditable(false); // read only mode
-        JScrollPane scrollPane2 = new JScrollPane(textArea2);
-
-        panel.add(scrollPane1);
-        panel.add(scrollPane2);
+        add(ideaButton);
+        panel.add(scrollPane);
+        add(backButton);
+        add(postButton);
 
         return panel;
     }
