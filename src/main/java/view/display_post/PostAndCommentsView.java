@@ -83,6 +83,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             replyPanel = createCommentUseCaseBuilder.build(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
             replyFrame.add(replyPanel);
             replyFrame.pack();
+            replyFrame.setLocationRelativeTo(this.getParent());
             replyFrame.setVisible(true);
         } else if (evt.getPropertyName().equals("close_reply_frame")) {
             replyFrame.setVisible(false);

@@ -43,6 +43,8 @@ public class PostView extends AbstractGridBagLayoutView {
         JLabel usernameLabel = new JLabel("Poster: " + username);
         if (post.get("logged_in_user_is_post_author") != null && (boolean) post.get("logged_in_user_is_post_author")) {
             usernameLabel.setForeground(Color.RED);
+        } else {
+            usernameLabel.setForeground(Color.BLUE);
         }
 
         JTextArea titleArea = createMultiLineText("Title: " + title, false);
