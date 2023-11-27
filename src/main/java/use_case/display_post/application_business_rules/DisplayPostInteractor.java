@@ -89,9 +89,11 @@ public class DisplayPostInteractor implements DisplayPostInputBoundary {
         processedPost.put("body", post.getBody());
         processedPost.put("suggested_collaborator_qualifications", post.getSuggestedCollaboratorQualifications());
 
+        boolean loggedInUserIsCollaborator = post.getCollaboratorIDs().contains(displayCommentDataAccessObject.getLoggedInUserId());
         boolean loggedInUserIsPostAuthor = post.getAuthorID().equals(displayCommentDataAccessObject.getLoggedInUserId());
 
         processedPost.put("logged_in_user_is_post_author", loggedInUserIsPostAuthor);
+        processedPost.put("logged_in_user_is_collaborator", loggedInUserIsCollaborator);
 
         return processedPost;
     }

@@ -29,7 +29,7 @@ public class PostView extends AbstractGridBagLayoutView {
         this.qualifications.add(0, "Suggested collaborator qualifications:");
 
         boolean qualificationsVisibility = qualifications.size() > 1;
-        boolean viewAuthorInformationButtonVisibility = (post.get("show_more_info_button") != null) && (boolean) post.get("show_more_info_button");
+        boolean viewAuthorInformationButtonVisibility = (boolean) post.get("logged_in_user_is_post_author") || (boolean) post.get("logged_in_user_is_collaborator");
 
         setLayout(new GridBagLayout());
 
