@@ -84,6 +84,9 @@ public class User {
     public void setCollaborationRequestIDs(List<ObjectId> collaborationRequestIDs) {
         this.collaborationRequestIDs = collaborationRequestIDs;
     }
+    public void addCollaborationRequestId(ObjectId id) {
+        this.collaborationRequestIDs.add(id);
+    }
 
     public String getName() {
         return name;
