@@ -3,6 +3,7 @@ package app;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import view.*;
+import view.display_post.*;
 
 import javax.swing.*;
 import java.awt.*;

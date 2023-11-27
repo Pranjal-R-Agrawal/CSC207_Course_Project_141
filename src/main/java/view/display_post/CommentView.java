@@ -1,4 +1,4 @@
-package view;
+package view.display_post;
 
 import org.bson.types.ObjectId;
 

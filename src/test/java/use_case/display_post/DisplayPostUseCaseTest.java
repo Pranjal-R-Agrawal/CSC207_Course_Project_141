@@ -10,7 +10,7 @@ import use_case.display_post.application_business_rules.DisplayPostInteractor;
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.display_post.interface_adapter.DisplayPostPresenter;
-import view.PostAndCommentsViewModel;
+import view.display_post.PostAndCommentsViewModel;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 

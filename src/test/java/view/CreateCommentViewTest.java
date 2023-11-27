@@ -5,6 +5,7 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import view.display_post.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;

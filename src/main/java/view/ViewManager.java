@@ -1,6 +1,8 @@
 package view;
 
 import org.bson.types.ObjectId;
+import view.display_post.PostAndCommentsView;
+import view.display_post.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;

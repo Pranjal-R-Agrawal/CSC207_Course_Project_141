@@ -1,7 +1,8 @@
-package view;
+package view.display_post;
 
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
