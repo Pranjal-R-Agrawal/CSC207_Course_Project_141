@@ -64,7 +64,7 @@ public class MistralAIAPI implements GenerativeAIAPI {
                 }
 
             } catch (IOException | NullPointerException | JSONException e) {
-               // JOptionPane.showMessageDialog(null, e.getMessage());
+               JOptionPane.showMessageDialog(null, e.getMessage());
                 throw new Exception("Unable to produce Business Model");
             }
 
