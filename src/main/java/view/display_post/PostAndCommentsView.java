@@ -72,6 +72,10 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             ObjectId postId = postAndCommentsViewModel.getPostId();
             displayPostController.execute(postId, "post");
         } else if (evt.getPropertyName().equals("display_single_comment")) {
+            if (!postAdded) {
+                postAndCommentsViewModel.getState().setErrorMessage("Post not found");
+                postAndCommentsViewModel.firePropertyChanged("display_error");
+            }
             ObjectId commentId = postAndCommentsViewModel.getState().getCommentId();
             displayPostController.execute(commentId, "comment");
         } else if (evt.getPropertyName().equals("reply_to_comment")) {
