@@ -72,12 +72,21 @@ public class PostView extends AbstractGridBagLayoutView {
             // TODO: implement similar to comment button
         });
 
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(e -> {
+            postAndCommentsViewModel.firePropertyChanged("reset_view");
+            postAndCommentsViewModel.firePropertyChanged("display_post");
+        });
+
         initialiseConstraints(constraints);
-        setConstraintWeight(constraints, 1.3, 1);
+        setConstraintWeight(constraints, 1.4, 1);
         addComponent(constraints, buttonRow, commentButton, 0, 0);
         setConstraintWeight(constraints, 1, 1);
         setConstraintInset(constraints, 0, 3, 0, 0);
         addComponent(constraints, buttonRow, viewAuthorInformationButton, GridBagConstraints.RELATIVE, 0);
+        setConstraintWeight(constraints, 0.1, 1);
+        setConstraintInset(constraints, 0, 3, 0, 0);
+        addComponent(constraints, buttonRow, refreshButton, GridBagConstraints.RELATIVE, 0);
 
         viewAuthorInformationButton.setVisible(viewAuthorInformationButtonVisibility);
 
