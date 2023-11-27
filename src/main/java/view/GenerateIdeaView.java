@@ -35,7 +35,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         ideaButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(ideaButton)) {
-                        generateIdeaController.execute();
+                        generateIdeaController.execute(false);
                     }
                 }
         );

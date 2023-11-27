@@ -27,9 +27,13 @@ public class MistralAIAPI implements GenerativeAIAPI {
         int i =0;
         JSONObject generatedText = null;
         JSONObject requestBodyJson = new JSONObject();
-        requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
-
-        while(i < 50) {
+        try {
+            requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
+        } catch(NullPointerException e) // Helpful for the test case in GenerateIdeaUseCaseTest.java
+        {
+            throw new Exception("Unable to produce Business Model");
+        }
+        while(i < 10) { //TODO: set to i < 50 during final submission
 
             RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());
             Request request = new Request.Builder()
@@ -50,7 +54,7 @@ public class MistralAIAPI implements GenerativeAIAPI {
 
                          if (generatedText.getString("generated_text").equals(requestBodyJson.getString("inputs")))
                          {
-                             return "";
+                             return idea.getIdea();
                          }
                     } else {
                         return "Empty response array.";
@@ -60,8 +64,8 @@ public class MistralAIAPI implements GenerativeAIAPI {
                 }
 
             } catch (IOException | NullPointerException | JSONException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-                throw new Exception("Couldn't generate business model");
+               // JOptionPane.showMessageDialog(null, e.getMessage());
+                throw new Exception("Unable to produce Business Model");
             }
 
             requestBodyJson.remove("inputs");
