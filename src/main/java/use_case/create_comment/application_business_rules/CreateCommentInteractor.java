@@ -27,6 +27,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
         } else {
             List<String> qualifications = Arrays.asList(createCommentInputData.getQualifications().split(";"));
             qualifications.replaceAll(String::trim);
+            qualifications.removeIf(String::isEmpty);
             ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
             Comment comment = commentFactory.create(createCommentInputData.getParentId(),
                     createCommentInputData.getParentPostId(),
@@ -34,7 +35,7 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
                     createCommentInputData.getBody(),
                     qualifications);
             commentDataAccessObject.addComment(comment);
-            commentPresenter.prepareSuccessView();
+            commentPresenter.prepareSuccessView(comment.getId());
         }
     }
 }
