@@ -29,6 +29,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
+    protected MongoCollection<CollabRequest> collabRequests;
     protected MongoCollection<Comment> comments;
     private ObjectId loggedInUserID;
     private ObjectId collaborationRequestId;
@@ -91,6 +92,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
 
+    private MongoCollection<CollabRequest> getCollabRequestsCollection() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(commentsCollectionName, CollabRequest.class).withCodecRegistry(pojoCodecRegistry);
+    }
+
     public void resetDatabase() {
         users.drop();
         posts.drop();
@@ -134,8 +141,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
-    public void setCollaborationRequestId(ObjectId id) {
+    public ObjectId setCollaborationRequestId(ObjectId id) {
         collaborationRequestId = id;
+        return id;
     }
 
     public User getLoggedInUser() {
@@ -148,6 +156,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         comments = getCommentsCollection();
         comments.insertOne(comment);
     }
+    @Override
+    public void addCollabRequest(CollabRequest collabRequest){
+        collabRequests = getCollabRequestsCollection();
+        collabRequests.insertOne(collabRequest);
+    }
+
 
     @Override
     public ObjectId getLoggedInUserId() {
@@ -156,13 +170,20 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public ObjectId getUserId() {
         return loggedInUserID;
     }
+    @Override
     public Comment getCommentByCommentId(ObjectId id) {
         comments = getCommentsCollection();
         return comments.find(Filters.eq("_id", id)).first();
     }
 
+    @Override
     public Post getPostByPostId(ObjectId id) {
         posts = getPostsCollection();
         return posts.find(Filters.eq("_id", id)).first();
+    }
+    @Override
+    public CollabRequest getCollaborationRequestById(ObjectId id) {
+        collabRequests = getCollabRequestsCollection();
+        return collabRequests.find(Filters.eq("_id", id)).first();
     }
 }
