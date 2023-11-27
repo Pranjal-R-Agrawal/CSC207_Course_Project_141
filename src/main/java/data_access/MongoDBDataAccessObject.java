@@ -125,6 +125,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.text(username)).first();
     }
 
+    public User getUserById(ObjectId objectId) {
+        users = getUsersCollection();
+        return users.find(Filters.eq("_id", objectId)).first();
+    }
+
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
@@ -150,5 +155,10 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public Comment getCommentByCommentId(ObjectId id) {
         comments = getCommentsCollection();
         return comments.find(Filters.eq("_id", id)).first();
+    }
+
+    public Post getPostByPostId(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
     }
 }
