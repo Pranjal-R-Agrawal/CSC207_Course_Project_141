@@ -1,8 +1,5 @@
 package view;
 
-import use_case.login.interface_adapter.LoginController;
-import use_case.login.interface_adapter.LoginState;
-
 import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -11,7 +8,7 @@ public class HomePageViewModel extends ViewModel {
 
     public static final String GENERATE_IDEA_BUTTON_LABEL = "Generate Idea";
 
-    public static final String POST_BUTTON_LABEL = "Post";
+    public static final String POST_BUTTON_LABEL = "Create Post";
 
     public static final String PROFILE_BUTTON_LABEL = "View Profile";
 
@@ -22,7 +19,7 @@ public class HomePageViewModel extends ViewModel {
     }
 
     public void firePropertyChanged(String propertyName) {
-        support.firePropertyChange(propertyName, null, this.state);
+        support.firePropertyChange(propertyName, null, "view");
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
