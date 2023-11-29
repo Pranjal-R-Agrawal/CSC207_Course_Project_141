@@ -41,6 +41,47 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
         homePageViewModel.addPropertyChangeListener(this);
 
+        generateIdeaButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(generateIdeaButton)) {
+                        viewManagerModel.setActiveView(generateIdeaViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
+
+        postButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(postButton)) {
+                        viewManagerModel.setActiveView(createPostViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
+
+        viewProfileButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(viewProfileButton)) {
+                        viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
+
+        setLayout(new GridLayout(7, 5));
+
+        JPanel emptyPanel1 = new JPanel();
+        JPanel emptyPanel2 = new JPanel();
+        JPanel emptyPanel3 = new JPanel();
+        JPanel emptyPanel4 = new JPanel();
+
+        add(emptyPanel4);
+        add(viewProfileButton);
+        add(emptyPanel1);
+        add(generateIdeaButton);
+        add(emptyPanel2);
+        add(postButton);
+        add(emptyPanel3);
     }
 
     @Override
