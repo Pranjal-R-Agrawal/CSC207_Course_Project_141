@@ -15,19 +15,28 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     public void execute(ViewUserInfoInputData viewUserInfoInputData) {
         if (viewUserInfoInputData.getIsCollaborator()) {
             // get name
+            String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
             // get rating
+            double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
             // get contact info
+            String email = infoDataAccessObject.getUserEmail(viewUserInfoInputData.getUserId());
+            String phoneNumber = infoDataAccessObject.getPhoneNumber(viewUserInfoInputData.getUserId());
 
             // create output data object
+            ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, email, phoneNumber);
+            infoPresenter.prepareCollabView(userData);
+        }
 
-            infoPresenter.prepareCollabView(new ViewUserInfoOutputData(viewUserInfoInputData.getUserId()));
-        } if (!viewUserInfoInputData.getIsCollaborator()) {
+        if (!viewUserInfoInputData.getIsCollaborator()) {
             // get name
+            String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
             // get rating
+            double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
 
             // create output data object
+            ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, "", "");
 
-            infoPresenter.prepareGeneralView(new ViewUserInfoOutputData(viewUserInfoInputData.getUserId()));
+            infoPresenter.prepareGeneralView(userData);
         } else {
             infoPresenter.prepareFailView("Failed to retreive User");
         }
