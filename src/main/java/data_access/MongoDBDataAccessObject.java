@@ -150,18 +150,20 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public boolean checkUserExists(ObjectId userId) {
         users = getUsersCollection();
         User user = users.find(Filters.eq("_id", userId)).first();
-        if (user != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return user != null;
     }
 
-    @Override
+
     public String getUsernameByUserId(ObjectId userId) {
         users = getUsersCollection();
         User user = users.find(Filters.eq("_id", userId)).first();
-        return user.getUsername();
+        return user.getName();
+    }
+
+    public String getNameByUserId(ObjectId userId) {
+        String username = getUsernameByUserId(userId);
+        User user = getUserByUsername(username);
+        return user.getName();
     }
 
     @Override

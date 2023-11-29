@@ -13,4 +13,7 @@ public interface ViewUserInfoDataAccessInterface {
     String getUserEmail(ObjectId userId);
 
     String getPhoneNumber(ObjectId userId);
+
+    String getNameByUserId(ObjectId userId);
+
 }

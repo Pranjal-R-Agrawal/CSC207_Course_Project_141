@@ -15,7 +15,7 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
         if(infoDataAccessObject.checkUserExists(viewUserInfoInputData.getUserId())) {
             if (viewUserInfoInputData.getIsCollaborator()) {
                 // get name
-                String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
+                String username = infoDataAccessObject.getNameByUserId(viewUserInfoInputData.getUserId());
                 // get rating
                 double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
                 // get contact info
@@ -29,7 +29,7 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
 
             else {
                 // get name
-                String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
+                String username = infoDataAccessObject.getNameByUserId(viewUserInfoInputData.getUserId());
                 // get rating
                 double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
 
