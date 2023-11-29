@@ -1,7 +1,6 @@
 package use_case.view_user_info.application_business_rules;
 
 import data_access.ViewUserInfoDataAccessInterface;
-import entity.User;
 
 public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     final ViewUserInfoDataAccessInterface infoDataAccessObject;
