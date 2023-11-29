@@ -9,7 +9,10 @@ import java.awt.*;
 
 public class Main {
     protected static SignupViewModel signupViewModel;
+
     protected static LoginViewModel loginViewModel;
+
+    protected static HomePageViewModel homePageViewModel;
 
     public static void main(String[] args) {
         JFrame application = new JFrame("Startup Generator");
@@ -25,6 +28,10 @@ public class Main {
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
+        homePageViewModel = new HomePageViewModel();
+        generateIdeaViewModel = new GenerateIdeaViewModel();
+        createPostViewModel = new CreatePostViewModel();
+        viewProfileViewModel = new ViewProfileViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         try {
@@ -50,6 +57,9 @@ public class Main {
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
+
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, viewProfileViewModel);
+        views.add(homePageView, homePageView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
