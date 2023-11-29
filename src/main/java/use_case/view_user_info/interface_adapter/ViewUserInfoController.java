@@ -15,6 +15,6 @@ public class ViewUserInfoController {
 
     public void execute(ObjectId userId, boolean isCollaborator) {
         ViewUserInfoInputData viewUserInfoInputData = new ViewUserInfoInputData(userId, isCollaborator);
-        ViewUserInfoInteractor.execute(viewUserInfoInputData);
+        viewUserInfoInteractor.execute(viewUserInfoInputData);
     }
 }
