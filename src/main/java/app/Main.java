@@ -3,6 +3,7 @@ package app;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import view.*;
+import view.display_post.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class Main {
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
+        ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
@@ -60,6 +61,11 @@ public class Main {
 
         HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, viewProfileViewModel);
         views.add(homePageView, homePageView.viewName);
+      
+        PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
+        CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
