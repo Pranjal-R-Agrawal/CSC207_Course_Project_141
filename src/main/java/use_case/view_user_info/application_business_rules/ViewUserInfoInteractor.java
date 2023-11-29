@@ -12,31 +12,34 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     }
 
     public void execute(ViewUserInfoInputData viewUserInfoInputData) {
-        if (viewUserInfoInputData.getIsCollaborator()) {
-            // get name
-            String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
-            // get rating
-            double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
-            // get contact info
-            String email = infoDataAccessObject.getUserEmail(viewUserInfoInputData.getUserId());
-            String phoneNumber = infoDataAccessObject.getPhoneNumber(viewUserInfoInputData.getUserId());
+        if(infoDataAccessObject.checkUserExists(viewUserInfoInputData.getUserId())) {
+            if (viewUserInfoInputData.getIsCollaborator()) {
+                // get name
+                String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
+                // get rating
+                double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
+                // get contact info
+                String email = infoDataAccessObject.getUserEmail(viewUserInfoInputData.getUserId());
+                String phoneNumber = infoDataAccessObject.getPhoneNumber(viewUserInfoInputData.getUserId());
 
-            // create output data object
-            ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, email, phoneNumber);
-            infoPresenter.prepareCollabView(userData);
+                // create output data object
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, email, phoneNumber);
+                infoPresenter.prepareCollabView(userData);
+            }
+
+            else {
+                // get name
+                String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
+                // get rating
+                double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
+
+                // create output data object
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, "", "");
+
+                infoPresenter.prepareGeneralView(userData);
+            }
         }
-
-        if (!viewUserInfoInputData.getIsCollaborator()) {
-            // get name
-            String username = infoDataAccessObject.getUsernameByUserId(viewUserInfoInputData.getUserId());
-            // get rating
-            double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
-
-            // create output data object
-            ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, "", "");
-
-            infoPresenter.prepareGeneralView(userData);
-        } else {
+        else {
             infoPresenter.prepareFailView("Failed to retreive User");
         }
     }
