@@ -25,7 +25,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, ViewUserInfoDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -143,5 +143,45 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     @Override
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
+    }
+
+    // Data access methods for view_user_info use case
+    @Override
+    public boolean checkUserExists(ObjectId userId) {
+        users = getUsersCollection();
+        User user = users.find(Filters.eq("_id", userId)).first();
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String getUsernameByUserId(ObjectId userId) {
+        users = getUsersCollection();
+        User user = users.find(Filters.eq("_id", userId)).first();
+        return user.getUsername();
+    }
+
+    @Override
+    public double getUserRating(ObjectId userId) {
+        String username = getUsernameByUserId(userId);
+        User user = getUserByUsername(username);
+        return user.getRating();
+    }
+
+    @Override
+    public String getUserEmail(ObjectId userId) {
+        String username = getUsernameByUserId(userId);
+        User user = getUserByUsername(username);
+        return user.getEmail();
+    }
+
+    @Override
+    public String getPhoneNumber(ObjectId userId) {
+        String username = getUsernameByUserId(userId);
+        User user = getUserByUsername(username);
+        return user.getPhoneNumber();
     }
 }
