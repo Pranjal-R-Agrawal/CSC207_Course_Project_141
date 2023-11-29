@@ -12,6 +12,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -25,7 +26,8 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, ViewUserInfoDataAccessInterface {
+
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, ViewUserInfoDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -125,6 +127,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.text(username)).first();
     }
 
+    public User getUserById(ObjectId id) {
+        users = getUsersCollection();
+        return users.find(Filters.eq("_id", id)).first();
+    }
+
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
@@ -134,10 +141,31 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.eq("_id", loggedInUserID)).first();
     }
 
+    public List<Comment> getCommentsByParentPostID(ObjectId id) {
+        comments = getCommentsCollection();
+        comments.createIndex(Indexes.text("parentPostId"));
+        return comments.find(Filters.eq("parentPostId", id)).into(new ArrayList<Comment>());
+    }
+
+    public Comment getCommentByCommentID(ObjectId id) {
+        comments = getCommentsCollection();
+        return comments.find(Filters.eq("_id", id)).first();
+    }
+
+    public Post getPostByPostID(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
+    }
+
     @Override
     public void addComment(Comment comment) {
         comments = getCommentsCollection();
         comments.insertOne(comment);
+    }
+
+    public void addPost(Post post) {
+        posts = getPostsCollection();
+        posts.insertOne(post);
     }
 
     @Override

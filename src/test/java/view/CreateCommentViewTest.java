@@ -1,11 +1,11 @@
 package view;
 
-import app.CreateCommentUseCaseFactory;
+import app.CreateCommentUseCaseBuilder;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
-import use_case.create_comment.CreateCommentUseCaseTest;
+import view.display_post.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,8 +104,9 @@ public class CreateCommentViewTest {
             throw new RuntimeException(e);
         }
         createCommentViewModel = new CreateCommentViewModel();
-        CreateCommentView createCommentView = CreateCommentUseCaseFactory.create(new ViewManagerModel(), createCommentViewModel, mongoDBDataAccessObject);
-        createCommentButton = (JButton) createCommentView.getComponent(2); // Make sure it is correct n
+        CreateCommentView createCommentView = CreateCommentUseCaseBuilder.create(new PostAndCommentsViewModel(), createCommentViewModel, mongoDBDataAccessObject);
+
+        createCommentButton = createCommentView.getCommentButton();
 
         message = "";
         popUpDiscovered = false;
