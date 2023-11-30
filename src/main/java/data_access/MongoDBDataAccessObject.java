@@ -92,9 +92,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     public void resetDatabase() {
-        users.drop();
-        posts.drop();
-        comments.drop();
+        users.deleteMany(new Document());
+        posts.deleteMany(new Document());
+        comments.deleteMany(new Document());
     }
 
     public boolean usernameUsed(String username) {
