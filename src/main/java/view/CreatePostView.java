@@ -111,9 +111,25 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
             public void keyReleased(KeyEvent e) {}
         });
 
+        setLayout(new GridBagLayout());
+
+        JPanel postButtonPanel = new JPanel(new GridBagLayout());
+        setConstraintInset(constraints, 0, 0, 0, 0);
+        addComponent(constraints, postButtonPanel, postButton, 0, 0);
+
+        setConstraintInset(constraints, 0, 5, 0, 5);
+        setConstraintWeight(constraints, 1, 1);
+        addPanel(constraints, this, titlePanel, 0, 0);
+        addPanel(constraints, this, bodyPanel, 0, GridBagConstraints.RELATIVE);
+        addPanel(constraints, this, colabRolesPanel, 0, GridBagConstraints.RELATIVE);
+        addPanel(constraints, this, postButtonPanel, 0, GridBagConstraints.RELATIVE);
+        add(postButton, constraints);
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("post_error")){
+            CreatePostState currentState = createPostViewModel.getState();
+            JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        }
     }
 }
