@@ -10,7 +10,7 @@ import java.awt.*;
 public class NewWindow {
     private JPanel view;
     private final boolean scrollable;
-    private final String viewName;
+    private String viewName;
     private JFrame frame = null;
     public NewWindow(JPanel view, boolean scrollable, String viewName){
         this.view = view;
@@ -20,6 +20,7 @@ public class NewWindow {
     public void setView(JPanel view){
         this.view = view;
     }
+    public void setViewName(String viewName){this.viewName = viewName;}
     public void createWindow(){
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
