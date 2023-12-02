@@ -7,16 +7,16 @@ public class ConcreteIdea implements Idea{
     public ConcreteIdea(String idea) {
         this.idea= idea;
     }
-
+    @Override
     public Idea setBusinessModel(String businessModel) {
         this.businessModel = businessModel;
         return this;
     }
-
+    @Override
     public String getIdea() {
         return idea;
     }
-
+    @Override
     public String getBusinessModel(){
         return businessModel;
     }
