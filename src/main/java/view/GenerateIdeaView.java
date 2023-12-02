@@ -16,8 +16,9 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     private final JButton ideaButton = new JButton();
     private final JButton backButton = new JButton();
     private final JButton postButton = new JButton();
+    private final JTextArea textArea = new JTextArea(10,25);
 
-    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel,GenerateIdeaController generateIdeaController,HomePageViewModel homePageViewModel){
+    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel) {
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.generateIdeaController = generateIdeaController;
         this.viewManagerModel = viewManagerModel;
@@ -39,7 +40,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
-  //     ideaButton.doClick();
+       //  ideaButton.doClick();
 
 
         backButton.addActionListener(
@@ -55,16 +56,8 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
 
         postButton.addActionListener(
                 e -> {
-                    if (e.getSource().equals(postButton)) {
-//                        SignupState currentState = signupViewModel.getState();
-//                        signupController.execute(
-//                                currentState.getUsername(),
-//                                currentState.getPassword(),
-//                                currentState.getRepeatPassword(),
-//                                currentState.getName(),
-//                                currentState.getEmail(),
-//                                currentState.getPhoneNumber()
-//                        );
+                    if(e.getSource().equals(postButton)){
+
                     }
                 }
         );
@@ -73,22 +66,13 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        if (generateIdeaViewModel.getState().getBusinessModel().isEmpty())
-        {
-            addComponent(ideaButton, c,0, 0, GridBagConstraints.HORIZONTAL);
-            addComponent(backButton, c,0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
-        }
-        else {
-
             JPanel ideaOutputData = create();
             addComponent(ideaButton, c, 0, 0, GridBagConstraints.HORIZONTAL);
             addComponent(ideaOutputData, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
-            addComponent(backButton, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
             addComponent(postButton, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+            addComponent(backButton, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
+}
 
-
-        }
-    }
 
     private void addComponent(JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
         c.gridx = gridx;
@@ -96,6 +80,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         c.fill = fill;
         add(panel, c);
     }
+
     private void addComponent(JButton jButton, GridBagConstraints c, int gridx, int gridy, int fill) {
         c.gridx = gridx;
         c.gridy = gridy;
@@ -105,39 +90,18 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
 
     private JPanel create() {
         JPanel panel = new JPanel();
-
-        JTextArea textArea = new JTextArea(10, 25);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setText(generateIdeaViewModel.getState().getBusinessModel());
-        textArea.setEditable(false); // read only mode
-        JScrollPane scrollPane = new JScrollPane(textArea);
-
-
+        this.textArea.setLineWrap(true);
+        this.textArea.setWrapStyleWord(true);
+        this.textArea.setEditable(false); // read only mode
+        JScrollPane scrollPane = new JScrollPane(this.textArea);
         panel.add(scrollPane);
-
         return panel;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        if (evt.getPropertyName().equals("sign_up_error")) {
-//            SignupState currentState = signupViewModel.getState();
-//            JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
-//        } else if (evt.getPropertyName().equals("reset_input_fields")) {
-//            usernameInputField.setText("");
-//            passwordInputField.setText("");
-//            repeatPasswordInputField.setText("");
-//            nameInputField.setText("");
-//            phoneNumberInputField.setText("");
-//            emailInputField.setText("");
-//        } else if (evt.getPropertyName().equals("update_fields")) {
-//            usernameInputField.setText(signupViewModel.getState().getUsername());
-//            passwordInputField.setText(signupViewModel.getState().getPassword());
-//            repeatPasswordInputField.setText(signupViewModel.getState().getRepeatPassword());
-//            nameInputField.setText(signupViewModel.getState().getName());
-//            phoneNumberInputField.setText(signupViewModel.getState().getPhoneNumber());
-//            emailInputField.setText(signupViewModel.getState().getEmail());
-//        }
+        if (evt.getPropertyName().equals("business_model_display")) { // sets the text of JTextArea with the new business model
+        this.textArea.setText(generateIdeaViewModel.getState().getBusinessModel());
+        }
     }
 }
