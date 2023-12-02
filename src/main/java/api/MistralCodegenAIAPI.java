@@ -6,16 +6,29 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * Concrete implementation of the GenerativeAIAPI interface.
+ * AI Models used:
+ *  <a href="https://huggingface.co/Salesforce/codegen-350M-mono">Salesforce/codegen-350M-mono</a>
+ *  <a href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1">mistralai/Mistral-7B-Instruct-v0.1</a>
+ * @author Sidharth Sawhney
+ */
 public class MistralCodegenAIAPI implements GenerativeAIAPI {
     private String API_TOKEN;
 
+    /**
+     * Generates business model for a given idea prompt with the <a href="https://huggingface.co/Salesforce/codegen-350M-mono">Salesforce/codegen-350M-mono</a> and <a href="https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.1">mistralai/Mistral-7B-Instruct-v0.1</a> AI models
+     * @param idea the idea for which the business model must be generated
+     * @param testForException a flag variable useful for testing purposes (set to false for normal execution)
+     * @return the business model for the idea prompt
+     * @throws Exception IOException or NullPointerException or JSONException
+     */
     @Override
     public String generateBusinessModel(Idea idea, boolean testForException) throws Exception {
         OkHttpClient client = new OkHttpClient();

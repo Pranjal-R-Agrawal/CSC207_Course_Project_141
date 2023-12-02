@@ -9,11 +9,25 @@ import use_case.generate_idea.interface_adapter.GenerateIdeaController;
 import use_case.generate_idea.interface_adapter.GenerateIdeaPresenter;
 import view.*;
 
+/**
+ * Static Factory class for assembling the required components for the Generate Idea Use Case
+ * @author Sidharth Sawhney
+ */
 public class GenerateIdeaUseCaseFactory {
 
     /** Prevents instantiation */
     private GenerateIdeaUseCaseFactory() {}
 
+
+    /**
+     * Creates the View for the Generate Idea Use Case
+     * @param viewManagerModel Manages which view is displayed
+     * @param generateIdeaViewModel Observable that stores the state useful to the Generate Idea View.
+     * @param generateIdeaDataAccessObject Helps us interact appropriately with the Database
+     * @param generativeAIAPI the API AI Model used to generate business model
+     * @param homePageViewModel Observable that stores the state useful to Home Page View.
+     * @return the View for the Generate Idea Use Case
+     */
     public static GenerateIdeaView create(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI, HomePageViewModel homePageViewModel) {
         GenerateIdeaController generateIdeaController = createGenerateIdeaUseCase(viewManagerModel, generateIdeaViewModel, generateIdeaDataAccessObject, generativeAIAPI);
         return new GenerateIdeaView(viewManagerModel, generateIdeaViewModel, generateIdeaController, homePageViewModel);

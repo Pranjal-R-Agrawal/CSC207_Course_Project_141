@@ -7,6 +7,10 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The UI that displays changes in the GenerateIdeaViewModel
+ * @author Sidharth Sawhney
+ */
 public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final GenerateIdeaViewModel generateIdeaViewModel;
@@ -18,6 +22,13 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     private final JButton postButton = new JButton();
     private final JTextArea textArea = new JTextArea(10,25);
 
+    /**
+     * Initializes the UI template and provides functionality to its components.
+     * @param viewManagerModel Manages which view is displayed
+     * @param generateIdeaViewModel Observable that stores the state useful to the Generate Idea View.
+     * @param generateIdeaController Controller to trigger the GenerateIdeaInputBoundary to perform application logic
+     * @param homePageViewModel Observable that stores the state useful to Home Page View.
+     */
     public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel) {
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.generateIdeaController = generateIdeaController;
@@ -98,6 +109,11 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         return panel;
     }
 
+    /**
+     * Updates the UI when a change is made in the GenerateIdeaViewModel
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("business_model_display")) { // sets the text of JTextArea with the new business model

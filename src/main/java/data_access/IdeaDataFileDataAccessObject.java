@@ -5,14 +5,23 @@ import entity.IdeaFactory;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Concrete implementation of the GenerateIdeaDataAccessInterface interface with a CSV file database.
+ * @author Sidharth Sawhney
+ */
 public class IdeaDataFileDataAccessObject implements GenerateIdeaDataAccessInterface{
 
     private final File ideaFile;
-
     private Map<Integer, Idea> ideas = new HashMap<>();
-
     private IdeaFactory ideaFactory;
 
+
+    /**
+     * Initializes a collection of ideas.
+     * @param csvPath a valid file path
+     * @param ideaFactory factory to create Ideas from prompts in the Database
+     * @throws Exception occurs when file is not found or ideas couldn't be retrieved
+     */
     public IdeaDataFileDataAccessObject(String csvPath, IdeaFactory ideaFactory) throws Exception {
         this.ideaFactory = ideaFactory;
         try {
@@ -34,6 +43,7 @@ public class IdeaDataFileDataAccessObject implements GenerateIdeaDataAccessInter
 
     }
 
+
     /**
      * Precondition: ideaFile is a valid path
      * @throws Exception
@@ -51,6 +61,12 @@ public class IdeaDataFileDataAccessObject implements GenerateIdeaDataAccessInter
                 }
             }
         }
+
+
+    /**
+     * Reads random idea from the loaded collection of ideas from the database
+     * @return an idea containing its prompt only (no business model)
+     */
     @Override
     public Idea generateRandomIdea()
     {
