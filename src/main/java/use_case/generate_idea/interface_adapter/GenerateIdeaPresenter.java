@@ -8,6 +8,7 @@ import view.ViewManagerModel;
 public class GenerateIdeaPresenter implements GenerateIdeaOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final GenerateIdeaViewModel generateIdeaViewModel;
+
     public GenerateIdeaPresenter(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
@@ -17,6 +18,7 @@ public class GenerateIdeaPresenter implements GenerateIdeaOutputBoundary {
     public void prepareSuccessView(GenerateIdeaOutputData idea) {
 
         generateIdeaViewModel.getState().setIdea(idea.getIdea()).setBusinessModel(idea.getBusinessModel());
+        generateIdeaViewModel.firePropertyChanged("business_model_display");
 
         viewManagerModel.setActiveView(generateIdeaViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

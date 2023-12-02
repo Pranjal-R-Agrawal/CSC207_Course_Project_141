@@ -17,7 +17,7 @@ public class MistralCodegenAIAPI implements GenerativeAIAPI {
     private String API_TOKEN;
 
     @Override
-    public String generateBusinessModel(Idea idea) throws Exception {
+    public String generateBusinessModel(Idea idea, boolean testForException) throws Exception {
         OkHttpClient client = new OkHttpClient();
         Random random = new Random();
         MediaType mediaType = MediaType.parse("application/json");
@@ -26,12 +26,9 @@ public class MistralCodegenAIAPI implements GenerativeAIAPI {
         int i = 0;
         JSONObject generatedText = null;
         JSONObject requestBodyJson = new JSONObject();
-        try {
-            requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
-        } catch (NullPointerException e) // Helpful for the test case in GenerateIdeaUseCaseTest.java
-        {
-            throw new Exception("Unable to produce Business Model");
-        }
+
+        requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
+
         while (i < 10) { //TODO: set to i < 50 during final submission
             int randomKeyIndex = random.nextInt(2); // chooses 0 for Mistral, 1 for Codegen
 
@@ -68,6 +65,9 @@ public class MistralCodegenAIAPI implements GenerativeAIAPI {
                     String responseBody = response.body().string();
                     JSONArray responseArray = new JSONArray(responseBody);
 
+                    if (testForException) // to test that the exception is caught and handled
+                        responseArray = null;
+
                     if (!responseArray.isEmpty()) {
                         generatedText = responseArray.getJSONObject(0);
 
@@ -95,12 +95,11 @@ public class MistralCodegenAIAPI implements GenerativeAIAPI {
 
 
     public static void main(String[] args) {
-        Idea idea = new ConcreteIdea("A “social” or “dynamic” sales and marketing platform for small business owners. The startup offers an online platform for users to create customized sales and marketing campaigns.");
-
+        Idea idea = new ConcreteIdea("A 3D printing platform that helps business owners create 3D-printed products");
 
         GenerativeAIAPI obj = new MistralCodegenAIAPI();
         try {
-            System.out.println(obj.generateBusinessModel(idea));
+            System.out.println(obj.generateBusinessModel(idea, false));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
 

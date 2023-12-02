@@ -9,7 +9,7 @@ public class GenerateIdeaController {
         this.generateIdeaUseCaseInteractor= generateIdeaUseCaseInteractor;
     }
 
-    public void execute(boolean testForError) {
-       generateIdeaUseCaseInteractor.execute(testForError);
+    public void execute(boolean testForException) {
+       generateIdeaUseCaseInteractor.execute(testForException);
     }
 }

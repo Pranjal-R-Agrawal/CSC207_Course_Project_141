@@ -18,7 +18,7 @@ public class MistralAIAPI implements GenerativeAIAPI {
     private String API_TOKEN;
 
     @Override
-    public String generateBusinessModel(Idea idea) throws Exception {
+    public String generateBusinessModel(Idea idea, boolean testForException) throws Exception {
         OkHttpClient client = new OkHttpClient();
 
         MediaType mediaType = MediaType.parse("application/json");
@@ -27,12 +27,9 @@ public class MistralAIAPI implements GenerativeAIAPI {
         int i =0;
         JSONObject generatedText = null;
         JSONObject requestBodyJson = new JSONObject();
-        try {
-            requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
-        } catch(NullPointerException e) // Helpful for the test case in GenerateIdeaUseCaseTest.java
-        {
-            throw new Exception("Unable to produce Business Model");
-        }
+
+        requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
+
         while(i < 10) { //TODO: set to i < 50 during final submission
 
             RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());
@@ -48,6 +45,9 @@ public class MistralAIAPI implements GenerativeAIAPI {
                 if (response.isSuccessful()) {
                     String responseBody = response.body().string();
                     JSONArray responseArray = new JSONArray(responseBody);
+
+                        if (testForException) // to test that the exception is caught and handled
+                            responseArray = null;
 
                     if (!responseArray.isEmpty()) {
                          generatedText = responseArray.getJSONObject(0);
@@ -78,12 +78,12 @@ public class MistralAIAPI implements GenerativeAIAPI {
 
     public static void main(String[] args)
     {
-        Idea idea = new ConcreteIdea("A “social” or “dynamic” sales and marketing platform for small business owners. The startup offers an online platform for users to create customized sales and marketing campaigns. The platform then connects them with their target audience, encouraging the user to talk about their products and services, which the startup claims is more effective than most traditional marketing platforms.");
+        Idea idea = new ConcreteIdea("A “social” or “dynamic” sales and marketing platform for small business owners. The startup offers an online platform for users to create customized sales and marketing campaigns.");
 
 
         GenerativeAIAPI obj = new MistralAIAPI();
         try {
-            System.out.println(obj.generateBusinessModel(idea));
+            System.out.println(obj.generateBusinessModel(idea, false));
         }
         catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

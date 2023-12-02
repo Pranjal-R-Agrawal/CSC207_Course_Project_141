@@ -15,25 +15,26 @@ public class GenerateIdeaInteractor implements GenerateIdeaInputBoundary{
         this.generativeAIAPI = generativeAIAPI;
     }
 
-    public void execute(boolean testForError) {
+    public void execute(boolean testForException) {
         Idea idea = null;
 
        try {
-           String businessModel= "";
-           if(testForError) // force exception to occur for GenerateIdeaUseCaseTest
-           {
-                idea = generateIdeaDataAccessObject.generateRandomIdea();
-                businessModel = generativeAIAPI.generateBusinessModel(null);
-           }
-           else {
-               idea = generateIdeaDataAccessObject.generateRandomIdea();
-               businessModel = generativeAIAPI.generateBusinessModel(idea);
-           }
+//           String businessModel= "";
+//           if(testForException) // force exception to occur for GenerateIdeaUseCaseTest
+//           {
+//                idea = generateIdeaDataAccessObject.generateRandomIdea();
+//                businessModel = generativeAIAPI.generateBusinessModel(null);
+//           }
+//           else {
+//               idea = generateIdeaDataAccessObject.generateRandomIdea();
+//               businessModel = generativeAIAPI.generateBusinessModel(idea);
+//           }
+           idea = generateIdeaDataAccessObject.generateRandomIdea();
+           String businessModel = generativeAIAPI.generateBusinessModel(idea,testForException);
            idea.setBusinessModel(businessModel);
            GenerateIdeaOutputData ideaOutputData = new GenerateIdeaOutputData(idea.getIdea(),idea.getBusinessModel());
-          generateIdeaPresenter.prepareSuccessView(ideaOutputData);
+           generateIdeaPresenter.prepareSuccessView(ideaOutputData);
        }catch (Exception e) {
-           System.out.println(e.getMessage()); // see the message
            GenerateIdeaOutputData ideaOutputData = new GenerateIdeaOutputData(idea.getIdea(),e.getMessage());
            generateIdeaPresenter.prepareSuccessView(ideaOutputData);}
         }

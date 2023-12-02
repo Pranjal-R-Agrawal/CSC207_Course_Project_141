@@ -1,7 +1,7 @@
 package app;
 
 import api.GenerativeAIAPI;
-import api.MistralAIAPI;
+import api.MistralCodegenAIAPI;
 import data_access.GenerateIdeaDataAccessInterface;
 import data_access.IdeaDataFileDataAccessObject;
 import data_access.MongoDBDataAccessObject;
@@ -61,7 +61,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        GenerativeAIAPI generativeAIAPI = new MistralAIAPI();
+        GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
         IdeaFactory ideaFactory = new ConcreteIdeaFactory();
         try
@@ -76,7 +76,7 @@ public class Main {
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(generateIdeaView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

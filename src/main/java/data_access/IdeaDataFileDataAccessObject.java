@@ -35,7 +35,7 @@ public class IdeaDataFileDataAccessObject implements GenerateIdeaDataAccessInter
     }
 
     /**
-     * Precondition: ideaFile must be valid
+     * Precondition: ideaFile is a valid path
      * @throws Exception
      */
     private void loadIdeas() throws Exception{
