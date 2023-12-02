@@ -110,6 +110,24 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     }
 
     /**
+     * For testing purposes
+     * @return Returns the GenerateIdeaViewModel
+     */
+    protected GenerateIdeaViewModel getGenerateIdeaViewModel()
+        {
+            return this.generateIdeaViewModel;
+        }
+
+    /**
+     * For testing purposes
+     * @return Returns the GenerateIdeaController
+     */
+    protected GenerateIdeaController getGenerateIdeaController()
+    {
+        return this.generateIdeaController;
+    }
+
+    /**
      * Updates the UI when a change is made in the GenerateIdeaViewModel
      * @param evt A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
