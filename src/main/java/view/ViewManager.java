@@ -47,6 +47,7 @@ public class ViewManager implements PropertyChangeListener {
             ObjectId id = (ObjectId) evt.getNewValue();
             PostAndCommentsView postAndCommentsView = getDisplayCommentsView(id);
             newWindow.setView(postAndCommentsView);
+            newWindow.setViewName(postAndCommentsView.viewName);
             newWindow.createWindow();
 //            JFrame postFrame = new JFrame();
 //            postFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

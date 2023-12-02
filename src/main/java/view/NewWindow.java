@@ -12,8 +12,7 @@ public class NewWindow {
     private final boolean scrollable;
     private String viewName;
     private JFrame frame = null;
-    public NewWindow(JPanel view, boolean scrollable, String viewName){
-        this.view = view;
+    public NewWindow(boolean scrollable, String viewName){
         this.scrollable = scrollable;
         this.viewName = viewName;
     }
