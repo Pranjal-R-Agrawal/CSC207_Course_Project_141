@@ -14,7 +14,9 @@ public class ViewManager implements PropertyChangeListener {
     private final JPanel views;
     private PostAndCommentsViewModel postAndCommentsViewModel;
     private PostAndCommentsView postAndCommentsView;
-    private NewWindow newWindow;
+    public NewWindow newPostAndCommentWindow;
+    public NewWindow newCreateCommentWindow;
+    public NewWindow newCreatePostWindow;
 
     public ViewManager(JPanel views, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
         this.views = views;
@@ -25,7 +27,11 @@ public class ViewManager implements PropertyChangeListener {
     public void setupDisplayComments(PostAndCommentsViewModel postAndCommentsViewModel, PostAndCommentsView postAndCommentsView, NewWindow newWindow) {
         this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.postAndCommentsView = postAndCommentsView;
-        this.newWindow = newWindow;
+    }
+    public void setupNewWindows(NewWindow newPostAndCommentWindow, NewWindow newCreateCommentWindow, NewWindow newCreatePostWindow){
+        this.newPostAndCommentWindow = newPostAndCommentWindow;
+        this.newCreateCommentWindow = newCreateCommentWindow;
+        this.newCreatePostWindow = newCreatePostWindow;
     }
 
     public PostAndCommentsView getDisplayCommentsView(ObjectId id) {
@@ -34,6 +40,8 @@ public class ViewManager implements PropertyChangeListener {
         postAndCommentsViewModel.firePropertyChanged("display_post");
         return postAndCommentsView;
     }
+
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -46,19 +54,11 @@ public class ViewManager implements PropertyChangeListener {
         } else if (evt.getPropertyName().equals("display_post")) {
             ObjectId id = (ObjectId) evt.getNewValue();
             PostAndCommentsView postAndCommentsView = getDisplayCommentsView(id);
-            newWindow.setView(postAndCommentsView);
-            newWindow.setViewName(postAndCommentsView.viewName);
-            newWindow.createWindow();
-//            JFrame postFrame = new JFrame();
-//            postFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//            postFrame.getContentPane().setLayout(new BoxLayout(postFrame.getContentPane(), BoxLayout.Y_AXIS));
-//            JScrollPane scrollPane = new JScrollPane(postAndCommentsView);
-//            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//            postFrame.getContentPane().add(scrollPane);
-//            postFrame.pack();
-//            postFrame.setTitle(postAndCommentsView.title);
-//            postFrame.setVisible(true);
+            newPostAndCommentWindow.setView(postAndCommentsView);
+            newPostAndCommentWindow.setViewName(postAndCommentsView.viewName);
+            newPostAndCommentWindow.createWindow();
+        } else if (evt.getPropertyName().equals("display_create_comment")){
+
         }
     }
 }
