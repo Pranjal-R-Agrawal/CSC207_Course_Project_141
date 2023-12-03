@@ -78,6 +78,7 @@ public class CreatePostInteractorTest {
     public void testValidInput(){
         CreatePostInputData inputData = new CreatePostInputData("test title", "test body", "test;qualifications");
         CreatePostDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        dataAccessObject.setLoggedInUserID(new ObjectId());
 
         CreatePostOutputBoundary createPostPresenter = new CreatePostOutputBoundary() {
             @Override
