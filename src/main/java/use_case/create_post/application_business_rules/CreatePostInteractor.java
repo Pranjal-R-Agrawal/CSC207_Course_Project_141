@@ -24,7 +24,8 @@ public class CreatePostInteractor implements CreatePostInputBoundary{
             createPostPresenter.prepareFailureView("Please enter a title.");
         } else if (createPostInputData.getBody() == null || createPostInputData.getBody().trim().isEmpty()) {
             createPostPresenter.prepareFailureView("Please enter text in body.");
-            // TODO: Validation for suggestedCollaboratorQualifications?
+        } else if (createPostInputData.getSuggestedCollaboratorQualifications() == null || createPostInputData.getSuggestedCollaboratorQualifications().trim().isEmpty()) {
+            createPostPresenter.prepareFailureView("Please at least 1 suggested collaborator qualification.");
         } else{
             List<String> suggestedCollaboratorQualifications = Arrays.asList(createPostInputData.getSuggestedCollaboratorQualifications().split(";"));
             suggestedCollaboratorQualifications.replaceAll(String::trim);
