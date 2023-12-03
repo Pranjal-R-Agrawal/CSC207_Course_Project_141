@@ -14,9 +14,9 @@ public class ViewManager implements PropertyChangeListener {
     private final JPanel views;
     private PostAndCommentsViewModel postAndCommentsViewModel;
     private PostAndCommentsView postAndCommentsView;
-    public NewWindow newPostAndCommentWindow;
-    public NewWindow newCreateCommentWindow;
-    public NewWindow newCreatePostWindow;
+    private NewWindow newPostAndCommentWindow;
+    private NewWindow newCreateCommentWindow;
+    private NewWindow newCreatePostWindow;
 
     public ViewManager(JPanel views, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
         this.views = views;
@@ -41,7 +41,17 @@ public class ViewManager implements PropertyChangeListener {
         return postAndCommentsView;
     }
 
+    public NewWindow getNewCreateCommentWindow() {
+        return newCreateCommentWindow;
+    }
 
+    public NewWindow getNewCreatePostWindow() {
+        return newCreatePostWindow;
+    }
+
+    public NewWindow getNewPostAndCommentWindow() {
+        return newPostAndCommentWindow;
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
