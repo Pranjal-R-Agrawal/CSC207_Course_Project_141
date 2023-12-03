@@ -21,7 +21,7 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
     private final JTextField collaboratorRolesInputField = new JTextField(20);
     private final JButton postButton = new JButton();
 
-    public CreatePostView(CreatePostViewModel createPostViewModel, PostAndCommentsViewModel postAndCommentsViewModel, CreatePostController createPostController){
+    public CreatePostView(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel, CreatePostController createPostController){
         super(createPostViewModel.getViewName());
         this.createPostViewModel = createPostViewModel;
 
@@ -87,7 +87,7 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
         bodyInputArea.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                postAndCommentsViewModel.firePropertyChanged("resize_reply_frame");
+                viewManagerModel.resize("create_post");
                 createPostViewModel.getState().setBody(bodyInputArea.getText() + e.getKeyChar());
             }
 
