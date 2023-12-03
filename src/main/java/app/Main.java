@@ -2,11 +2,15 @@ package app;
 
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
+import entity.Post;
+import entity.User;
+import org.bson.types.ObjectId;
 import view.*;
 import view.display_post.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Main {
     protected static SignupViewModel signupViewModel;
@@ -54,8 +58,15 @@ public class Main {
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
-        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
         viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
+        NewWindow newPostAndCommentsWindow = new NewWindow(true, postAndCommentsView.viewName);
+        NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
+        NewWindow newCreatePostWindow = new NewWindow(false, "Post");
+        viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
+
+        CreatePostViewModel createPostViewModel = new CreatePostViewModel();
+        CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
