@@ -1,8 +1,5 @@
 package use_case.create_post.application_business_rules;
 
-import org.bson.types.ObjectId;
-
-import java.util.List;
 
 public class CreatePostInputData {
     final private String title;

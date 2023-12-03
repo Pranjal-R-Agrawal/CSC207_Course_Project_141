@@ -1,10 +1,7 @@
 package view;
 
-import use_case.create_comment.interface_adapter.CreateCommentState;
 import use_case.create_post.interface_adapter.CreatePostController;
 import use_case.create_post.interface_adapter.CreatePostState;
-import view.display_post.PostAndCommentsViewModel;
-import view.display_post.PostView;
 
 import javax.swing.*;
 import java.awt.*;

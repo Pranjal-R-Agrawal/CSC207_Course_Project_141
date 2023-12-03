@@ -10,7 +10,6 @@ import use_case.create_post.application_business_rules.CreatePostInputData;
 import use_case.create_post.application_business_rules.CreatePostInteractor;
 import use_case.create_post.application_business_rules.CreatePostOutputBoundary;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
