@@ -14,7 +14,7 @@ public class CreatePostInputData {
         this.suggestedCollaboratorQualifications = suggestedCollaboratorQualifications;
     }
 
-    public String getBody(){return title;}
-    public String getTitle(){return body;}
+    public String getBody(){return body;}
+    public String getTitle(){return title;}
     public String getSuggestedCollaboratorQualifications() {return suggestedCollaboratorQualifications;}
 }
