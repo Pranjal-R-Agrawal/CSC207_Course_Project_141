@@ -3,6 +3,7 @@ package entity;
 import org.bson.types.ObjectId;
 
 public class CollabRequest {
+    private ObjectId id;
     private ObjectId collabRequestId;
     private String author;
     private String title;
@@ -13,6 +14,13 @@ public class CollabRequest {
         this.collabRequestId = collabRequestId;
         this.author = author;
         this.title = title;
+    }
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public ObjectId getCollabRequestId() {
