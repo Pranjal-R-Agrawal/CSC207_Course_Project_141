@@ -132,4 +132,5 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
             JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
         }
     }
+    public JButton getPostButton(){return postButton;}
 }
