@@ -36,14 +36,16 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     private final String usersCollectionName;
     private final String postsCollectionName;
     private final String commentsCollectionName;
+    private final String collabRequestsCollectionName;
 
     public MongoDBDataAccessObject(
-            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
+            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName, String collabRequestsCollectionName
     ) throws FileNotFoundException, NoSuchElementException {
         String uri;
         this.usersCollectionName = usersCollectionName;
         this.postsCollectionName = postsCollectionName;
         this.commentsCollectionName = commentsCollectionName;
+        this.collabRequestsCollectionName = collabRequestsCollectionName;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
@@ -68,6 +70,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
             if (!collections.contains(commentsCollectionName)) database.createCollection(commentsCollectionName);
             comments = getCommentsCollection();
+
+            if (!collections.contains(collabRequestsCollectionName)) database.createCollection(collabRequestsCollectionName);
+            collabRequests = getCollabRequestsCollection();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Could not connect to the database\nError: " + e.getMessage());
             throw new RuntimeException(e);
@@ -102,6 +107,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         users.drop();
         posts.drop();
         comments.drop();
+        collabRequests.drop();
     }
 
     public boolean usernameUsed(String username) {
@@ -182,7 +188,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return posts.find(Filters.eq("_id", id)).first();
     }
     @Override
-    public CollabRequest getCollaborationRequestById(ObjectId id) {
+    public CollabRequest getCollabRequestById(ObjectId id) {
         collabRequests = getCollabRequestsCollection();
         return collabRequests.find(Filters.eq("_id", id)).first();
     }
