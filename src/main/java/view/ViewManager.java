@@ -24,11 +24,12 @@ public class ViewManager implements PropertyChangeListener {
         viewManagerModel.addPropertyChangeListener(this);
     }
 
-    public void setupDisplayComments(PostAndCommentsViewModel postAndCommentsViewModel, PostAndCommentsView postAndCommentsView, NewWindow newWindow) {
+    public void setupDisplayComments(PostAndCommentsViewModel postAndCommentsViewModel, PostAndCommentsView postAndCommentsView) {
         this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.postAndCommentsView = postAndCommentsView;
     }
-    public void setupNewWindows(NewWindow newPostAndCommentWindow, NewWindow newCreateCommentWindow, NewWindow newCreatePostWindow){
+
+    public void setupNewWindows(NewWindow newPostAndCommentWindow, NewWindow newCreateCommentWindow, NewWindow newCreatePostWindow) {
         this.newPostAndCommentWindow = newPostAndCommentWindow;
         this.newCreateCommentWindow = newCreateCommentWindow;
         this.newCreatePostWindow = newCreatePostWindow;
@@ -67,12 +68,12 @@ public class ViewManager implements PropertyChangeListener {
             newPostAndCommentWindow.setView(postAndCommentsView);
             newPostAndCommentWindow.setViewName(postAndCommentsView.viewName);
             newPostAndCommentWindow.createWindow();
-        } else if (evt.getPropertyName().equals("display_create_comment")){
+        } else if (evt.getPropertyName().equals("display_create_comment")) {
             CreateCommentView createCommentView = (CreateCommentView) evt.getNewValue();
             newCreateCommentWindow.setView(createCommentView);
             newCreateCommentWindow.setViewName("Reply to Comment");
             newCreateCommentWindow.createWindow();
-        }else if (evt.getPropertyName().equals("display_create_post")){
+        } else if (evt.getPropertyName().equals("display_create_post")) {
             CreatePostView createPostView = (CreatePostView) evt.getNewValue();
             newCreatePostWindow.setView(createPostView);
             newCreatePostWindow.setViewName("Create Post");
@@ -83,3 +84,4 @@ public class ViewManager implements PropertyChangeListener {
             newCreatePostWindow.closeWindow();
         }
     }
+}
