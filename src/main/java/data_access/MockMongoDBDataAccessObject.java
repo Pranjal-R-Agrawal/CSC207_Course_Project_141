@@ -20,7 +20,7 @@ public class MockMongoDBDataAccessObject implements CreatePostDataAccessInterfac
     }
 
     @Override
-    public void setLoggedInUserId(ObjectId id) {
+    public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
 

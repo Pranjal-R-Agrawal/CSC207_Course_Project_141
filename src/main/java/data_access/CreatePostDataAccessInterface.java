@@ -8,7 +8,7 @@ public interface CreatePostDataAccessInterface {
 
     ObjectId getLoggedInUserId();
 
-    void setLoggedInUserId(ObjectId id);
+    void setLoggedInUserID(ObjectId id);
 
     Post getPostByPostID(ObjectId id);
 }
