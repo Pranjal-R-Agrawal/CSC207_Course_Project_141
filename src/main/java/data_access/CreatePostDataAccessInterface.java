@@ -7,4 +7,8 @@ public interface CreatePostDataAccessInterface {
     void addPost(Post post);
 
     ObjectId getLoggedInUserId();
+
+    void setLoggedInUserId(ObjectId id);
+
+    Post getPostByPostID(ObjectId id);
 }
