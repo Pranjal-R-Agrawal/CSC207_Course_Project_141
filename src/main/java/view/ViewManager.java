@@ -80,8 +80,18 @@ public class ViewManager implements PropertyChangeListener {
             newCreatePostWindow.createWindow();
         } else if (evt.getPropertyName().equals("close_create_comment")) {
             newCreateCommentWindow.closeWindow();
+            newPostAndCommentWindow.resize();
         } else if (evt.getPropertyName().equals("close_create_post")) {
             newCreatePostWindow.closeWindow();
+        } else if (evt.getPropertyName().equals("resize")){
+            String view = (String) evt.getNewValue();
+            if (view.equals("create_comment")){
+                newCreateCommentWindow.resize();
+            } else if (view.equals("create_post")) {
+                newCreatePostWindow.resize();
+            } else if (view.equals("post")) {
+                newPostAndCommentWindow.resize();
+            }
         }
     }
 }

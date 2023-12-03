@@ -39,6 +39,9 @@ public class NewWindow {
         frame.setVisible(false);
         frame.dispose();
     }
+    public void resize(){
+        frame.pack();
+    }
     //TODO: Remove tester code and unneeded imports
 //    public static void main(String[] args) {
 //        CardLayout cardLayout = new CardLayout();

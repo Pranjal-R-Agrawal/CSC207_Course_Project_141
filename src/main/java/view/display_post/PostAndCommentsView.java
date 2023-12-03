@@ -91,6 +91,8 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             postAdded = false;
             this.removeAll();
             comments.clear();
+        } else if (evt.getPropertyName().equals("resize_reply_frame")) {
+            viewManagerModel.resize("create_comment");
         }
     }
 
