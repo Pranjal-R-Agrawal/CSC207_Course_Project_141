@@ -8,14 +8,13 @@ import view.ViewManagerModel;
 public class CreatePostPresenter implements CreateCommentOutputBoundary {
     CreatePostViewModel createPostViewModel;
     ViewManagerModel viewManagerModel;
-    //TODO: Add view model of Generative AI
     public CreatePostPresenter(CreatePostViewModel createPostViewModel){
         this.createPostViewModel = createPostViewModel;
     }
     @Override
     public void prepareSuccessView(ObjectId postId) {
         createPostViewModel.setState(new CreatePostState());
-        // TODO: Close current window using view model of Generative AI
+        viewManagerModel.closeCreatePost();
         viewManagerModel.displayPost(postId);
     }
 
