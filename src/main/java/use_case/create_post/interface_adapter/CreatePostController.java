@@ -7,7 +7,7 @@ import use_case.create_post.application_business_rules.CreatePostInteractor;
 public class CreatePostController {
     CreatePostInputBoundary createPostInteractor;
 
-    public CreatePostController(CreatePostInteractor createPostInteractor){
+    public CreatePostController(CreatePostInputBoundary createPostInteractor){
         this.createPostInteractor = createPostInteractor;
     }
 
