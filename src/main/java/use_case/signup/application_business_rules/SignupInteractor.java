@@ -20,7 +20,7 @@ public class SignupInteractor implements SignupInputBoundary {
         } else if (signupInputData.getPassword() == null || signupInputData.getPassword().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a password.");
         } else if (signupInputData.getRepeatPassword() == null || signupInputData.getRepeatPassword().trim().isEmpty()) {
-            userPresenter.prepareFailView("Please repeat repeat password.");
+            userPresenter.prepareFailView("Please enter repeat password.");
         } else if (signupInputData.getName() == null || signupInputData.getName().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter your name.");
         } else if (signupInputData.getEmail() == null || signupInputData.getEmail().trim().isEmpty()) {
@@ -40,7 +40,7 @@ public class SignupInteractor implements SignupInputBoundary {
                     signupInputData.getPassword().trim(),
                     signupInputData.getName().trim(),
                     signupInputData.getEmail().trim(),
-                    signupInputData.getPhoneNumber().trim(),
+                    signupInputData.getPhoneNumber(),
                     signupInputData.getCity().trim(),
                     signupInputData.getFieldOfExpertise().trim()
             );

@@ -4,6 +4,7 @@ import data_access.MongoDBDataAccessObject;
 
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.User;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.login.application_business_rules.LoginInteractor;
@@ -24,25 +25,31 @@ public class LoginUseCaseTest {
     @Test
     public void testAllFieldsEmpty() {
         loginController.execute(null, null);
-        assert loginViewModel.getState().getErrorMessage().equals("Please enter a username.");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a username.");
+        loginController.execute("", "");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a username.");
     }
 
     @Test
     public void testUsernameEmpty() {
         loginController.execute(null, "password");
-        assert loginViewModel.getState().getErrorMessage().equals("Please enter a username.");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a username.");
+        loginController.execute("", "password");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a username.");
     }
 
     @Test
     public void testPasswordEmpty() {
         loginController.execute("username", null);
-        assert loginViewModel.getState().getErrorMessage().equals("Please enter a password.");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a password.");
+        loginController.execute("username", "");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Please enter a password.");
     }
 
     @Test
     public void testInvalidCredentials() {
         loginController.execute("invalid", "credentials");
-        assert loginViewModel.getState().getErrorMessage().equals("Invalid username or password.");
+        assertEquals(loginViewModel.getState().getErrorMessage(), "Invalid username or password.");
     }
 
     @Test
@@ -51,7 +58,7 @@ public class LoginUseCaseTest {
                 "username", "password", "name", "email", "phone", "", "")
         );
         loginController.execute("username", "password");
-        assert loginViewModel.getState().getErrorMessage() == null;
+        assertNull(loginViewModel.getState().getErrorMessage());
     }
 
     @Before
