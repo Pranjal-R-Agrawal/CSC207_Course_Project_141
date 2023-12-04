@@ -10,6 +10,7 @@ import data_access.MongoDBDataAccessObject;
 
 import use_case.signup.application_business_rules.SignupInteractor;
 
+import use_case.signup.application_business_rules.SignupOutputBoundary;
 import use_case.signup.interface_adapter.SignupController;
 import use_case.signup.interface_adapter.SignupPresenter;
 
@@ -93,12 +94,11 @@ public class SignupUseCaseTest {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+        SignupOutputBoundary signupPresenter = new SignupPresenter(
+                viewManagerModel, signupViewModel, new LoginViewModel()
+        );
         signupController = new SignupController(
-                new SignupInteractor(
-                        mongoDBDataAccessObject, new SignupPresenter(
-                                viewManagerModel, signupViewModel, new LoginViewModel()
-                        )
-                )
+                new SignupInteractor(mongoDBDataAccessObject, signupPresenter), signupPresenter
         );
 
         mongoDBDataAccessObject.resetDatabase();

@@ -63,6 +63,22 @@ public class SignupState {
         return this;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getFieldOfExpertise() {
+        return fieldOfExpertise;
+    }
+
+    public void setFieldOfExpertise(String fieldOfExpertise) {
+        this.fieldOfExpertise = fieldOfExpertise;
+    }
+
     public String getErrorMessage() {
         return errorMessage;
     }

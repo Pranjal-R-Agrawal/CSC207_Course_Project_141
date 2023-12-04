@@ -21,6 +21,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
     private final JTextField emailInputField = new JTextField(20);
     private final SignupController signupController;
     private final JButton signupButton = new JButton();
+    private final JButton loginButton = new JButton();
 
     public SignupView(SignupViewModel signupViewModel, SignupController signupController) {
         this.signupViewModel = signupViewModel;
@@ -29,6 +30,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
         viewName = signupViewModel.getViewName();
         setName(viewName);
         signupButton.setText(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        loginButton.setText(SignupViewModel.LOGIN_BUTTON_LABEL);
 
         signupViewModel.addPropertyChangeListener(this);
 
@@ -55,6 +57,14 @@ public class SignupView extends JPanel implements PropertyChangeListener {
                                 currentState.getEmail(),
                                 currentState.getPhoneNumber()
                         );
+                    }
+                }
+        );
+
+        loginButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(loginButton)) {
+                        signupController.goToLogin();
                     }
                 }
         );
@@ -154,6 +164,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
         addComponent(emailPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         addComponent(optionalPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         add(signupButton, c);
+        add(loginButton, c);
     }
 
     private void addComponent(JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
