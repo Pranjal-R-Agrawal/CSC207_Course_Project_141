@@ -28,7 +28,7 @@ public class ViewProfileOutputData {
         return email;
     }
 
-    public double getRating() {
-        return rating;
+    public String getRating() {
+        return (String.valueOf(rating));
     }
 }
