@@ -11,11 +11,17 @@ import view.LoginViewModel;
 import view.SignupViewModel;
 import view.ViewManagerModel;
 
-import javax.swing.*;
-
 public class LoginUseCaseFactory {
     private LoginUseCaseFactory() {}
 
+    /**
+     * Creates and returns a LoginView object
+     * @param viewManagerModel the view manager model
+     * @param signupViewModel the signup view model
+     * @param loginViewModel the login view model
+     * @param loginUserDataAccessObject the login user data access object
+     * @return a LoginView object
+     */
     public static LoginView create(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject) {
         LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, signupViewModel, loginUserDataAccessObject);
         return new LoginView(loginViewModel, loginController);

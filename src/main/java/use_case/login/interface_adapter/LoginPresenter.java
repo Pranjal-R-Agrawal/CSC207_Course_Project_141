@@ -19,18 +19,29 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.signupViewModel = signupViewModel;
     }
 
+    /**
+     * Resets the fields of the login view model
+     * Changes view to the home page
+     */
     @Override
     public void prepareSuccessView() {
         loginViewModel.setState(new LoginState());
         loginViewModel.firePropertyChanged("reset_fields");
     }
 
+    /**
+     * Sets the error message of the login view model
+     * @param error the error message
+     */
     @Override
     public void prepareFailView(String error) {
         loginViewModel.getState().setErrorMessage(error);
         loginViewModel.firePropertyChanged("log_in_error");
     }
 
+    /**
+     * Changes view to the sign up page
+     */
     @Override
     public void goToSignUp() {
         viewManagerModel.setActiveView(signupViewModel.getViewName());

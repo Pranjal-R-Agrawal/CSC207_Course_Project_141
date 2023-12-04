@@ -9,11 +9,17 @@ import view.SignupView;
 import view.SignupViewModel;
 import view.ViewManagerModel;
 
-import javax.swing.*;
-
 public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
+    /**
+     * Creates and returns a SignupView object
+     * @param viewManagerModel the view manager model
+     * @param signupViewModel the signup view model
+     * @param loginViewModel the login view model
+     * @param signupUserDataAccessObject the signup user data access object
+     * @return a SignupView object
+     */
     public static SignupView create(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface signupUserDataAccessObject) {
         SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, signupUserDataAccessObject);
         return new SignupView(signupViewModel, signupController);

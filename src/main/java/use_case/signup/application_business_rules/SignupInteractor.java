@@ -9,11 +9,21 @@ public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
 
+    /**
+     * Constructor for SignupInteractor
+     * @param userDataAccessObject the data access object
+     * @param userPresenter the presenter
+     */
     public SignupInteractor(SignupUserDataAccessInterface userDataAccessObject, SignupOutputBoundary userPresenter) {
         this.userDataAccessObject = userDataAccessObject;
         this.userPresenter = userPresenter;
     }
 
+    /**
+     * Executes the use case
+     * Checks the validity of the input data (whether it is null or contains only whitespace) and signs up the user if valid
+     * @param signupInputData the input data
+     */
     public void execute(SignupInputData signupInputData) {
         if (signupInputData.getUsername() == null ||signupInputData.getUsername().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a username.");
