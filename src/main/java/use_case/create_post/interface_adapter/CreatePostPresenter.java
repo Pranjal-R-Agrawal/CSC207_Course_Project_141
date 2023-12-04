@@ -15,6 +15,7 @@ public class CreatePostPresenter implements CreatePostOutputBoundary {
     @Override
     public void prepareSuccessView(ObjectId postId) {
         createPostViewModel.setState(new CreatePostState());
+        createPostViewModel.firePropertyChanged("reset_input_fields");
         viewManagerModel.closeCreatePost();
         viewManagerModel.displayPost(postId);
     }
