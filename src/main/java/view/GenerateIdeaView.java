@@ -15,6 +15,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final GenerateIdeaViewModel generateIdeaViewModel;
     private final GenerateIdeaController generateIdeaController;
+    private final CreatePostViewModel createPostViewModel;
     private final HomePageViewModel homePageViewModel;
     private final ViewManagerModel viewManagerModel;
     private final JButton ideaButton = new JButton();
@@ -27,13 +28,15 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
      * @param viewManagerModel Manages which view is displayed
      * @param generateIdeaViewModel Observable that stores the state useful to the Generate Idea View.
      * @param generateIdeaController Controller to trigger the GenerateIdeaInputBoundary to perform application logic
+     * @param createPostViewModel Observable that stores the state useful to Create Post View.
      * @param homePageViewModel Observable that stores the state useful to Home Page View.
      */
-    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel) {
+    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel) {
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.generateIdeaController = generateIdeaController;
         this.viewManagerModel = viewManagerModel;
         this.homePageViewModel = homePageViewModel;
+        this.createPostViewModel = createPostViewModel;
 
         viewName = generateIdeaViewModel.getViewName();
         setName(viewName);
@@ -68,6 +71,28 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         postButton.addActionListener(
                 e -> {
                     if(e.getSource().equals(postButton)){
+
+                        String text = this.textArea.getText();
+                        String idea_prompt= "b"; // to be passed if full business model not generated and idea prompt not displayed only
+                        String business_model= "w"; // to be passed if full business model not generated and idea prompt not displayed only
+                        if (text.contains("Write a Business model for this idea?"))
+                        {
+                            idea_prompt = text.substring(0,text.indexOf("Write a Business model for this idea?"));
+                            int business_model_start = text.indexOf("Write a Business model for this idea?") + ("Write a Business model for this idea?".length());
+                            business_model = text.substring(business_model_start);
+                        }
+                        else if(!text.isEmpty() && !text.equals("Unable to produce Business Model"))
+                        {
+                            idea_prompt = text.substring(0);
+                        }
+                        System.out.println(idea_prompt); // test
+                        System.out.println(business_model); // test
+
+                        createPostViewModel.getState().setTitle(idea_prompt).setBody(business_model);
+                        createPostViewModel.firePropertyChanged("update_fields");
+
+                        viewManagerModel.setActiveView(createPostViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
 
                     }
                 }

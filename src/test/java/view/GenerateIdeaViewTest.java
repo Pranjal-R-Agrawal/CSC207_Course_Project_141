@@ -18,15 +18,18 @@ public class GenerateIdeaViewTest {
     private static GenerateIdeaView generateIdeaView;
     private IdeaDataFileDataAccessObject ideaDataFileDataAccessObject;
     private GenerateIdeaViewModel generateIdeaViewModel;
+    private CreatePostViewModel createPostViewModel;
     private JButton ideaButton;
 
+    //TODO: Write tests for back and post button once create_post branch has been merged
     @Before
     public void setUpTest() throws Exception {
 
         ideaDataFileDataAccessObject = new IdeaDataFileDataAccessObject("src/main/java/data_access/ideas.csv",new ConcreteIdeaFactory());
 
         generateIdeaViewModel = new GenerateIdeaViewModel();
-        generateIdeaView = GenerateIdeaUseCaseFactory.create(new ViewManagerModel(),generateIdeaViewModel, ideaDataFileDataAccessObject, new MistralCodegenAIAPI(), new HomePageViewModel());
+        createPostViewModel = new CreatePostViewModel();
+        generateIdeaView = GenerateIdeaUseCaseFactory.create(new ViewManagerModel(),generateIdeaViewModel, createPostViewModel,ideaDataFileDataAccessObject, new MistralCodegenAIAPI(), new HomePageViewModel());
 
         ideaButton = (JButton) generateIdeaView.getComponent(0);
 

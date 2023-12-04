@@ -17,6 +17,7 @@ public class Main {
     protected static SignupViewModel signupViewModel;
     protected static LoginViewModel loginViewModel;
     protected static GenerateIdeaViewModel generateIdeaViewModel;
+    protected static CreatePostViewModel createPostViewModel;
     protected static HomePageViewModel homePageViewModel;
 
     public static void main(String[] args) {
@@ -35,6 +36,7 @@ public class Main {
         loginViewModel = new LoginViewModel();
         generateIdeaViewModel = new GenerateIdeaViewModel();
         homePageViewModel = new HomePageViewModel();
+        createPostViewModel = new CreatePostViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         try {
@@ -73,7 +75,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel);
+        GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
         viewManagerModel.setActiveView(generateIdeaView.viewName);
