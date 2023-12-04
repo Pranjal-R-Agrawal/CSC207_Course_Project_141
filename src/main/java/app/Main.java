@@ -78,7 +78,7 @@ public class Main {
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
-        viewManagerModel.setActiveView(generateIdeaView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

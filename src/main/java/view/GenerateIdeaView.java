@@ -54,13 +54,13 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
-       //  ideaButton.doClick();
 
 
         backButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(backButton)) {
-                        generateIdeaViewModel.setState(new GenerateIdeaState());
+                        generateIdeaViewModel.getState().setIdea(null).setBusinessModel(""); // resets the current state to default values
+                        generateIdeaViewModel.setState(new GenerateIdeaState()); // updates the view model to have a fresh state
                         viewManagerModel.setActiveView(homePageViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }
@@ -73,8 +73,8 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     if(e.getSource().equals(postButton)){
 
                         String text = this.textArea.getText();
-                        String idea_prompt= "b"; // to be passed if full business model not generated and idea prompt not displayed only
-                        String business_model= "w"; // to be passed if full business model not generated and idea prompt not displayed only
+                        String idea_prompt= ""; // to be passed if full business model not generated and idea prompt not displayed only
+                        String business_model= ""; // to be passed if full business model not generated and idea prompt not displayed only
                         if (text.contains("Write a Business model for this idea?"))
                         {
                             idea_prompt = text.substring(0,text.indexOf("Write a Business model for this idea?"));
