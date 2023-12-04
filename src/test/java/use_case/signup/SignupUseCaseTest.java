@@ -25,62 +25,62 @@ public class SignupUseCaseTest {
 
     @Test
     public void testAllFieldsEmpty() {
-        signupController.execute(null, null, null, null, null, null);
+        signupController.execute(null, null, null, null, null, null, null, null);
         assert signupViewModel.getState().getErrorMessage().equals("Please enter a username.");
     }
 
     @Test
     public void testUsernameEmpty() {
-        signupController.execute(null, "password", "password", "name", "email", "phone");
+        signupController.execute(null, "password", "password", "name", "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Please enter a username.");
     }
 
     @Test
     public void testPasswordEmpty() {
-        signupController.execute("username", null, "password", "name", "email", "phone");
+        signupController.execute("username", null, "password", "name", "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Please enter a password.");
     }
 
     @Test
     public void testRepeatPasswordEmpty() {
-        signupController.execute("username", "password", null, "name", "email", "phone");
+        signupController.execute("username", "password", null, "name", "email", "phone","city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Please enter a password.");
     }
 
     @Test
     public void testNameEmpty() {
-        signupController.execute("username", "password", "password", null, "email", "phone");
+        signupController.execute("username", "password", "password", null, "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Please enter your name.");
     }
 
     @Test
     public void testEmailEmpty() {
-        signupController.execute("username", "password", "password", "name", null, "phone");
+        signupController.execute("username", "password", "password", "name", null, "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Please enter your email-id.");
     }
 
     @Test
     public void testPhoneNumberEmpty() {
-        signupController.execute("username", "password", "password", "name", "email", null);
+        signupController.execute("username", "password", "password", "name", "email", null, "city", "field");
         assert signupViewModel.getState().getErrorMessage() == null;
     }
 
     @Test
     public void testUsernameUsedNoUsers() {
-        signupController.execute("username", "password", "password", "name", "email", "phone");
+        signupController.execute("username", "password", "password", "name", "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage() == null;
     }
 
     @Test
     public void testUsernameUsedAddUser() {
-        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone", "", ""));
-        signupController.execute("username", "password", "password", "name", "email", "phone");
+        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone", "city", "field"));
+        signupController.execute("username", "password", "password", "name", "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Username already used.");
     }
 
     @Test
     public void testPasswordsDontMatch() {
-        signupController.execute("username", "password1", "password2", "name", "email", "phone");
+        signupController.execute("username", "password1", "password2", "name", "email", "phone", "city", "field");
         assert signupViewModel.getState().getErrorMessage().equals("Passwords don't match.");
     }
 

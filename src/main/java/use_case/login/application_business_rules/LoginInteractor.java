@@ -12,14 +12,13 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     public void execute(LoginInputData loginInputData) {
-        // TODO: Validate input data better.
-        if (loginInputData.getUsername() == null) {
+        if (loginInputData.getUsername() == null || loginInputData.getUsername().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a username.");
-        } else if (loginInputData.getPassword() == null) {
+        } else if (loginInputData.getPassword() == null || loginInputData.getPassword().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a password.");
-        } else if (userDataAccessObject.isValid(loginInputData.getUsername(), loginInputData.getPassword())) {
+        } else if (userDataAccessObject.isValid(loginInputData.getUsername().trim(), loginInputData.getPassword().trim())) {
             userDataAccessObject.setLoggedInUserID(
-                    userDataAccessObject.getUserByUsername(loginInputData.getUsername()).getId()
+                    userDataAccessObject.getUserByUsername(loginInputData.getUsername().trim()).getId()
             );
             userPresenter.prepareSuccessView();
         } else {

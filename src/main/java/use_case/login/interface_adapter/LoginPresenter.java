@@ -22,6 +22,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     @Override
     public void prepareSuccessView() {
         loginViewModel.setState(new LoginState());
+        loginViewModel.firePropertyChanged("reset_fields");
     }
 
     @Override

@@ -8,6 +8,8 @@ public class SignupState {
     private String email;
     private String phoneNumber;
     private String errorMessage;
+    private String city;
+    private String fieldOfExpertise;
 
     public String getUsername() {
         return username;
@@ -67,16 +69,18 @@ public class SignupState {
         return city;
     }
 
-    public void setCity(String city) {
+    public SignupState setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public String getFieldOfExpertise() {
         return fieldOfExpertise;
     }
 
-    public void setFieldOfExpertise(String fieldOfExpertise) {
+    public SignupState setFieldOfExpertise(String fieldOfExpertise) {
         this.fieldOfExpertise = fieldOfExpertise;
+        return this;
     }
 
     public String getErrorMessage() {

@@ -7,15 +7,18 @@ public class SignupInputData {
     final private String name;
     final private String email;
     final private String phoneNumber;
+    final private String city;
+    final private String fieldOfExpertise;
 
-
-    public SignupInputData(String username, String password, String repeatPassword, String name, String email, String phoneNumber) {
+    public SignupInputData(String username, String password, String repeatPassword, String name, String email, String phoneNumber, String city, String fieldOfExpertise) {
         this.username = username;
         this.password = password;
         this.repeatPassword = repeatPassword;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.fieldOfExpertise = fieldOfExpertise;
     }
 
     public String getUsername() {
@@ -40,5 +43,13 @@ public class SignupInputData {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getFieldOfExpertise() {
+        return fieldOfExpertise;
     }
 }
