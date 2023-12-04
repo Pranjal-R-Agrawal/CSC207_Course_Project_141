@@ -7,8 +7,8 @@ import view.ViewProfileViewModel;
 import view.ViewManagerModel;
 
 public class ViewProfilePresenter implements ViewProfileOutputBoundary {
-    private ViewManagerModel viewManagerModel;
-    private ViewProfileViewModel viewProfileViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final ViewProfileViewModel viewProfileViewModel;
 
     public ViewProfilePresenter(ViewManagerModel viewManagerModel, ViewProfileViewModel viewProfileViewModel) {
         this.viewProfileViewModel = viewProfileViewModel;
