@@ -5,10 +5,9 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 /**
- * An interface for a factory to create Post objects
- * @author Yathusan Koneswararajah
+ * Creates a Post entity
  */
-public interface PostFactory {
+public class ConcretePostFactory implements PostFactory {
     /**
      * Creates and returns a Post object
      * @param authorId ID of the author of the post
@@ -17,5 +16,7 @@ public interface PostFactory {
      * @param suggestedCollaboratorQualifications Suggested qualifications of the post
      * @return a Post object
      */
-    Post create(ObjectId authorId, String title, String body, List<String> suggestedCollaboratorQualifications);
+    public Post create(ObjectId authorId, String title, String body, List<String> suggestedCollaboratorQualifications){
+        return new Post(authorId, title, body, suggestedCollaboratorQualifications);
+    }
 }

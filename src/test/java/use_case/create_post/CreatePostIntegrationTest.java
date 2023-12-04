@@ -2,7 +2,7 @@ package use_case.create_post;
 
 import data_access.CreatePostDataAccessInterface;
 import data_access.MongoDBDataAccessObjectBuilder;
-import entity.PostFactory;
+import entity.ConcretePostFactory;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class CreatePostIntegrationTest {
                 assertEquals(error, "Please enter a title.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -62,7 +62,7 @@ public class CreatePostIntegrationTest {
                 assertEquals(error, "Please enter text in body.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -80,7 +80,7 @@ public class CreatePostIntegrationTest {
                 assertEquals(error, "Please at least 1 suggested collaborator qualification.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -101,7 +101,7 @@ public class CreatePostIntegrationTest {
                 fail("Use case failure is unexpected.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, mongoDBDataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
 }

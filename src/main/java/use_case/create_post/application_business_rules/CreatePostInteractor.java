@@ -2,7 +2,7 @@ package use_case.create_post.application_business_rules;
 
 import data_access.CreatePostDataAccessInterface;
 import entity.Post;
-import entity.PostFactory;
+import entity.ConcretePostFactory;
 import org.bson.types.ObjectId;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CreatePostInteractor implements CreatePostInputBoundary{
     CreatePostOutputBoundary createPostPresenter;
     CreatePostDataAccessInterface createPostDataAccessObject;
-    PostFactory postFactory;
+    ConcretePostFactory postFactory;
 
     /**
      *Initializes the CreatePostInteractor object.
@@ -24,7 +24,7 @@ public class CreatePostInteractor implements CreatePostInputBoundary{
      * @param createPostDataAccessObject An object that puts the created post into the database.
      * @param postFactory An object that generates a Post entity given the necessary information
      */
-    public CreatePostInteractor(CreatePostOutputBoundary createPostPresenter, CreatePostDataAccessInterface createPostDataAccessObject, PostFactory postFactory){
+    public CreatePostInteractor(CreatePostOutputBoundary createPostPresenter, CreatePostDataAccessInterface createPostDataAccessObject, ConcretePostFactory postFactory){
         this.createPostPresenter = createPostPresenter;
         this.createPostDataAccessObject = createPostDataAccessObject;
         this.postFactory = postFactory;

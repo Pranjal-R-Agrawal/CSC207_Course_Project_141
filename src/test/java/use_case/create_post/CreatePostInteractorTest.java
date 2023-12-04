@@ -2,7 +2,7 @@ package use_case.create_post;
 
 import data_access.CreatePostDataAccessInterface;
 import data_access.MockMongoDBDataAccessObject;
-import entity.PostFactory;
+import entity.ConcretePostFactory;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import use_case.create_post.application_business_rules.CreatePostInputBoundary;
@@ -32,7 +32,7 @@ public class CreatePostInteractorTest {
                 assertEquals(error, "Please enter a title.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -51,7 +51,7 @@ public class CreatePostInteractorTest {
                 assertEquals(error, "Please enter text in body.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -70,7 +70,7 @@ public class CreatePostInteractorTest {
                 assertEquals(error, "Please at least 1 suggested collaborator qualification.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
     @Test
@@ -93,7 +93,7 @@ public class CreatePostInteractorTest {
                 fail("Use case failure is unexpected.");
             }
         };
-        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new PostFactory());
+        CreatePostInputBoundary interactor = new CreatePostInteractor(createPostPresenter, dataAccessObject, new ConcretePostFactory());
         interactor.execute(inputData);
     }
 }
