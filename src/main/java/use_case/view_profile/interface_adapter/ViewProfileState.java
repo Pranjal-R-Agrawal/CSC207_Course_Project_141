@@ -4,13 +4,13 @@ public class ViewProfileState {
     private String username;
     private String name;
     private String email;
-    private double rating;
+    private String rating;
     private String errorMessage;
 
     public String getUsername() {
         return username;
     }
-    public ViewProfileState setUsername() {
+    public ViewProfileState setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -19,7 +19,7 @@ public class ViewProfileState {
         return name;
     }
 
-    public ViewProfileState setName() {
+    public ViewProfileState setName(String name) {
         this.name = name;
         return this;
     }
@@ -28,16 +28,16 @@ public class ViewProfileState {
         return email;
     }
 
-    public ViewProfileState setEmail() {
+    public ViewProfileState setEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public double getRating() {
-        return rating;
+    public String getRating() {
+        return String.valueOf(rating);
     }
 
-    public ViewProfileState setRating() {
+    public ViewProfileState setRating(String rating) {
         this.rating = rating;
         return this;
     }
