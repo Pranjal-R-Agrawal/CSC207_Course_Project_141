@@ -11,7 +11,18 @@ import view.CreatePostView;
 import view.CreatePostViewModel;
 import view.ViewManagerModel;
 
+/**
+ * Static factory for assembling components for the CreatePost use case
+ * @author Yathusan Koneswararajah
+ */
 public class CreatePostUseCaseFactory {
+    /**
+     * Creates the view for the CreatePost use case
+     * @param viewManagerModel Manages the views to be displayed
+     * @param createPostViewModel Observable that contains what the CreatePostView will observe
+     * @param createPostDataAccessObject Object that interacts with database
+     * @return The view for the CreatePost use case
+     */
     public static CreatePostView create(ViewManagerModel viewManagerModel, CreatePostViewModel createPostViewModel, CreatePostDataAccessInterface createPostDataAccessObject){
         CreatePostController createPostController = createCreatePostUseCase(viewManagerModel, createPostViewModel, createPostDataAccessObject);
         return new CreatePostView(createPostViewModel, viewManagerModel, createPostController);

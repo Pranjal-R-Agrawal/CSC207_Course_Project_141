@@ -10,6 +10,10 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The UI that displays the changes in the CreatePostViewModel
+ * @author Yathusan Koneswararajah
+ */
 public class CreatePostView extends AbstractGridBagLayoutView implements PropertyChangeListener {
     public final String viewName;
     private final CreatePostViewModel createPostViewModel;
@@ -18,6 +22,12 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
     private final JTextField collaboratorRolesInputField = new JTextField(20);
     private final JButton postButton = new JButton();
 
+    /**
+     * Initializes the template for the UI and makes the components function
+     * @param createPostViewModel Observable that stores the CreatePost view state
+     * @param viewManagerModel Manages the views
+     * @param createPostController Controller to trigger the application logic for this use case
+     */
     public CreatePostView(CreatePostViewModel createPostViewModel, ViewManagerModel viewManagerModel, CreatePostController createPostController){
         super(createPostViewModel.getViewName());
         this.createPostViewModel = createPostViewModel;
@@ -122,6 +132,12 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
         addPanel(constraints, this, postButtonPanel, 0, GridBagConstraints.RELATIVE);
         add(postButton, constraints);
     }
+
+    /**
+     * Updates the UI for changes made in the ViewModel
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("post_error")){
@@ -138,5 +154,9 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
             collaboratorRolesInputField.setText("");
         }
     }
+
+    /**
+     * @return Returns the postButton of this UI
+     */
     public JButton getPostButton(){return postButton;}
 }

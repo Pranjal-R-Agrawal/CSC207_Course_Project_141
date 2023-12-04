@@ -8,17 +8,34 @@ import org.bson.types.ObjectId;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A concrete implementation of the CreatePostInputBoundary which adds a post to the database
+ * and passes the id of the post to be displayed to the user.
+ * @author Yathusan Koneswararajah
+ */
 public class CreatePostInteractor implements CreatePostInputBoundary{
     CreatePostOutputBoundary createPostPresenter;
     CreatePostDataAccessInterface createPostDataAccessObject;
     PostFactory postFactory;
 
+    /**
+     *Initializes the CreatePostInteractor object.
+     * @param createPostPresenter Recieves output data (id) to display the appropriate post.
+     * @param createPostDataAccessObject An object that puts the created post into the database.
+     * @param postFactory An object that generates a Post entity given the necessary information
+     */
     public CreatePostInteractor(CreatePostOutputBoundary createPostPresenter, CreatePostDataAccessInterface createPostDataAccessObject, PostFactory postFactory){
         this.createPostPresenter = createPostPresenter;
         this.createPostDataAccessObject = createPostDataAccessObject;
         this.postFactory = postFactory;
     }
 
+    /**
+     * Creates a Post entity based on the InputData and puts it into the database
+     * and passes the created post's id to the presenter or if inputs are invalid, it sends an
+     * error to be displayed by the Presenter.
+     * @param createPostInputData A data class that contains the inputs for the post
+     */
     public void execute(CreatePostInputData createPostInputData){
         if (createPostInputData.getTitle() == null || createPostInputData.getTitle().trim().isEmpty()){
             createPostPresenter.prepareFailureView("Please enter a title.");
