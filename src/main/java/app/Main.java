@@ -2,15 +2,12 @@ package app;
 
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
-import entity.Post;
-import entity.User;
-import org.bson.types.ObjectId;
 import view.*;
 import view.display_post.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+
 
 public class Main {
     protected static SignupViewModel signupViewModel;
