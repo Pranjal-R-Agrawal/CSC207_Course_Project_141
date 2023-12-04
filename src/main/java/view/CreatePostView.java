@@ -127,6 +127,15 @@ public class CreatePostView extends AbstractGridBagLayoutView implements Propert
         if (evt.getPropertyName().equals("post_error")){
             CreatePostState currentState = createPostViewModel.getState();
             JOptionPane.showMessageDialog(this, currentState.getErrorMessage());
+        } else if (evt.getPropertyName().equals("update_fields")){
+            CreatePostState currentState = createPostViewModel.getState();
+            titleInputField.setText(currentState.getTitle());
+            bodyInputArea.setText(currentState.getBody());
+            collaboratorRolesInputField.setText(currentState.getSuggestedCollaboratorRoles());
+        } else if (evt.getPropertyName().equals("reset_input_fields")) {
+            titleInputField.setText("");
+            bodyInputArea.setText("");
+            collaboratorRolesInputField.setText("");
         }
     }
     public JButton getPostButton(){return postButton;}
