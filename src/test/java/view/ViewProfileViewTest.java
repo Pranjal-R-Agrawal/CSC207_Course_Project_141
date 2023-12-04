@@ -65,6 +65,23 @@ public class ViewProfileViewTest {
 
 
     }
+    @Test
+    public void testViewProfileDisplayDynamic() {
+        viewProfileViewModel.firePropertyChanged("display_profile");
+        createCloseTimer().start();
+        // TODO: Finish implementing this test after main page is implemented
+
+//        assertEquals("testuser", viewProfileViewModel.getState().getUsername());
+//        assertEquals("test", viewProfileViewModel.getState().getName());
+//        assertEquals("test@email.com", viewProfileViewModel.getState().getEmail());
+//        assertEquals("0.0", viewProfileViewModel.getState().getRating());
+        assertEquals("testuser1", message_username);
+        assertEquals("test1", message_name);
+        assertEquals("test1@email.com", message_email);
+        assertEquals("0.0", message_rating);
+
+
+    }
 
     private Timer createCloseTimer() {
      ActionListener close = e -> {
