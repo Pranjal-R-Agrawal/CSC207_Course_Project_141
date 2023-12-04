@@ -29,4 +29,5 @@ replay_pid*
 .idea/
 target/
 /src/main/java/data_access/database_connection.txt
+/src/main/java/data_access/users.csv
 /src/main/java/app/MyMain.java
