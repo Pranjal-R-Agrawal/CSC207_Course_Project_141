@@ -76,6 +76,7 @@ public class SignupUseCaseTest {
     public void testPhoneNumberEmpty() {
         signupController.execute("username", "password", "password", "name", "email", null, "city", "field");
         assertNull(signupViewModel.getState().getErrorMessage());
+        mongoDBDataAccessObject.resetDatabase();
         signupController.execute("username", "password", "password", "name", "email", "", "city", "field");
         assertNull(signupViewModel.getState().getErrorMessage());
     }
