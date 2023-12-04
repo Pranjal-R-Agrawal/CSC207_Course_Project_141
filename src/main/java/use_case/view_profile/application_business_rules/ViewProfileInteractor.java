@@ -19,22 +19,15 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
 
     public void execute() {
         // TODO: Maybe change the rating to a string for displaying purposes?
-        if (viewProfileDataAccessObject.getLoggedInUser() != null) {
-            String username = viewProfileDataAccessObject.getLoggedInUser().getUsername();
-            String name = viewProfileDataAccessObject.getLoggedInUser().getName();
-            String email = viewProfileDataAccessObject.getLoggedInUser().getEmail();
-            double rating = viewProfileDataAccessObject.getLoggedInUser().getRating();
 
-            ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, rating);
-            viewProfilePresenter.prepareSuccessView(viewProfileOutputData);
+        String username = viewProfileDataAccessObject.getLoggedInUser().getUsername();
+        String name = viewProfileDataAccessObject.getLoggedInUser().getName();
+        String email = viewProfileDataAccessObject.getLoggedInUser().getEmail();
+        double rating = viewProfileDataAccessObject.getLoggedInUser().getRating();
+
+        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, rating);
+        viewProfilePresenter.prepareSuccessView(viewProfileOutputData);
 
         }
 
-        else {
-            viewProfilePresenter.prepareFailView("User not found");
-        }
-
-
-
-    }
 }
