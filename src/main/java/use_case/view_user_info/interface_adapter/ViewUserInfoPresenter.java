@@ -4,9 +4,18 @@ import use_case.view_user_info.application_business_rules.ViewUserInfoOutputBoun
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputData;
 import view.ViewUserInfoView;
 
-
+/**
+ * Concrete implementation of the ViewUserInfoOutputBoundary.
+ * The Presenter invokes the showUserInfo method of the ViewUserInfoView Class and passes the appropriate data
+ * This presenter does not update the active view and has no property or state changes as the info is only displayed through a pop-up dialog box
+ * @author Tanmay Shinde
+ */
 public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
 
+    /**
+     * Constructs the relevant output data for the case when logged-in user is a collaborator and passes it to the View
+     * @param user OutputData object containing relevant user data that is to be displayed
+     */
     @Override
     public void prepareCollabView(ViewUserInfoOutputData user) {
         String message = "<html>Name: </html>" + user.getName() +
@@ -20,6 +29,10 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
         viewUserInfoView.showUserInfo(message);
     }
 
+    /**
+     * Constructs the relevant output data for the case when logged-in user is not a collaborator and passes it to the View
+     * @param user OutputData object containing relevant user data that is to be displayed
+     */
     @Override
     public void prepareGeneralView(ViewUserInfoOutputData user) {
         String message = "<html>Name: </html>" + user.getName() +
@@ -30,6 +43,10 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
         viewUserInfoView.showUserInfo(message);
     }
 
+    /**
+     * Invokes the showUserInfo method of the View with an error message
+     * @param error the error message conveying that the user could not be retrieved
+     */
     @Override
     public void prepareFailView(String error) {
         ViewUserInfoView viewUserInfoView = new ViewUserInfoView();
