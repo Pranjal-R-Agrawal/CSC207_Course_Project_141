@@ -42,7 +42,7 @@ public class MistralCodegenAIAPI implements GenerativeAIAPI {
 
         requestBodyJson.put("inputs", idea.getIdea() + "Write a Business model for this idea?");
 
-        while (i < 10) { //TODO: set to i < 50 during final submission
+        while (i < 10) { //TODO: set to i < 50 during final submission, we are not setting it now so that our code runs quickly as we develop
             int randomKeyIndex = random.nextInt(2); // chooses 0 for Mistral, 1 for Codegen
 
             RequestBody body = RequestBody.create(mediaType, requestBodyJson.toString());
