@@ -12,7 +12,8 @@ public class CollabRequestPresenter implements CollabRequestOutputBoundary {
     }
     @Override
     public void prepareSuccessView() {
-        // TODO: Show popup?
+        String messa0ge = "Collab request sent!";
+
 
     }
 }
