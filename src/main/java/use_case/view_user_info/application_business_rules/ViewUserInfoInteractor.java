@@ -21,10 +21,6 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
 
         if(user != null) {
             if (viewUserInfoInputData.getIsCollaborator()) {
-
-                // username
-                String username = user.getUsername();
-
                 // name
                 String name = user.getName();
 
@@ -49,9 +45,6 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
             }
 
             else {
-                // username
-                String username = user.getUsername();
-
                 // name
                 String name = user.getName();
 
