@@ -14,6 +14,14 @@ import org.json.JSONObject;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * This version of the AI model API contains only one endpoint.
+ * Our team will not be using this for our demonstration of the project.
+ * Please refer to MistralCodegenAIAPI.java for the latest code used for demonstration (1 API with 2 endpoints)
+ * Though, this file may demonstrate Dependency Inversion SOLID Principle for anybody who wants to construct their
+ * GenerativeAIAPI using this an object of this class :)
+ * @author Sidharth Sawhney
+ */
 public class MistralAIAPI implements GenerativeAIAPI {
     private String API_TOKEN;
 

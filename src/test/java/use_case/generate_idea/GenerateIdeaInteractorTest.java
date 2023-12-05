@@ -48,5 +48,6 @@ public class GenerateIdeaInteractorTest {
 
         GenerateIdeaInputBoundary interactor = new GenerateIdeaInteractor(generateIdeaDataAccessObject, successPresenter, new MockAPIBusinessModels());
         interactor.execute(true);
+
     }
 }

@@ -78,11 +78,8 @@ public class GenerateIdeaViewTest {
             for (Window window : windows) {
                 if (window instanceof JFrame jFrame) {
                     if (jFrame.isVisible()) {
-                     //   String s = (GenerateIdeaView)(jFrame.getRootPane().getContentPane().getComponent(0)).getGenerateIdeaViewModel().getState().getBusinessModel();
                         String s = ((GenerateIdeaView) ((BorderLayout) jFrame.getRootPane()
                                 .getContentPane().getLayout()).getLayoutComponent(BorderLayout.CENTER)).getGenerateIdeaViewModel().getState().getBusinessModel();
-
-                        System.out.println("message = " + s);
 
                         GenerateIdeaViewTest.message = s;
                     }
