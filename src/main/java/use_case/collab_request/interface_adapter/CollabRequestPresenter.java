@@ -12,7 +12,7 @@ public class CollabRequestPresenter implements CollabRequestOutputBoundary {
     }
     @Override
     public void prepareSuccessView() {
-        String messa0ge = "Collab request sent!";
+        String message = "Collab request sent!";
 
 
     }
