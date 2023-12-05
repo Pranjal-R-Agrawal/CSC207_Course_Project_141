@@ -16,10 +16,10 @@ public class CollabRequestInteractor implements CollabRequestInputBoundary{
     }
     @Override
     public void execute(ObjectId postId , ObjectId userId) {
-        User commenter = collabRequestDataAccessObject.getUserByUserId(userId);
+        User commenter = collabRequestDataAccessObject.getUserById(userId);
         String postTitle = collabRequestDataAccessObject.getPostByPostId(postId).getTitle();
         ObjectId authorId = collabRequestDataAccessObject.getPostByPostId(postId).getAuthorID();
-        String author = collabRequestDataAccessObject.getUserByUserId(authorId).getUsername();
+        String author = collabRequestDataAccessObject.getUserById(authorId).getUsername();
 
 
         ObjectId collabId = collabRequestDataAccessObject.getPostByPostId(postId).getId();
