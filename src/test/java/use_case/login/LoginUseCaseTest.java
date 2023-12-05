@@ -11,11 +11,14 @@ import use_case.login.application_business_rules.LoginInteractor;
 import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginPresenter;
 
+import view.HomePageViewModel;
 import view.LoginViewModel;
 import view.ViewManagerModel;
 
 public class LoginUseCaseTest {
     LoginViewModel loginViewModel;
+
+    HomePageViewModel homePageViewModel;
     MongoDBDataAccessObject mongoDBDataAccessObject;
     LoginController loginController;
 
@@ -56,6 +59,7 @@ public class LoginUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         loginViewModel = new LoginViewModel();
+        homePageViewModel = new HomePageViewModel();
         try {
             mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
         } catch (Exception e) {
@@ -63,7 +67,7 @@ public class LoginUseCaseTest {
             throw new RuntimeException(e);
         }
         loginController = new LoginController(
-                new LoginInteractor(mongoDBDataAccessObject, new LoginPresenter(viewManagerModel, loginViewModel))
+                new LoginInteractor(mongoDBDataAccessObject, new LoginPresenter(viewManagerModel, loginViewModel, homePageViewModel))
         );
 
         mongoDBDataAccessObject.resetDatabase();
