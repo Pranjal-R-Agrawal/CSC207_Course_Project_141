@@ -188,6 +188,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return posts.find(Filters.eq("_id", id)).first();
     }
     @Override
+    public User getUserByUserId(ObjectId id) {
+        users = getUsersCollection();
+        return users.find(Filters.eq("_id", id)).first();
+    }
+
     public CollabRequest getCollabRequestById(ObjectId id) {
         collabRequests = getCollabRequestsCollection();
         return collabRequests.find(Filters.eq("_id", id)).first();
