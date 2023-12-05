@@ -2,7 +2,7 @@ package use_case.display_post.interface_adapter;
 
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.application_business_rules.DisplayPostOutputData;
-import view.display_post.PostAndCommentsViewModel;
+import view.PostAndCommentsViewModel;
 
 public class DisplayPostPresenter implements DisplayPostOutputBoundary {
     private final PostAndCommentsViewModel displayCommentViewModel;

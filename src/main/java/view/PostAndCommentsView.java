@@ -1,18 +1,18 @@
-package view.display_post;
+package view;
 
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
-import view.CreateCommentView;
-import view.NewWindow;
-import view.ViewManagerModel;
+import view.CommentView;
+import view.PostAndCommentsViewModel;
+import view.PostView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-import java.util.Map;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class PostAndCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
@@ -22,7 +22,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     private final ViewManagerModel viewManagerModel;
     private final DisplayPostController displayPostController;
     private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
-    private final Map<ObjectId, CommentView> comments = new HashMap<>();
+    private final Map<ObjectId, view.CommentView> comments = new HashMap<>();
     boolean postAdded = false;
     public String title;
 

@@ -6,8 +6,8 @@ import use_case.display_post.application_business_rules.DisplayPostOutputBoundar
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.display_post.interface_adapter.DisplayPostPresenter;
 import view.ViewManagerModel;
-import view.display_post.PostAndCommentsView;
-import view.display_post.PostAndCommentsViewModel;
+import view.PostAndCommentsView;
+import view.PostAndCommentsViewModel;
 
 public class DisplayPostUseCaseFactory {
     private DisplayPostUseCaseFactory() {}
