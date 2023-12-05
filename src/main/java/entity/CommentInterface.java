@@ -26,7 +26,7 @@ public interface CommentInterface {
 
     /**
      * Sets the parentID of this comment
-     * @param parentId
+     * @param parentId ID of parent comment
      */
     public void setParentId(ObjectId parentId);
 
@@ -37,7 +37,7 @@ public interface CommentInterface {
 
     /**
      * Sets ParentPostId of this comment
-     * @param parentPostId
+     * @param parentPostId ID of parent post
      */
     public void setParentPostId(ObjectId parentPostId);
 
@@ -48,7 +48,7 @@ public interface CommentInterface {
 
     /**
      * Sets the list of IDs corresponding to comments under current comment
-     * @param childrenId
+     * @param childrenId List of IDs for children comments
      */
     public void setChildrenId(List<ObjectId> childrenId);
 
@@ -59,7 +59,7 @@ public interface CommentInterface {
 
     /**
      * Sets ID of this comment's author
-     * @param authorId
+     * @param authorId ID of author
      */
     public void setAuthorId(ObjectId authorId);
 
@@ -70,7 +70,7 @@ public interface CommentInterface {
 
     /**
      * Sets the body of the comment
-     * @param body
+     * @param body Body of comment
      */
     public void setBody(String body);
 
@@ -81,7 +81,7 @@ public interface CommentInterface {
 
     /**
      * Sets the list of qualifications for this comment
-     * @param qualifications
+     * @param qualifications Qualifications
      */
     public void setQualifications(List<String> qualifications);
 }
