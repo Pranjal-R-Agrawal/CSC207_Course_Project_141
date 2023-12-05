@@ -2,6 +2,8 @@ package use_case.signup.application_business_rules;
 
 import data_access.SignupUserDataAccessInterface;
 import entity.User;
+import entity.UserFactory;
+import entity.UserFactoryInterface;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
@@ -27,14 +29,14 @@ public class SignupInteractor implements SignupInputBoundary {
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
         } else {
-            User user = new User(signupInputData.getUsername(),
+            UserFactoryInterface userFactoryInterface = new UserFactory();
+            User user = (User) userFactoryInterface.create(signupInputData.getUsername(),
                     signupInputData.getPassword(),
                     signupInputData.getName(),
                     signupInputData.getEmail(),
                     signupInputData.getPhoneNumber(),
                     "",
-                    ""
-            );
+                    "");
             userDataAccessObject.addUser(user);
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());
             userPresenter.prepareSuccessView(signupOutputData);

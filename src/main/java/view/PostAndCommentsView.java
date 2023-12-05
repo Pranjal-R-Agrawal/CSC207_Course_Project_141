@@ -1,34 +1,38 @@
-package view.display_post;
+package view;
 
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
+import view.CommentView;
+import view.PostAndCommentsViewModel;
+import view.PostView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-import java.util.Map;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class PostAndCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private ObjectId postId;
     private final PostAndCommentsViewModel postAndCommentsViewModel;
+    private final ViewManagerModel viewManagerModel;
     private final DisplayPostController displayPostController;
     private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
-    private final Map<ObjectId, CommentView> comments = new HashMap<>();
-    private JFrame replyFrame;
-    private JPanel replyPanel;
+    private final Map<ObjectId, view.CommentView> comments = new HashMap<>();
     boolean postAdded = false;
     public String title;
 
-    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
         this.displayPostController = displayPostController;
+
+        this.viewManagerModel = viewManagerModel;
 
         this.postAndCommentsViewModel = postAndCommentsViewModel;
         postAndCommentsViewModel.addPropertyChangeListener(this);
@@ -79,22 +83,16 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             ObjectId commentId = postAndCommentsViewModel.getState().getCommentId();
             displayPostController.execute(commentId, "comment");
         } else if (evt.getPropertyName().equals("reply_to_comment")) {
-            replyFrame = new JFrame("Reply to comment");
-            replyPanel = createCommentUseCaseBuilder.build(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
-            replyFrame.add(replyPanel);
-            replyFrame.pack();
-            replyFrame.setLocationRelativeTo(this.getParent());
-            replyFrame.setVisible(true);
+            CreateCommentView replyPanel = createCommentUseCaseBuilder.build(postAndCommentsViewModel.getState().getReplyParentPostId(), postAndCommentsViewModel.getState().getReplyParentId());
+            viewManagerModel.displayCreateComment(replyPanel);
         } else if (evt.getPropertyName().equals("close_reply_frame")) {
-            replyFrame.setVisible(false);
-            replyFrame.dispose();
-            replyPanel = null;
+            viewManagerModel.closeCreateComment();
         } else if(evt.getPropertyName().equals("reset_view")) {
             postAdded = false;
             this.removeAll();
             comments.clear();
         } else if (evt.getPropertyName().equals("resize_reply_frame")) {
-            replyFrame.pack();
+            viewManagerModel.resize("create_comment");
         }
     }
 

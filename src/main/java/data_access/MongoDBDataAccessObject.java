@@ -27,7 +27,7 @@ import org.bson.types.ObjectId;
 import javax.swing.*;
 
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, ViewUserInfoDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -105,9 +105,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return false;
     }
 
-    public void addUser(User user) {
+    public void addUser(UserInterface user) {
         users = getUsersCollection();
-        users.insertOne(user);
+        users.insertOne((User)user);
     }
 
     public boolean isValid(String username, String password) {
