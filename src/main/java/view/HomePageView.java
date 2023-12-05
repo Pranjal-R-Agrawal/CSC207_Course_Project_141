@@ -6,7 +6,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-
+/**
+ * The UI that displays the HomePageViewModel
+ * @author Tanmay Shinde
+ */
 public class HomePageView extends JPanel implements PropertyChangeListener {
     public final String viewName;
 
@@ -23,7 +26,15 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     private final JButton generateIdeaButton = new JButton();
     private final JButton postButton = new JButton();
     private final JButton viewProfileButton = new JButton();
-
+    
+    /**
+     * Initializes the UI for the Home Page and provides functionality to its components.
+     * @param viewManagerModel View manager for managing which view is displayed
+     * @param homePageViewModel Observable that stores the state useful to the Home Page View.
+     * @param generateIdeaViewModel Observable that stores the state of the Generate Idea View.
+     * @param createPostViewModel Observable that stores the state of the Create Post View.
+     * @param viewProfileViewModel Observable that stores the state of the View Profile View.
+     */
     public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, ViewProfileViewModel viewProfileViewModel) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -84,6 +95,10 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         add(emptyPanel3);
     }
 
+    /**
+     * Updates the UI when a change is made in the HomePageViewModel
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {}
 }
