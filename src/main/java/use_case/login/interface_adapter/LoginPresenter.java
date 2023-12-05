@@ -2,23 +2,27 @@ package use_case.login.interface_adapter;
 
 import use_case.login.application_business_rules.LoginOutputBoundary;
 
+import view.HomePageViewModel;
 import view.LoginViewModel;
 import view.ViewManagerModel;
-
-// TODO: Connect with StartupGenerator Home Page
 
 public class LoginPresenter implements LoginOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final LoginViewModel loginViewModel;
 
-    public LoginPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    private final HomePageViewModel homePageViewModel;
+
+    public LoginPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, HomePageViewModel homePageViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
+        this.homePageViewModel = homePageViewModel;
     }
 
     @Override
     public void prepareSuccessView() {
         loginViewModel.setState(new LoginState());
+        viewManagerModel.setActiveView(homePageViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
