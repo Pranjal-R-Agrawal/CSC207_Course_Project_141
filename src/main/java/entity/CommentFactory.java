@@ -18,7 +18,7 @@ public class CommentFactory implements CommentFactoryInterface{
      * @param qualifications Qualifications listed by commenter
      * @return a Comment object
      */
-    public Comment create(ObjectId parentId, ObjectId parentPostId, ObjectId authorId, String body, List<String> qualifications){
+    public CommentInterface create(ObjectId parentId, ObjectId parentPostId, ObjectId authorId, String body, List<String> qualifications){
         return new Comment(parentId, parentPostId, authorId, body, qualifications);
     }
 }

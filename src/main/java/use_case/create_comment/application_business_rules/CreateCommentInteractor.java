@@ -4,6 +4,7 @@ import data_access.CreateCommentDataAccessInterface;
 import entity.Comment;
 import entity.CommentFactory;
 import entity.CommentFactoryInterface;
+import entity.CommentInterface;
 import org.bson.types.ObjectId;
 
 import java.util.Arrays;
@@ -47,12 +48,12 @@ public class CreateCommentInteractor implements CreateCommentInputBoundary {
             qualifications.replaceAll(String::trim);
             qualifications.removeIf(String::isEmpty);
             ObjectId authorId = commentDataAccessObject.getLoggedInUserId();
-            Comment comment = commentFactory.create(createCommentInputData.getParentId(),
+            CommentInterface comment = commentFactory.create(createCommentInputData.getParentId(),
                     createCommentInputData.getParentPostId(),
                     authorId,
                     createCommentInputData.getBody(),
                     qualifications);
-            commentDataAccessObject.addComment(comment);
+            commentDataAccessObject.addComment((Comment)comment);
             commentPresenter.prepareSuccessView(comment.getId());
         }
     }
