@@ -1,7 +1,7 @@
-package view.display_post;
+package view;
 
 import org.bson.types.ObjectId;
-import view.AbstractGridBagLayoutView;
+import view.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;

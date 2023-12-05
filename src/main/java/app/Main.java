@@ -1,17 +1,23 @@
 package app;
 
+import api.GenerativeAIAPI;
+import api.MistralCodegenAIAPI;
+import data_access.GenerateIdeaDataAccessInterface;
+import data_access.IdeaDataFileDataAccessObject;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
+import entity.ConcreteIdeaFactory;
+import entity.IdeaFactory;
 import view.*;
-import view.display_post.*;
-
 import javax.swing.*;
 import java.awt.*;
-
 
 public class Main {
     protected static SignupViewModel signupViewModel;
     protected static LoginViewModel loginViewModel;
+    protected static GenerateIdeaViewModel generateIdeaViewModel;
+    protected static CreatePostViewModel createPostViewModel;
+    protected static HomePageViewModel homePageViewModel;
 
     public static void main(String[] args) {
         JFrame application = new JFrame("Startup Generator");
@@ -27,6 +33,9 @@ public class Main {
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
+        generateIdeaViewModel = new GenerateIdeaViewModel();
+        homePageViewModel = new HomePageViewModel();
+        createPostViewModel = new CreatePostViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         try {
@@ -53,6 +62,24 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
 
+        CreatePostViewModel createPostViewModel = new CreatePostViewModel();
+        CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
+
+        GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
+        GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
+        IdeaFactory ideaFactory = new ConcreteIdeaFactory();
+        try
+        {
+            generateIdeaDataAccessObject = new IdeaDataFileDataAccessObject("src/main/java/data_access/ideas.csv",ideaFactory);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
+        views.add(generateIdeaView,generateIdeaView.viewName);
+
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
@@ -61,9 +88,6 @@ public class Main {
         NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
         NewWindow newCreatePostWindow = new NewWindow(false, "Post");
         viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
-
-        CreatePostViewModel createPostViewModel = new CreatePostViewModel();
-        CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
