@@ -8,4 +8,5 @@ public interface CreateCommentDataAccessInterface {
     void addComment(Comment comment);
     CommentInterface getCommentByCommentID(ObjectId id);
     ObjectId getLoggedInUserId();
+    void setLoggedInUserID(ObjectId id);
 }
