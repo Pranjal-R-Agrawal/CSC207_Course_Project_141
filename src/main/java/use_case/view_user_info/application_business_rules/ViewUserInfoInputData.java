@@ -2,7 +2,7 @@ package use_case.view_user_info.application_business_rules;
 
 import org.bson.types.ObjectId;
 
-/*
+/**
  * Input Data class that represents the data passed to the use case interactor
  * @author Tanmay Shinde
  */
