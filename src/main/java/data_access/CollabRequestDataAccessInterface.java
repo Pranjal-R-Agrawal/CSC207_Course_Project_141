@@ -5,9 +5,7 @@ import entity.User;
 import entity.Post;
 import org.bson.types.ObjectId;
 public interface CollabRequestDataAccessInterface {
-    Comment getCommentByCommentId(ObjectId id);
-    User getUserById(ObjectId id);
     Post getPostByPostId(ObjectId id);
-    CollabRequest getCollabRequestById(ObjectId id);
-    void addCollabRequest(CollabRequest collabRequest);
+    User getUserByUserId(ObjectId id);
+
 }
