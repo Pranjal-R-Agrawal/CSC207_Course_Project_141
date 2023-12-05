@@ -104,9 +104,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return false;
     }
 
-    public void addUser(User user) {
+    public void addUser(UserInterface user) {
         users = getUsersCollection();
-        users.insertOne(user);
+        users.insertOne((User)user);
     }
 
     public boolean isValid(String username, String password) {
