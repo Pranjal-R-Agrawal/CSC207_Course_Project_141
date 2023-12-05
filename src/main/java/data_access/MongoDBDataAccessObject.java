@@ -26,7 +26,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
