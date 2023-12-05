@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Post {
     private ObjectId id;
-    private List<ObjectId> childrenId;
+    private List<ObjectId> childrenId; // TODO: TAKE THIS OUT
     private ObjectId authorID;
     private List<ObjectId> collaboratorIDs;
     private String title;
