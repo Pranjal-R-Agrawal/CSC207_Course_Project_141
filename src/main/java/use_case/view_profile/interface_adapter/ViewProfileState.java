@@ -1,11 +1,15 @@
 package use_case.view_profile.interface_adapter;
 
+import java.util.List;
+
 public class ViewProfileState {
     private String username;
     private String name;
     private String email;
     private String rating;
     private String errorMessage;
+    private String projects;
+    private List<String> collabRequests;
 
     public String getUsername() {
         return username;
@@ -50,6 +54,25 @@ public class ViewProfileState {
         this.errorMessage = errorMessage;
         return this;
     }
+    public String getProjects() {
+        return projects;
+    }
+
+    public ViewProfileState setProjects(String projects) {
+        this.projects = projects;
+        return this;
+    }
+    public List<String> getCollabRequests() {
+        return collabRequests;
+    }
+
+    public ViewProfileState setCollabRequests(List<String> collabRequests) {
+        this.collabRequests = collabRequests;
+        return this;
+    }
+
+
+
 
 
 }

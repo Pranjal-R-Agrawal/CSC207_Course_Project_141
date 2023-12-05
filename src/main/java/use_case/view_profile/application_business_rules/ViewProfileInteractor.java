@@ -34,7 +34,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
             projects += post + " ";
         }
         List<ObjectId> collabRequestIds = viewProfileDataAccessObject.getLoggedInUser().getCollaborationRequestIDs();
-        List<String> collabRequests = new ArrayList<>();
+        ArrayList<String> collabRequests = new ArrayList<>();
         for (ObjectId collabRequestId : collabRequestIds) {
             String collabRequest = viewProfileDataAccessObject.getCollabRequestById(collabRequestId).getTitle();
 
