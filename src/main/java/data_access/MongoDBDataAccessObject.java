@@ -12,6 +12,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -25,27 +26,23 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, CollabRequestDataAccessInterface{
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
-    protected MongoCollection<CollabRequest> collabRequests;
     protected MongoCollection<Comment> comments;
     private ObjectId loggedInUserID;
-    private ObjectId collaborationRequestId;
     private final String usersCollectionName;
     private final String postsCollectionName;
     private final String commentsCollectionName;
-    private final String collabRequestsCollectionName;
 
     public MongoDBDataAccessObject(
-            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName, String collabRequestsCollectionName
+            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
     ) throws FileNotFoundException, NoSuchElementException {
         String uri;
         this.usersCollectionName = usersCollectionName;
         this.postsCollectionName = postsCollectionName;
         this.commentsCollectionName = commentsCollectionName;
-        this.collabRequestsCollectionName = collabRequestsCollectionName;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
@@ -70,9 +67,6 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
             if (!collections.contains(commentsCollectionName)) database.createCollection(commentsCollectionName);
             comments = getCommentsCollection();
-
-            if (!collections.contains(collabRequestsCollectionName)) database.createCollection(collabRequestsCollectionName);
-            collabRequests = getCollabRequestsCollection();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Could not connect to the database\nError: " + e.getMessage());
             throw new RuntimeException(e);
@@ -97,17 +91,10 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
 
-    private MongoCollection<CollabRequest> getCollabRequestsCollection() {
-        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-        return database.getCollection(commentsCollectionName, CollabRequest.class).withCodecRegistry(pojoCodecRegistry);
-    }
-
     public void resetDatabase() {
         users.drop();
         posts.drop();
         comments.drop();
-        collabRequests.drop();
     }
 
     public boolean usernameUsed(String username) {
@@ -139,17 +126,13 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.text(username)).first();
     }
 
-    public User getUserById(ObjectId objectId) {
+    public User getUserById(ObjectId id) {
         users = getUsersCollection();
-        return users.find(Filters.eq("_id", objectId)).first();
+        return users.find(Filters.eq("_id", id)).first();
     }
 
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
-    }
-    public ObjectId setCollaborationRequestId(ObjectId id) {
-        collaborationRequestId = id;
-        return id;
     }
 
     public User getLoggedInUser() {
@@ -157,44 +140,35 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.eq("_id", loggedInUserID)).first();
     }
 
+    public List<Comment> getCommentsByParentPostID(ObjectId id) {
+        comments = getCommentsCollection();
+        comments.createIndex(Indexes.text("parentPostId"));
+        return comments.find(Filters.eq("parentPostId", id)).into(new ArrayList<Comment>());
+    }
+
+    public Comment getCommentByCommentID(ObjectId id) {
+        comments = getCommentsCollection();
+        return comments.find(Filters.eq("_id", id)).first();
+    }
+
+    public Post getPostByPostID(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
+    }
+
     @Override
     public void addComment(Comment comment) {
         comments = getCommentsCollection();
         comments.insertOne(comment);
     }
-    @Override
-    public void addCollabRequest(CollabRequest collabRequest){
-        collabRequests = getCollabRequestsCollection();
-        collabRequests.insertOne(collabRequest);
-    }
 
+    public void addPost(Post post) {
+        posts = getPostsCollection();
+        posts.insertOne(post);
+    }
 
     @Override
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
-    }
-    public ObjectId getUserId() {
-        return loggedInUserID;
-    }
-    @Override
-    public Comment getCommentByCommentId(ObjectId id) {
-        comments = getCommentsCollection();
-        return comments.find(Filters.eq("_id", id)).first();
-    }
-
-    @Override
-    public Post getPostByPostId(ObjectId id) {
-        posts = getPostsCollection();
-        return posts.find(Filters.eq("_id", id)).first();
-    }
-    @Override
-    public User getUserByUserId(ObjectId id) {
-        users = getUsersCollection();
-        return users.find(Filters.eq("_id", id)).first();
-    }
-
-    public CollabRequest getCollabRequestById(ObjectId id) {
-        collabRequests = getCollabRequestsCollection();
-        return collabRequests.find(Filters.eq("_id", id)).first();
     }
 }

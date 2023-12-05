@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+public class Post implements PostInterface{
     private ObjectId id;
     private List<ObjectId> childrenId; // TODO: TAKE THIS OUT
     private ObjectId authorID;
