@@ -1,6 +1,8 @@
 package data_access;
 
+import entity.Post;
 import entity.User;
+import org.bson.types.ObjectId;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -54,5 +56,15 @@ public class ViewProfileDataFileAccessObject implements ViewProfileDataAccessInt
     public User getLoggedInUser() {
         return testUser;
 
+    }
+
+    @Override
+    public Post getPostByPostID(ObjectId id) {
+        return null;
+    }
+
+    @Override
+    public CollabRequest getCollabRequestById(ObjectId id) {
+        return null;
     }
 }
