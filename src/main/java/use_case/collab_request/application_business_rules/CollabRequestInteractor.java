@@ -6,44 +6,27 @@ import org.bson.types.ObjectId;
 
 public class CollabRequestInteractor implements CollabRequestInputBoundary{
     final CollabRequestDataAccessInterface collabRequestDataAccessObject;
-    final CollabRequestOutputBoundary collabPresenter;
+    final CollabRequestOutputBoundary collabRequestPresenter;
     final CollabRequestFactory collabRequestFactory;
 
     public CollabRequestInteractor(CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestOutputBoundary collabPresenter, CollabRequestFactory collabRequestFactory) {
         this.collabRequestDataAccessObject = collabRequestDataAccessObject;
-        this.collabPresenter = collabPresenter;
+        this.collabRequestPresenter = collabPresenter;
         this.collabRequestFactory = collabRequestFactory;
     }
     @Override
-    public void execute(CollabRequestInputData collabRequestInputData) {
-        User commenter = collabRequestDataAccessObject.getUserById(
-                collabRequestDataAccessObject.getCommentByCommentId(
-                        collabRequestInputData.getCommentId()).getAuthorId());
-        Comment comment = collabRequestDataAccessObject.getCommentByCommentId(
-                collabRequestInputData.getCommentId());
-        String author = collabRequestDataAccessObject.getUserById(
-                collabRequestDataAccessObject.getPostByPostId(
-                        comment.getParentPostId()
-                ).getAuthorID()
-        ).getUsername();
-        String title = collabRequestDataAccessObject.getPostByPostId(
-                comment.getParentPostId()
-        ).getTitle();
+    public void execute(ObjectId postId , ObjectId userId) {
+        User commenter = collabRequestDataAccessObject.getUserByUserId(userId);
+        String postTitle = collabRequestDataAccessObject.getPostByPostId(postId).getTitle();
+        ObjectId authorId = collabRequestDataAccessObject.getPostByPostId(postId).getAuthorID();
+        String author = collabRequestDataAccessObject.getUserByUserId(authorId).getUsername();
 
-        ObjectId collabId = collabRequestDataAccessObject.getCommentByCommentId(
-                collabRequestInputData.getCommentId()
-        ).getId();
 
-        CollabRequest collabRequest = collabRequestFactory.create(collabId, author, title);
+        ObjectId collabId = collabRequestDataAccessObject.getPostByPostId(postId).getId();
+
+        CollabRequest collabRequest = collabRequestFactory.create(collabId, author, postTitle);
         collabRequestDataAccessObject.addCollabRequest(collabRequest);
         commenter.addCollaborationRequestId(collabId);
-
-
-
-
-
-
-
-
+        collabRequestPresenter.prepareSuccessView();
     }
 }
