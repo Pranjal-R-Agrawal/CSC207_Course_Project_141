@@ -25,6 +25,12 @@ public class SignupView extends JPanel implements PropertyChangeListener {
     private final JButton signupButton = new JButton();
     private final JButton loginButton = new JButton();
 
+    /**
+     * Constructor for SignupView
+     * Displays the signup form, sends the input to the controller, creates  popup window if there is an error
+     * @param signupViewModel SignupViewModel
+     * @param signupController SignupController
+     */
     public SignupView(SignupViewModel signupViewModel, SignupController signupController) {
         this.signupViewModel = signupViewModel;
         this.signupController = signupController;

@@ -3,9 +3,6 @@ package view;
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
-import view.CommentView;
-import view.PostAndCommentsViewModel;
-import view.PostView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +23,14 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     boolean postAdded = false;
     public String title;
 
+    /**
+     * This class is responsible for displaying a post and its comments.
+     * It contains a PostView and a list of CommentViews.
+     * @param postAndCommentsViewModel The view model for this view
+     * @param viewManagerModel The view manager model
+     * @param displayPostController The controller for displaying posts
+     * @param createCommentUseCaseBuilder The use case builder for creating comments
+     */
     public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
@@ -96,6 +101,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
         }
     }
 
+    // Functions for making this view scrollable
     public Dimension getPreferredScrollableViewportSize() {return getPreferredSize();}
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {return 1;}
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height : visibleRect.width) - 10;}
