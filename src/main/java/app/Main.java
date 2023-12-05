@@ -89,7 +89,7 @@ public class Main {
         NewWindow newCreatePostWindow = new NewWindow(false, "Post");
         viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
 
-        viewManagerModel.setActiveView(generateIdeaView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
