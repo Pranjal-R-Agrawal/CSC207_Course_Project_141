@@ -1,19 +1,26 @@
 package use_case.view_profile.application_business_rules;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewProfileOutputData {
     private final String username;
 
     private final String name;
 
     private final String email;
+    private final String projects;
+    private final ArrayList<String> collabRequests;
 
     private final double rating;
 
-    public ViewProfileOutputData(String username, String name, String email, double rating) {
+    public ViewProfileOutputData(String username, String name, String email, double rating, String projects, ArrayList<String> collabRequests) {
         this.username = username;
         this.name = name;
         this.email = email;
         this.rating = rating;
+        this.projects = projects;
+        this.collabRequests = collabRequests;
     }
 
     public String getUsername() {
@@ -30,5 +37,11 @@ public class ViewProfileOutputData {
 
     public String getRating() {
         return (String.valueOf(rating));
+    }
+    public String getProjects() {
+        return projects;
+    }
+    public ArrayList<String> getCollabRequests() {
+        return collabRequests;
     }
 }
