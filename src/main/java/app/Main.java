@@ -20,8 +20,6 @@ public class Main {
     protected static CreatePostViewModel createPostViewModel;
     protected static HomePageViewModel homePageViewModel;
 
-    protected static HomePageViewModel homePageViewModel;
-
     public static void main(String[] args) {
         JFrame application = new JFrame("Startup Generator");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +64,7 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
 
         HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, viewProfileViewModel);
