@@ -12,7 +12,6 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Main {
     protected static SignupViewModel signupViewModel;
     protected static LoginViewModel loginViewModel;
@@ -30,7 +29,7 @@ public class Main {
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        new ViewManager(views, cardLayout, viewManagerModel);
+        ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
@@ -63,6 +62,9 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
 
+        CreatePostViewModel createPostViewModel = new CreatePostViewModel();
+        CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
+
         GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
         IdeaFactory ideaFactory = new ConcreteIdeaFactory();
@@ -75,10 +77,19 @@ public class Main {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
-        GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel);
+        GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
+        CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
+        NewWindow newPostAndCommentsWindow = new NewWindow(true, postAndCommentsView.viewName);
+        NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
+        NewWindow newCreatePostWindow = new NewWindow(false, "Post");
+        viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
+
+        viewManagerModel.setActiveView(generateIdeaView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

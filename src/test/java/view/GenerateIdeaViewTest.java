@@ -1,8 +1,11 @@
 package view;
 
 import api.MistralCodegenAIAPI;
+import app.CreatePostUseCaseFactory;
 import app.GenerateIdeaUseCaseFactory;
 import data_access.IdeaDataFileDataAccessObject;
+import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +28,14 @@ public class GenerateIdeaViewTest {
     @Before
     public void setUpTest() throws Exception {
 
+        MongoDBDataAccessObject mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+
         ideaDataFileDataAccessObject = new IdeaDataFileDataAccessObject("src/main/java/data_access/ideas.csv",new ConcreteIdeaFactory());
 
         generateIdeaViewModel = new GenerateIdeaViewModel();
         createPostViewModel = new CreatePostViewModel();
-        generateIdeaView = GenerateIdeaUseCaseFactory.create(new ViewManagerModel(),generateIdeaViewModel, createPostViewModel,ideaDataFileDataAccessObject, new MistralCodegenAIAPI(), new HomePageViewModel());
+
+        generateIdeaView = GenerateIdeaUseCaseFactory.create(new ViewManagerModel(),generateIdeaViewModel, createPostViewModel,ideaDataFileDataAccessObject, new MistralCodegenAIAPI(), new HomePageViewModel(), CreatePostUseCaseFactory.create(new ViewManagerModel(),createPostViewModel,mongoDBDataAccessObject));
 
         ideaButton = (JButton) generateIdeaView.getComponent(0);
 

@@ -1,23 +1,25 @@
 package use_case.create_comment.interface_adapter;
 
+import org.bson.types.ObjectId;
 import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
 import view.CreateCommentViewModel;
-import view.ViewManagerModel;
+import view.PostAndCommentsViewModel;
 
 public class CreateCommentPresenter implements CreateCommentOutputBoundary {
-    private final ViewManagerModel viewManagerModel;
+    private final PostAndCommentsViewModel postAndCommentsViewModel;
     private final CreateCommentViewModel createCommentViewModel;
-    // TODO: Add PostViewModel instance variable
-    public CreateCommentPresenter(ViewManagerModel viewManagerModel, CreateCommentViewModel createCommentViewModel){
-        this.viewManagerModel = viewManagerModel;
+
+    public CreateCommentPresenter(PostAndCommentsViewModel postAndCommentsViewModel, CreateCommentViewModel createCommentViewModel){
+        this.postAndCommentsViewModel = postAndCommentsViewModel;
         this.createCommentViewModel = createCommentViewModel;
     }
 
     @Override
-    public void prepareSuccessView() {
+    public void prepareSuccessView(ObjectId commentId) {
         createCommentViewModel.setState(new CreateCommentState());
-        // TODO: Switch to PostView and clear all fields
-
+        postAndCommentsViewModel.getState().setCommentId(commentId);
+        postAndCommentsViewModel.firePropertyChanged("display_single_comment");
+        postAndCommentsViewModel.firePropertyChanged("close_reply_frame");
     }
 
     @Override

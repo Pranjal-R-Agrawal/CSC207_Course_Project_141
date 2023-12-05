@@ -27,11 +27,12 @@ public class GenerateIdeaUseCaseFactory {
      * @param generativeAIAPI the API AI Model used to generate business model
      * @param createPostViewModel Observable that stores the state useful to Create Post View.
      * @param homePageViewModel Observable that stores the state useful to Home Page View.
+     * @param createPostView the UI responsible for allowing the user to format a post
      * @return the View for the Generate Idea Use Case
      */
-    public static GenerateIdeaView create(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI, HomePageViewModel homePageViewModel) {
+    public static GenerateIdeaView create(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI, HomePageViewModel homePageViewModel,CreatePostView createPostView) {
         GenerateIdeaController generateIdeaController = createGenerateIdeaUseCase(viewManagerModel, generateIdeaViewModel, generateIdeaDataAccessObject, generativeAIAPI);
-        return new GenerateIdeaView(viewManagerModel, generateIdeaViewModel, createPostViewModel, generateIdeaController, homePageViewModel);
+        return new GenerateIdeaView(viewManagerModel, generateIdeaViewModel, createPostViewModel, generateIdeaController, homePageViewModel,createPostView);
     }
     private static GenerateIdeaController createGenerateIdeaUseCase(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI) {
         GenerateIdeaOutputBoundary generateIdeaPresenter = new GenerateIdeaPresenter(viewManagerModel, generateIdeaViewModel);

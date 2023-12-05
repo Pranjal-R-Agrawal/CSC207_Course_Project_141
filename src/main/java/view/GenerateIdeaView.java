@@ -1,5 +1,6 @@
 package view;
 
+import app.CreatePostUseCaseFactory;
 import use_case.generate_idea.interface_adapter.GenerateIdeaController;
 import use_case.generate_idea.interface_adapter.GenerateIdeaState;
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final GenerateIdeaViewModel generateIdeaViewModel;
     private final GenerateIdeaController generateIdeaController;
+    private final CreatePostView createPostView;
     private final CreatePostViewModel createPostViewModel;
     private final HomePageViewModel homePageViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -31,12 +33,13 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
      * @param createPostViewModel Observable that stores the state useful to Create Post View.
      * @param homePageViewModel Observable that stores the state useful to Home Page View.
      */
-    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel) {
+    public GenerateIdeaView(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaController generateIdeaController, HomePageViewModel homePageViewModel, CreatePostView createPostView) {
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.generateIdeaController = generateIdeaController;
         this.viewManagerModel = viewManagerModel;
         this.homePageViewModel = homePageViewModel;
         this.createPostViewModel = createPostViewModel;
+        this.createPostView = createPostView;
 
         viewName = generateIdeaViewModel.getViewName();
         setName(viewName);
@@ -85,14 +88,12 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                         {
                             idea_prompt = text.substring(0);
                         }
-                        System.out.println(idea_prompt); // test
-                        System.out.println(business_model); // test
 
                         createPostViewModel.getState().setTitle(idea_prompt).setBody(business_model);
                         createPostViewModel.firePropertyChanged("update_fields");
+                        viewManagerModel.displayCreatePost(createPostView);
+                        viewManagerModel.resize("create_post");
 
-                        viewManagerModel.setActiveView(createPostViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
 
                     }
                 }
