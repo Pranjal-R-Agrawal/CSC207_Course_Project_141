@@ -20,41 +20,31 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
         User user = infoDataAccessObject.getUserById(userId);
 
         if(user != null) {
+
+            // name
+            String name = user.getName();
+
+            // field of expertise
+            String fieldOfExpertise = user.getFieldOfExpertise();
+
+            // rating
+            double rating = user.getRating();
+
+            // city
+            String city = user.getCity();
+
+            // email
+            String email = user.getEmail();
+
+            // phone number
+            String phoneNumber = user.getPhoneNumber();
+
             if (viewUserInfoInputData.getIsCollaborator()) {
-                // name
-                String name = user.getName();
-
-                // field of expertise
-                String fieldOfExpertise = user.getFieldOfExpertise();
-
-                // rating
-                double rating = user.getRating();
-
-                // city
-                String city = user.getCity();
-
-                // email
-                String email = user.getEmail();
-
-                // phone number
-                String phoneNumber = user.getPhoneNumber();
-
-                // create output data object
                 ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, city, email, phoneNumber);
                 infoPresenter.prepareCollabView(userData);
             }
 
             else {
-                // name
-                String name = user.getName();
-
-                // field of expertise
-                String fieldOfExpertise = user.getFieldOfExpertise();
-
-                // rating
-                double rating = user.getRating();
-
-                // create output data object
                 ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, "", "", "");
                 infoPresenter.prepareGeneralView(userData);
             }
