@@ -7,6 +7,7 @@ import org.junit.Test;
 public class MongoDBDataAccessObjectTest {
     MongoDBDataAccessObject dataAccessObject;
 
+    // TODO: Add test for addComment() after implementation for fetching comments method
     @Test
     public void testUsernameUsedEmptyCollection() {
         assert !dataAccessObject.usernameUsed("username");
