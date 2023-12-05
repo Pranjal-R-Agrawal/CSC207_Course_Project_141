@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.Post;
 import entity.User;
 import org.bson.types.ObjectId;
 
@@ -12,5 +13,15 @@ public class MockViewProfileDataAccessObject implements ViewProfileDataAccessInt
         User testUser = new User("testuser", "password123", "test", "test@email.com",
                 "123-456-7890", "testCity", "coding");
         return testUser;
+    }
+
+    @Override
+    public Post getPostByPostID(ObjectId id) {
+        return null;
+    }
+
+    @Override
+    public CollabRequest getCollabRequestById(ObjectId id) {
+        return null;
     }
 }
