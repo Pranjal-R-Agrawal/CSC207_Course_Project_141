@@ -11,7 +11,7 @@ public class ViewUserInfoInputData {
 
     final private boolean isCollaborator;
 
-    /*
+    /**
      * Initializes an Input Data object and provides functionality to its components
      * @param userId User Id of the user
      * @param isCollaborator boolean value denoting whether the logged-in user is a collaborator of the user whose info needs to be presented
@@ -21,7 +21,7 @@ public class ViewUserInfoInputData {
         this.isCollaborator = isCollaborator;
     }
 
-    /*
+    /**
      * Getter for userId
      * @return a ObjectId object denoting the userId of the user whose info needs to be presented
      */
@@ -29,7 +29,7 @@ public class ViewUserInfoInputData {
         return userId;
     }
 
-    /*
+    /**
      * Getter for isCollaborator
      * @return a boolean value denoting whether the logged-in user is a collaborator of the user whose info needs to be presented
      */
