@@ -6,7 +6,6 @@ public class ViewUserInfoOutputData {
 
     private final String fieldOfExpertise;
 
-    private final double rating;
 
     private final String city;
 
@@ -14,10 +13,9 @@ public class ViewUserInfoOutputData {
 
     private final String phoneNumber;
 
-    public ViewUserInfoOutputData(String name, String fieldOfExpertise, double rating, String city, String email, String phoneNumber) {
+    public ViewUserInfoOutputData(String name, String fieldOfExpertise, String city, String email, String phoneNumber) {
         this.name = name;
         this.fieldOfExpertise = fieldOfExpertise;
-        this.rating = rating;
         this.city = city;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -25,10 +23,6 @@ public class ViewUserInfoOutputData {
 
     public String getName() {
         return name;
-    }
-
-    public double getRating() {
-        return rating;
     }
 
     public String getEmail() {

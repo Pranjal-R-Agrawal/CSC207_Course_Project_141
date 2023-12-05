@@ -11,7 +11,6 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
     public void prepareCollabView(ViewUserInfoOutputData user) {
         String message = "<html>Name: </html>" + user.getName() +
                 "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise() +
-                "<html><br/>Rating: </html>" + user.getRating() +
                 "<html><br/>City: </html>" + user.getCity() +
                 "<html><br/>Email: </html>" + user.getEmail() +
                 "<html><br/>Phone Number: </html>" + user.getPhoneNumber();
@@ -24,8 +23,7 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
     @Override
     public void prepareGeneralView(ViewUserInfoOutputData user) {
         String message = "<html>Name: </html>" + user.getName() +
-                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise() +
-                "<html><br/>Rating: </html>" + user.getRating();
+                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise();
 
         ViewUserInfoView viewUserInfoView = new ViewUserInfoView();
 

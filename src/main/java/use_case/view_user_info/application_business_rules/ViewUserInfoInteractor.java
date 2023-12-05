@@ -27,8 +27,6 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
             // field of expertise
             String fieldOfExpertise = user.getFieldOfExpertise();
 
-            // rating
-            double rating = user.getRating();
 
             // city
             String city = user.getCity();
@@ -40,12 +38,12 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
             String phoneNumber = user.getPhoneNumber();
 
             if (viewUserInfoInputData.getIsCollaborator()) {
-                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, city, email, phoneNumber);
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, city, email, phoneNumber);
                 infoPresenter.prepareCollabView(userData);
             }
 
             else {
-                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, "", "", "");
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, "", "", "");
                 infoPresenter.prepareGeneralView(userData);
             }
         }
