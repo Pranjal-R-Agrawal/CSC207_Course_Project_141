@@ -1,6 +1,8 @@
 package use_case.view_user_info.application_business_rules;
 
 import data_access.ViewUserInfoDataAccessInterface;
+import entity.User;
+import org.bson.types.ObjectId;
 
 public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     final ViewUserInfoDataAccessInterface infoDataAccessObject;
@@ -12,30 +14,55 @@ public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     }
 
     public void execute(ViewUserInfoInputData viewUserInfoInputData) {
-        if(infoDataAccessObject.checkUserExists(viewUserInfoInputData.getUserId())) {
+
+        ObjectId userId = viewUserInfoInputData.getUserId();
+
+        User user = infoDataAccessObject.getUserById(userId);
+
+        if(user != null) {
             if (viewUserInfoInputData.getIsCollaborator()) {
-                // get name
-                String username = infoDataAccessObject.getNameByUserId(viewUserInfoInputData.getUserId());
-                // get rating
-                double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
-                // get contact info
-                String email = infoDataAccessObject.getUserEmail(viewUserInfoInputData.getUserId());
-                String phoneNumber = infoDataAccessObject.getPhoneNumber(viewUserInfoInputData.getUserId());
+
+                // username
+                String username = user.getUsername();
+
+                // name
+                String name = user.getName();
+
+                // field of expertise
+                String fieldOfExpertise = user.getFieldOfExpertise();
+
+                // rating
+                double rating = user.getRating();
+
+                // city
+                String city = user.getCity();
+
+                // email
+                String email = user.getEmail();
+
+                // phone number
+                String phoneNumber = user.getPhoneNumber();
 
                 // create output data object
-                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, email, phoneNumber);
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, city, email, phoneNumber);
                 infoPresenter.prepareCollabView(userData);
             }
 
             else {
-                // get name
-                String username = infoDataAccessObject.getNameByUserId(viewUserInfoInputData.getUserId());
-                // get rating
-                double rating = infoDataAccessObject.getUserRating(viewUserInfoInputData.getUserId());
+                // username
+                String username = user.getUsername();
+
+                // name
+                String name = user.getName();
+
+                // field of expertise
+                String fieldOfExpertise = user.getFieldOfExpertise();
+
+                // rating
+                double rating = user.getRating();
 
                 // create output data object
-                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(username, rating, "", "");
-
+                ViewUserInfoOutputData userData = new ViewUserInfoOutputData(name, fieldOfExpertise, rating, "", "", "");
                 infoPresenter.prepareGeneralView(userData);
             }
         }
