@@ -26,23 +26,26 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, CollabRequestDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
+    protected MongoCollection<CollabRequest> collabRequests;
     private ObjectId loggedInUserID;
     private final String usersCollectionName;
     private final String postsCollectionName;
     private final String commentsCollectionName;
+    private final String collabRequestsCollectionName;
 
     public MongoDBDataAccessObject(
-            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
+            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName, String collabRequestsCollectionName
     ) throws FileNotFoundException, NoSuchElementException {
         String uri;
         this.usersCollectionName = usersCollectionName;
         this.postsCollectionName = postsCollectionName;
         this.commentsCollectionName = commentsCollectionName;
+        this.collabRequestsCollectionName = collabRequestsCollectionName;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
@@ -90,11 +93,18 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
+    private MongoCollection<CollabRequest> getCollabRequests() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(collabRequestsCollectionName, CollabRequest.class).withCodecRegistry(pojoCodecRegistry);
+
+    }
 
     public void resetDatabase() {
         users.drop();
         posts.drop();
         comments.drop();
+        collabRequests.drop();
     }
 
     public boolean usernameUsed(String username) {
@@ -126,9 +136,22 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.text(username)).first();
     }
 
+    @Override
+    public Post getPostByPostId(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
+    }
+
     public User getUserById(ObjectId id) {
         users = getUsersCollection();
         return users.find(Filters.eq("_id", id)).first();
+    }
+
+    @Override
+    public void addCollabRequest(CollabRequest collabRequest) {
+        collabRequests = getCollabRequests();
+        collabRequests.insertOne(collabRequest);
+
     }
 
     public void setLoggedInUserID(ObjectId id) {
@@ -171,4 +194,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
     }
+
+
+
 }
