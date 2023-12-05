@@ -7,5 +7,6 @@ import org.bson.types.ObjectId;
 public interface CollabRequestDataAccessInterface {
     Post getPostByPostId(ObjectId id);
     User getUserByUserId(ObjectId id);
+    void addCollabRequest(CollabRequest collabRequest);
 
 }
