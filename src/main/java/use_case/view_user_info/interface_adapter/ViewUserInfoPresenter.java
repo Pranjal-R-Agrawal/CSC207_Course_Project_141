@@ -4,7 +4,6 @@ import use_case.view_user_info.application_business_rules.ViewUserInfoOutputBoun
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputData;
 import view.ViewUserInfoView;
 
-import javax.swing.*;
 
 public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
 
