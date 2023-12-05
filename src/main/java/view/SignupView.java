@@ -244,4 +244,8 @@ public class SignupView extends JPanel implements PropertyChangeListener {
             fieldOfExpertiseInputField.setText(signupViewModel.getState().getFieldOfExpertise());
         }
     }
+
+    public JButton getSignupButton() {
+        return signupButton;
+    }
 }

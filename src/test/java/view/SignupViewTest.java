@@ -48,7 +48,7 @@ public class SignupViewTest {
         signupViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         signupButton.doClick();
-        assert message.contains("Please enter a password.");
+        assert message.contains("Please repeat the password.");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class SignupViewTest {
     @Test
     public void testPhoneNumberEmpty() {
         signupViewModel.getState().setUsername("username").setPassword("password")
-                .setRepeatPassword("password").setName("name").setEmail("email");
+                .setRepeatPassword("password").setName("name").setEmail("email").setCity("city").setFieldOfExpertise("field");
         signupViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         signupButton.doClick();
@@ -84,7 +84,7 @@ public class SignupViewTest {
     @Test
     public void testUsernameUsedNoUsers() {
         signupViewModel.getState().setUsername("username").setPassword("password")
-                .setRepeatPassword("password").setName("name").setEmail("email");
+                .setRepeatPassword("password").setName("name").setEmail("email").setCity("city").setFieldOfExpertise("field");
         signupViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         signupButton.doClick();
@@ -97,7 +97,7 @@ public class SignupViewTest {
                 new User("username", "password", "name", "email", "phone", "", "")
         );
         signupViewModel.getState().setUsername("username").setPassword("password")
-                .setRepeatPassword("password").setName("name").setEmail("email");
+                .setRepeatPassword("password").setName("name").setEmail("email").setCity("city").setFieldOfExpertise("field");
         signupViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         signupButton.doClick();
@@ -107,7 +107,7 @@ public class SignupViewTest {
     @Test
     public void testPasswordsDontMatch() {
         signupViewModel.getState().setUsername("username").setPassword("password1")
-                .setRepeatPassword("password2").setName("name").setEmail("email");
+                .setRepeatPassword("password2").setName("name").setEmail("email").setCity("city").setFieldOfExpertise("field");
         signupViewModel.firePropertyChanged("update_fields");
         createCloseTimer().start();
         signupButton.doClick();
@@ -150,7 +150,7 @@ public class SignupViewTest {
         }
         signupViewModel = new SignupViewModel();
         SignupView signupView = SignupUseCaseFactory.create(new ViewManagerModel(), signupViewModel, new LoginViewModel(), mongoDBDataAccessObject);
-        signupButton = (JButton) signupView.getComponent(7);
+        signupButton = signupView.getSignupButton();
 
         mongoDBDataAccessObject.resetDatabase();
 

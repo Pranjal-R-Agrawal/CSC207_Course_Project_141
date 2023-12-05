@@ -71,7 +71,7 @@ public class SignupInteractorTest {
             public void prepareSuccessView(SignupOutputData user) {fail();}
             @Override
             public void prepareFailView(String error) {
-                assertEquals(error, "Please enter repeat password.");
+                assertEquals(error, "Please repeat the password.");
             }
             @Override
             public void goToLogin() {fail();}

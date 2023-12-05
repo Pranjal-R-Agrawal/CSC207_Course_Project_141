@@ -30,7 +30,7 @@ public class SignupInteractor implements SignupInputBoundary {
         } else if (signupInputData.getPassword() == null || signupInputData.getPassword().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a password.");
         } else if (signupInputData.getRepeatPassword() == null || signupInputData.getRepeatPassword().trim().isEmpty()) {
-            userPresenter.prepareFailView("Please enter repeat password.");
+            userPresenter.prepareFailView("Please repeat the password.");
         } else if (signupInputData.getName() == null || signupInputData.getName().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter your name.");
         } else if (signupInputData.getEmail() == null || signupInputData.getEmail().trim().isEmpty()) {
