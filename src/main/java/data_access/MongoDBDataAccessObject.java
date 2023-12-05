@@ -172,46 +172,4 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
     }
-
-    // Data access methods for view_user_info use case
-    @Override
-    public boolean checkUserExists(ObjectId userId) {
-        users = getUsersCollection();
-        User user = users.find(Filters.eq("_id", userId)).first();
-        return user != null;
-    }
-
-
-    public String getUsernameByUserId(ObjectId userId) {
-        users = getUsersCollection();
-        User user = users.find(Filters.eq("_id", userId)).first();
-        return user.getName();
-    }
-
-    public String getNameByUserId(ObjectId userId) {
-        String username = getUsernameByUserId(userId);
-        User user = getUserByUsername(username);
-        return user.getName();
-    }
-
-    @Override
-    public double getUserRating(ObjectId userId) {
-        String username = getUsernameByUserId(userId);
-        User user = getUserByUsername(username);
-        return user.getRating();
-    }
-
-    @Override
-    public String getUserEmail(ObjectId userId) {
-        String username = getUsernameByUserId(userId);
-        User user = getUserByUsername(username);
-        return user.getEmail();
-    }
-
-    @Override
-    public String getPhoneNumber(ObjectId userId) {
-        String username = getUsernameByUserId(userId);
-        User user = getUserByUsername(username);
-        return user.getPhoneNumber();
-    }
 }
