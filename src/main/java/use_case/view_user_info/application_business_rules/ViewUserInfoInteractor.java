@@ -4,15 +4,28 @@ import data_access.ViewUserInfoDataAccessInterface;
 import entity.User;
 import org.bson.types.ObjectId;
 
+/**
+ * Concrete implementation of ViewUserInfoInputBoundary responsible for implementing the logic to display information of a user
+ * @author Tanmay Shinde
+ * */
 public class ViewUserInfoInteractor implements ViewUserInfoInputBoundary{
     final ViewUserInfoDataAccessInterface infoDataAccessObject;
     final ViewUserInfoOutputBoundary infoPresenter;
 
+    /**
+     * Initializes the ViewUserInfoInteractor Object
+     * @param infoDataAccessObject the data access interface implementation to be used for accessing data from the database
+     * @param infoPresenter Receives the output data from VieUserInfoInteractor to facilitate with the display of the relevant user data
+     */
     public ViewUserInfoInteractor(ViewUserInfoDataAccessInterface infoDataAccessObject, ViewUserInfoOutputBoundary infoPresenter) {
         this.infoDataAccessObject = infoDataAccessObject;
         this.infoPresenter = infoPresenter;
     }
 
+    /**
+     * Obtains user data from the database and passes the relevant data to the Presenter if the user exists
+     * @param viewUserInfoInputData the input data object containing the user's userId
+     */
     public void execute(ViewUserInfoInputData viewUserInfoInputData) {
 
         ObjectId userId = viewUserInfoInputData.getUserId();
