@@ -8,8 +8,13 @@ public class ViewProfileViewModel extends ViewModel {
     public static final String NAME_LABEL = "Name:";
     public static final String EMAIL_LABEL = "Email:";
     public static final String RATINGS_LABEL = "Rating:";
+    public static final String PROJECTS_LABEL = "Projects:";
+    public static final String COLLAB_REQUESTS_LABEL = "Collab Requests:";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     public static final String BACK_BUTTON_LABEL = "Back";
+    public static final String ACCEPT_BUTTON_LABEL = "Accept";
+    public static final String REJECT_BUTTON_LABEL = "Reject";
+
     public static final String VIEW_PROFILE_BUTTON_LABEL = "View Profile";
     private ViewProfileState state = new ViewProfileState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
