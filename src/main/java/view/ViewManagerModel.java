@@ -19,11 +19,12 @@ public class ViewManagerModel {
 
     public void firePropertyChanged() {
         support.firePropertyChange("view", null, this.activeViewName);
+        resize("main");
     }
 
     public void switchView(String activeView) {
-        this.activeViewName = activeView;
-        support.firePropertyChange("view", null, this.activeViewName);
+        setActiveView(activeView);
+        firePropertyChanged();
     }
 
     public void displayPost(ObjectId id) {
