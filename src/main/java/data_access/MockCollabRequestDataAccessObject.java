@@ -9,12 +9,16 @@ import java.util.Map;
 
 public class MockCollabRequestDataAccessObject implements CollabRequestDataAccessInterface{
     Map<Integer, Post> posts = new HashMap<>();
-    ObjectId id = new ObjectId();
+    ObjectId idAuthor = new ObjectId();
+//    ObjectId idPost = new ObjectId();
+    ObjectId idUser = new ObjectId();
     Map<Integer, User> users = new HashMap<>();
     private PostFactory postFactory;
     public MockCollabRequestDataAccessObject() {
         this.postFactory = new ConcretePostFactory();
-        posts.put(0, postFactory.create(id, "Test Post", "Test Body", new ArrayList<String>()));
+        Post post = postFactory.create(idAuthor, "Test Post", "Test Body", new ArrayList<String>());
+        post.setId(new ObjectId());
+        posts.put(0, post);
         users.put(0, new User("testuser", "testpassword", "testname", "test@email.com", "123-456-7890", "Test city", "coding"));
 
 
@@ -30,8 +34,23 @@ public class MockCollabRequestDataAccessObject implements CollabRequestDataAcces
     }
     @Override
     public void addCollabRequest(CollabRequest collabRequest) {
-        users.get(0).addCollaborationRequestId(new ObjectId());
+        users.get(0).addCollabRequest(collabRequest.getPostId());
+    }
+//    public ObjectId getIdPost()
+//    {
+//        return idPost;
+//    }
+    public ObjectId getIdUser()
+    {
+        return idUser;
     }
 
-
+    public ObjectId getIdAuthor()
+    {
+        return idAuthor;
+    }
+    public ObjectId getIdPost()
+    {
+        return posts.get(0).getId();
+    }
 }
