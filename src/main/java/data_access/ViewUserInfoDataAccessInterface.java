@@ -16,4 +16,5 @@ public interface ViewUserInfoDataAccessInterface {
      */
     User getUserById(ObjectId userId);
 
+    void drop();
 }
