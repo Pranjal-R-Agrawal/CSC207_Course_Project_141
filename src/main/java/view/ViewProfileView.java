@@ -22,7 +22,6 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
     private final JTextField usernameDisplayField = new JTextField(20);
     private final JTextField nameDisplayField = new JTextField(20);
     private final JTextField emailDisplayField = new JTextField(20);
-    private final JTextField ratingsDisplayField = new JTextField(20);
     private final JTextField projectsDisplayField = new JTextField(20);
     private final JTextField collabRequestsDisplayField = new JTextField(20);
     private final JButton backButton = new JButton();
@@ -43,29 +42,22 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
         JPanel usernamePanel = createEntry(ViewProfileViewModel.USERNAME_LABEL, usernameDisplayField);
         JPanel namePanel = createEntry(ViewProfileViewModel.NAME_LABEL, nameDisplayField);
         JPanel emailPanel = createEntry(ViewProfileViewModel.EMAIL_LABEL, emailDisplayField);
-        JPanel ratingsPanel = createEntry(ViewProfileViewModel.RATINGS_LABEL, ratingsDisplayField);
         JPanel projectsPanel = createEntry(ViewProfileViewModel.PROJECTS_LABEL, projectsDisplayField);
         JPanel collabRequestsPanel = createEntry(ViewProfileViewModel.COLLAB_REQUESTS_LABEL, collabRequestsDisplayField);
         collabRequestsPanel.setLayout(new FlowLayout());
-        for (String collabRequest : viewProfileViewModel.getState().getCollabRequests()) {
+        for (CollabRequest collabRequest : viewProfileViewModel.getState().getCollabRequests()) {
             JButton acceptButton = new JButton("Accept");
             JButton rejectButton = new JButton("Reject");
 
-            acceptButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Handle accept action for collabRequest
-                    // You may want to delegate this action to the controller
-                    acceptCollabController.acceptCollaboration(collabRequest);
+            acceptButton.addActionListener( e -> {
+                if (e.getSource().equals(acceptButton)) {
+
                 }
             });
 
-            rejectButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Handle reject action for collabRequest
-                    // You may want to delegate this action to the controller
-                    rejectCollabController.rejectCollaboration(collabRequest);
+            rejectButton.addActionListener( e -> {
+                if (e.getSource().equals(rejectButton)) {
+                    generateIdeaController.execute(false);
                 }
             });
 
@@ -108,7 +100,6 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
         addComponent(usernamePanel, c, 0, 0, GridBagConstraints.HORIZONTAL);
         addComponent(namePanel, c, 0 , GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         addComponent(emailPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
-        addComponent(ratingsPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         addComponent(projectsPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         addComponent(collabRequestsPanel, c, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         add(logoutButton, c);
@@ -168,7 +159,7 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
             ratingsDisplayField.setText(String.valueOf(currentState.getRating()));
             projectsDisplayField.setText(String.valueOf(currentState.getProjects()));
             collabRequestsDisplayField.setText(String.valueOf(currentState.getCollabRequests()));
-            updateCollabRequestsPanel(collabRequestpanel);
+           // updateCollabRequestsPanel(collabRequestpanel);
 
 
         }

@@ -6,10 +6,9 @@ public class ViewProfileState {
     private String username;
     private String name;
     private String email;
-    private String rating;
     private String errorMessage;
     private String projects;
-    private List<String> collabRequests;
+    private List<CollabRequest> collabRequests;
 
     public String getUsername() {
         return username;
@@ -37,14 +36,6 @@ public class ViewProfileState {
         return this;
     }
 
-    public String getRating() {
-        return String.valueOf(rating);
-    }
-
-    public ViewProfileState setRating(String rating) {
-        this.rating = rating;
-        return this;
-    }
 
     public String getErrorMessage() {
         return errorMessage;
@@ -62,11 +53,11 @@ public class ViewProfileState {
         this.projects = projects;
         return this;
     }
-    public List<String> getCollabRequests() {
+    public List<CollabRequest> getCollabRequests() {
         return collabRequests;
     }
 
-    public ViewProfileState setCollabRequests(List<String> collabRequests) {
+    public ViewProfileState setCollabRequests(List<CollabRequest> collabRequests) {
         this.collabRequests = collabRequests;
         return this;
     }

@@ -82,6 +82,10 @@ public class Main {
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
+        ViewProfileViewModel viewProfileViewModel = new ViewProfileViewModel();
+        ViewProfileView viewProfileView = ViewProfileUseCaseFactory.create(viewManagerModel,viewProfileViewModel,mongoDBDataAccessObject);
+        views.add(viewProfileView,viewProfileView.viewName);
+
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
@@ -93,7 +97,6 @@ public class Main {
 
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
-
         views.add(searchPostView, searchPostView.viewName);
 
         application.pack();
