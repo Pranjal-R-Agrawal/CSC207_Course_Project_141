@@ -54,12 +54,12 @@ public class CollabRequestInteractorIntegrationTest {
         CollabRequestOutputBoundary successPresenter = new CollabRequestOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assertEquals(testPost.getId(), mongoDBDataAccessObject.getUserById(testCommenter.getId()).getCollaborationRequestIDs().get(0));
+                assertEquals(testPost.getId(), testCommenter.getCollaborationRequestIDs().get(0));
             }
         };
 
         CollabRequestInputBoundary interactor = new CollabRequestInteractor(mongoDBDataAccessObject, successPresenter, collabRequestFactory);
-        interactor.execute(testPost.getId(), testCommenter.getId());
+        interactor.execute(testPost.getId(), testCommenter.getId(),testCommenter);
 
     }
 }
