@@ -11,8 +11,10 @@ import entity.IdeaFactory;
 import view.*;
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
 public class Main {
+    static final JFrame application = new JFrame("Startup Generator");
     protected static SignupViewModel signupViewModel;
     protected static LoginViewModel loginViewModel;
     protected static GenerateIdeaViewModel generateIdeaViewModel;
@@ -20,7 +22,6 @@ public class Main {
     protected static HomePageViewModel homePageViewModel;
 
     public static void main(String[] args) {
-        JFrame application = new JFrame("Startup Generator");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -30,6 +31,7 @@ public class Main {
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
+        viewManagerModel.addPropertyChangeListener(Main::propertyChange);
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
@@ -59,7 +61,7 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
         views.add(loginView, loginView.viewName);
 
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
@@ -89,10 +91,21 @@ public class Main {
         NewWindow newCreatePostWindow = new NewWindow(false, "Post");
         viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
 
-        viewManagerModel.setActiveView(signupView.viewName);
-        viewManagerModel.firePropertyChanged();
+        SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
+        SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
+
+        views.add(searchPostView, searchPostView.viewName);
 
         application.pack();
+        application.setLocationRelativeTo(null);
         application.setVisible(true);
+    }
+
+    public static void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("resize")) {
+            if (((String) evt.getNewValue()).equals("main")) {
+                application.pack();
+            }
+        }
     }
 }
