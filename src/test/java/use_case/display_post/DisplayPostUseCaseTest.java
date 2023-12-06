@@ -4,13 +4,14 @@ import entity.Comment;
 import entity.Post;
 import entity.User;
 import org.bson.types.ObjectId;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.display_post.application_business_rules.DisplayPostInteractor;
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.display_post.interface_adapter.DisplayPostPresenter;
-import view.display_post.PostAndCommentsViewModel;
+import view.PostAndCommentsViewModel;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 
@@ -26,14 +27,14 @@ public class DisplayPostUseCaseTest {
     public void testInvalidCommentID() {
         ObjectId commentID = new ObjectId();
         displayPostController.execute(commentID, "comment");
-        assert postAndCommentsViewModel.getState().getErrorMessage().equals("Comment not found");
+        assertEquals(postAndCommentsViewModel.getState().getErrorMessage(), "Comment not found");
     }
 
     @Test
     public void testInvalidPostID() {
         ObjectId postID = new ObjectId();
         displayPostController.execute(postID, "post");
-        assert postAndCommentsViewModel.getState().getErrorMessage().equals("Post not found");
+        assertEquals(postAndCommentsViewModel.getState().getErrorMessage(), "Post not found");
     }
 
     @Test
@@ -51,7 +52,7 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(commentID, "comment");
 
-        assert postAndCommentsViewModel.getState().getComments().size() == 1;
+        assertEquals(postAndCommentsViewModel.getState().getComments().size(), 1);
     }
 
     @Test
@@ -69,7 +70,7 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(postID, "post");
 
-        assert postAndCommentsViewModel.getState().getComments().size() == 1;
+        assertEquals(postAndCommentsViewModel.getState().getComments().size(), 1);
     }
 
     @Test
@@ -93,7 +94,7 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(postID, "post");
 
-        assert postAndCommentsViewModel.getState().getComments().size() == 3;
+        assertEquals(postAndCommentsViewModel.getState().getComments().size(), 3);
     }
 
     @Test
@@ -117,7 +118,7 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(postID, "post");
 
-        assert postAndCommentsViewModel.getState().getComments().size() == 3;
+        assertEquals(postAndCommentsViewModel.getState().getComments().size(), 3);
     }
 
     @Test
@@ -138,17 +139,17 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(commentID, "comment");
 
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("id").equals(commentID);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("parentPostId").equals(postId);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("parentId").equals(postId);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("authorId").equals(user.getId());
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("username").equals(user.getUsername());
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("body").equals("body");
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("qualifications").equals(new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("comment_author_is_post_author").equals(true);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_comment_author").equals(true);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_post_author").equals(true);
-        assert postAndCommentsViewModel.getState().getComments().get(commentID).get("show_more_info_button").equals(true);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("id"), commentID);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("parentPostId"), postId);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("parentId"), postId);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("authorId"), user.getId());
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("username"), user.getUsername());
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("body"), "body");
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("qualifications"), new ArrayList<String>(Arrays.asList("qual1", "qual2")));
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("comment_author_is_post_author"), true);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_comment_author"), true);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("logged_in_user_is_post_author"), true);
+        assertEquals(postAndCommentsViewModel.getState().getComments().get(commentID).get("show_more_info_button"), true);
     }
 
     @Test
@@ -165,13 +166,13 @@ public class DisplayPostUseCaseTest {
 
         displayPostController.execute(postId, "post");
 
-        assert postAndCommentsViewModel.getState().getPost().get("id").equals(postId);
-        assert postAndCommentsViewModel.getState().getPost().get("authorId").equals(user.getId());
-        assert postAndCommentsViewModel.getState().getPost().get("username").equals(user.getUsername());
-        assert postAndCommentsViewModel.getState().getPost().get("title").equals("title");
-        assert postAndCommentsViewModel.getState().getPost().get("body").equals("body");
-        assert postAndCommentsViewModel.getState().getPost().get("suggested_collaborator_qualifications").equals(new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        assert postAndCommentsViewModel.getState().getPost().get("logged_in_user_is_post_author").equals(true);
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("id"), postId);
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("authorId"), user.getId());
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("username"), user.getUsername());
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("title"), "title");
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("body"), "body");
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("suggested_collaborator_qualifications"), new ArrayList<String>(Arrays.asList("qual1", "qual2")));
+        assertEquals(postAndCommentsViewModel.getState().getPost().get("logged_in_user_is_post_author"), true);
     }
 
     @Before

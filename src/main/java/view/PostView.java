@@ -1,7 +1,6 @@
-package view.display_post;
+package view;
 
 import org.bson.types.ObjectId;
-import view.AbstractGridBagLayoutView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is responsible for displaying a post.
+ */
 public class PostView extends AbstractGridBagLayoutView {
     final ObjectId id;
     final ObjectId authorId;
@@ -17,6 +19,12 @@ public class PostView extends AbstractGridBagLayoutView {
     final String body;
     final List<String> qualifications;
 
+    /**
+     * Constructor for PostView.
+     * Extracts the information of the post from the map and displays it.
+     * @param post The map containing the information of the post to display
+     * @param postAndCommentsViewModel The view model for this view
+     */
     public PostView(Map<String, Object> post, PostAndCommentsViewModel postAndCommentsViewModel) {
         super("Post" + (ObjectId) post.get("id"));
 

@@ -33,6 +33,7 @@ public class NewWindow {
             frame.add(view);
         }
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
     public void closeWindow(){
@@ -42,6 +43,8 @@ public class NewWindow {
     public void resize(){
         frame.pack();
     }
+
+
     //TODO: Remove tester code and unneeded imports
 //    public static void main(String[] args) {
 //        CardLayout cardLayout = new CardLayout();

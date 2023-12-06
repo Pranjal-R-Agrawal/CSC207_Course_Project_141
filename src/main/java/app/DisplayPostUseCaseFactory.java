@@ -6,12 +6,19 @@ import use_case.display_post.application_business_rules.DisplayPostOutputBoundar
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.display_post.interface_adapter.DisplayPostPresenter;
 import view.ViewManagerModel;
-import view.display_post.PostAndCommentsView;
-import view.display_post.PostAndCommentsViewModel;
+import view.PostAndCommentsView;
+import view.PostAndCommentsViewModel;
 
 public class DisplayPostUseCaseFactory {
     private DisplayPostUseCaseFactory() {}
 
+    /**
+     * Creates and returns a PostAndCommentsView object
+     * @param displayCommentViewModel the display comment view model
+     * @param displayCommentDataAccessObject the display comment data access object
+     * @param createCommentUseCaseBuilder  the create comment use case builder
+     * @return a PostAndCommentsView object
+     */
     public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
         return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder);

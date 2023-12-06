@@ -9,7 +9,7 @@ import use_case.create_comment.application_business_rules.CreateCommentInteracto
 import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentPresenter;
 import view.CreateCommentViewModel;
-import view.display_post.PostAndCommentsViewModel;
+import view.PostAndCommentsViewModel;
 
 public class CreateCommentUseCaseTest {
     CreateCommentViewModel createCommentViewModel;

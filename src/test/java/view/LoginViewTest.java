@@ -101,7 +101,7 @@ public class LoginViewTest {
             throw new RuntimeException(e);
         }
         loginViewModel = new LoginViewModel();
-        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), loginViewModel, mongoDBDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), new SignupViewModel(), loginViewModel, mongoDBDataAccessObject);
         loginButton = (JButton) loginView.getComponent(2);
 
         mongoDBDataAccessObject.resetDatabase();

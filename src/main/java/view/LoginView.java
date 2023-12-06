@@ -17,6 +17,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     private final JPasswordField passwordInputField = new JPasswordField(20);
     private final LoginController loginController;
     private final JButton loginButton = new JButton();
+    private final JButton signUpButton = new JButton();
 
     public LoginView(LoginViewModel loginViewModel, LoginController loginController) {
         this.loginViewModel = loginViewModel;
@@ -25,6 +26,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         viewName = loginViewModel.getViewName();
         setName(viewName);
         loginButton.setText(LoginViewModel.LOGIN_BUTTON_LABEL);
+        signUpButton.setText(LoginViewModel.SIGN_UP_BUTTON_LABEL);
 
         loginViewModel.addPropertyChangeListener(this);
 
@@ -39,6 +41,16 @@ public class LoginView extends JPanel implements PropertyChangeListener {
                                 currentState.getUsername(),
                                 currentState.getPassword()
                         );
+                    }
+                }
+        );
+
+        signUpButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(signUpButton)) {
+                        loginViewModel.firePropertyChanged("reset_fields");
+                        loginViewModel.setState(new LoginState());
+                        loginController.goToSignUp();
                     }
                 }
         );
@@ -75,6 +87,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         addComponent(usernamePanel, constraints, 0, 0, GridBagConstraints.HORIZONTAL);
         addComponent(passwordPanel, constraints, 0, GridBagConstraints.RELATIVE, GridBagConstraints.HORIZONTAL);
         add(loginButton, constraints);
+        add(signUpButton, constraints);
     }
 
     private void addComponent(JPanel panel, GridBagConstraints c, int gridx, int gridy, int fill) {
@@ -102,6 +115,9 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         } else if (evt.getPropertyName().equals("update_password")) {
             LoginState currentState = loginViewModel.getState();
             passwordInputField.setText(currentState.getPassword());
+        } else if (evt.getPropertyName().equals("reset_fields")) {
+            usernameInputField.setText("");
+            passwordInputField.setText("");
         }
     }
 }
