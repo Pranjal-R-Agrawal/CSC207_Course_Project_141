@@ -23,6 +23,7 @@ public class SearchPostController {
      * @param keyword the keyword to look for in post titles
      */
     public void execute(String keyword) {
+
         searchPostUseCaseInteractor.execute(new SearchPostInputData(keyword));
     }
 }
