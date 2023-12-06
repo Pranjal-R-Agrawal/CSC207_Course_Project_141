@@ -1,20 +1,17 @@
 package use_case.signup;
 
 import data_access.MockSignupLoginDisplayPostDataAccessObject;
-import data_access.MongoDBDataAccessObject;
-import data_access.MongoDBDataAccessObjectBuilder;
+
 import static org.junit.Assert.*;
 
-import entity.User;
 import entity.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.signup.application_business_rules.*;
-import view.SignupViewModel;
 
 public class SignupInteractorTest {
     SignupInputBoundary signupInteractor;
-    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mockDAO;
 
     @Test
     public void testAllFieldsEmpty() {
@@ -28,7 +25,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("", "", "", "", "", "", "", ""));
     }
 
@@ -44,7 +41,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("", "password", "password", "name", "email", "phone", "city", "field"));
         signupInteractor.execute(new SignupInputData(null, "password", "password", "name", "email", "phone", "city", "field"));
     }
@@ -61,7 +58,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", null, "password", "name", "email", "phone", "city", "field"));
         signupInteractor.execute(new SignupInputData("username", "", "password", "name", "email", "phone", "city", "field"));
     }
@@ -78,7 +75,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", null, "name", "email", "phone", "city", "field"));
         signupInteractor.execute(new SignupInputData("username", "password", "", "name", "email", "phone", "city", "field"));
     }
@@ -95,7 +92,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", "password", null, "email", "phone", "city", "field"));
         signupInteractor.execute(new SignupInputData("username", "password", "password", "", "email", "phone", "city", "field"));
     }
@@ -112,7 +109,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", null, "phone", "city", "field"));
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "", "phone", "city", "field"));
     }
@@ -127,7 +124,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "email", null, "city", "field"));
     }
 
@@ -143,7 +140,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "email", "phone", null, "field"));
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "email", "phone", "", "field"));
     }
@@ -160,7 +157,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "email", "phone", "city", null));
         signupInteractor.execute(new SignupInputData("username", "password", "password", "name", "email", "phone", "city", ""));
     }
@@ -177,7 +174,7 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         SignupInputData signupInputData = new SignupInputData("username", "password", "password1", "name", "email", "phone", "city", "field");
         signupInteractor.execute(signupInputData);
     }
@@ -194,8 +191,8 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {fail();}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
-        mongoDBDataAccessObject.addUser(new UserFactory().create("username", "password", "name", "email", "phone", "city", "field"));
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
+        mockDAO.addUser(new UserFactory().create("username", "password", "name", "email", "phone", "city", "field"));
         SignupInputData signupInputData = new SignupInputData("username", "password", "password", "name", "email", "phone", "city", "field");
         signupInteractor.execute(signupInputData);
     }
@@ -210,13 +207,13 @@ public class SignupInteractorTest {
             @Override
             public void goToLogin() {}
         };
-        signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
+        signupInteractor = new SignupInteractor(mockDAO, signupPresenter);
         SignupInputData signupInputData = new SignupInputData("username", "password", "password", "name", "email", "phone", "city", "field");
         signupInteractor.execute(signupInputData);
     }
 
     @Before
     public void setUpTest() {
-        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
+        mockDAO = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }

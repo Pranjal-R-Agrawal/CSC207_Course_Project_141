@@ -12,13 +12,11 @@ import use_case.display_post.application_business_rules.DisplayPostInputData;
 import use_case.display_post.application_business_rules.DisplayPostInteractor;
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.application_business_rules.DisplayPostOutputData;
-import data_access.MongoDBDataAccessObject;
-import data_access.MongoDBDataAccessObjectBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 public class DisplayPostInteractorTest {
-    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mockDAO;
 
     @Test
     public void testInvalidCommentID() {
@@ -31,7 +29,7 @@ public class DisplayPostInteractorTest {
             @Override
             public void prepareSuccessView(DisplayPostOutputData displayPostOutputData) {fail();}
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(commentID, 0));
     }
 
@@ -46,20 +44,20 @@ public class DisplayPostInteractorTest {
             @Override
             public void prepareSuccessView(DisplayPostOutputData displayPostOutputData) {fail();}
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(postID, 1));
     }
 
     @Test
     public void testValidCommentID() {
         User user = new User("username", "password", "name", "email", "phone", "city", "field");
-        mongoDBDataAccessObject.addUser(user);
+        mockDAO.addUser(user);
 
         Post post = new Post(user.getId(), "title", "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addPost(post);
+        mockDAO.addPost(post);
 
         Comment comment = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment);
+        mockDAO.addComment(comment);
 
         ObjectId commentID = comment.getId();
 
@@ -71,26 +69,26 @@ public class DisplayPostInteractorTest {
                 assertEquals(displayPostOutputData.getComments().size(), 1);
             }
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(commentID, 0));
     }
 
     @Test
     public void testValidPostID_3_comment() {
         User user = new User("username", "password", "name", "email", "phone", "city", "field");
-        mongoDBDataAccessObject.addUser(user);
+        mockDAO.addUser(user);
 
         Post post = new Post(user.getId(), "title", "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addPost(post);
+        mockDAO.addPost(post);
 
         Comment comment = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment);
+        mockDAO.addComment(comment);
 
         Comment comment2 = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment2);
+        mockDAO.addComment(comment2);
 
         Comment comment3 = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment3);
+        mockDAO.addComment(comment3);
 
         ObjectId postID = post.getId();
 
@@ -102,23 +100,23 @@ public class DisplayPostInteractorTest {
                 assertEquals(displayPostOutputData.getComments().size(), 3);
             }
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(postID, 1));
     }
     
     @Test
     public void testValidPostID_nested() {
         User user = new User("username", "password", "name", "email", "phone", "city", "field");
-        mongoDBDataAccessObject.addUser(user);
+        mockDAO.addUser(user);
 
         Post post = new Post(user.getId(), "title", "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addPost(post);
+        mockDAO.addPost(post);
 
         Comment comment = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment);
+        mockDAO.addComment(comment);
 
         Comment comment2 = new Comment(comment.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment2);
+        mockDAO.addComment(comment2);
 
         ObjectId postID = post.getId();
 
@@ -130,20 +128,20 @@ public class DisplayPostInteractorTest {
                 assertEquals(displayPostOutputData.getComments().size(), 2);
             }
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(postID, 1));
     }
 
     @Test
     public void testProcessedCommentData() {
         User user = new User("username", "password", "name", "email", "phone", "city", "field");
-        mongoDBDataAccessObject.addUser(user);
+        mockDAO.addUser(user);
 
         Post post = new Post(user.getId(), "title", "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addPost(post);
+        mockDAO.addPost(post);
 
         Comment comment = new Comment(post.getId(), post.getId(), user.getId(), "body", new ArrayList<String>(Arrays.asList("qual1", "qual2")));
-        mongoDBDataAccessObject.addComment(comment);
+        mockDAO.addComment(comment);
 
         ObjectId postId = post.getId();
         ObjectId commentID = comment.getId();
@@ -162,12 +160,12 @@ public class DisplayPostInteractorTest {
                 assertEquals(displayPostOutputData.getComments().get(commentID).get("qualifications"), new ArrayList<String>(Arrays.asList("qual1", "qual2")));
             }
         };
-        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mongoDBDataAccessObject, displayPostOutputBoundary);
+        DisplayPostInteractor displayPostInteractor = new DisplayPostInteractor(mockDAO, displayPostOutputBoundary);
         displayPostInteractor.execute(new DisplayPostInputData(commentID, 0));
     }
 
     @Before
     public void setUpTest() {
-        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
+        mockDAO = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }

@@ -2,8 +2,6 @@ package use_case.login;
 import static org.junit.Assert.*;
 
 import data_access.MockSignupLoginDisplayPostDataAccessObject;
-import data_access.MongoDBDataAccessObject;
-import data_access.MongoDBDataAccessObjectBuilder;
 import entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +11,7 @@ import use_case.login.application_business_rules.LoginOutputBoundary;
 
 
 public class LoginInteractorTest {
-    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mockDAO;
     LoginInteractor loginInteractor;
 
     @Test
@@ -28,7 +26,7 @@ public class LoginInteractorTest {
             @Override
             public void goToSignUp() {fail();}
         };
-        loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginOutputBoundary);
+        loginInteractor = new LoginInteractor(mockDAO, loginOutputBoundary);
         loginInteractor.execute(new LoginInputData(null, null));
     }
 
@@ -44,7 +42,7 @@ public class LoginInteractorTest {
             @Override
             public void goToSignUp() {fail();}
         };
-        loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginOutputBoundary);
+        loginInteractor = new LoginInteractor(mockDAO, loginOutputBoundary);
         loginInteractor.execute(new LoginInputData("", "password"));
     }
 
@@ -60,7 +58,7 @@ public class LoginInteractorTest {
             @Override
             public void goToSignUp() {fail();}
         };
-        loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginOutputBoundary);
+        loginInteractor = new LoginInteractor(mockDAO, loginOutputBoundary);
         loginInteractor.execute(new LoginInputData("username", null));
     }
 
@@ -76,7 +74,7 @@ public class LoginInteractorTest {
             @Override
             public void goToSignUp() {fail();}
         };
-        loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginOutputBoundary);
+        loginInteractor = new LoginInteractor(mockDAO, loginOutputBoundary);
         loginInteractor.execute(new LoginInputData("invalid", "credentials"));
     }
 
@@ -90,8 +88,8 @@ public class LoginInteractorTest {
             @Override
             public void goToSignUp() {fail();}
         };
-        loginInteractor = new LoginInteractor(mongoDBDataAccessObject, loginOutputBoundary);
-        mongoDBDataAccessObject.addUser(new User(
+        loginInteractor = new LoginInteractor(mockDAO, loginOutputBoundary);
+        mockDAO.addUser(new User(
                 "username", "password", "name", "email", "phone", "", "")
         );
         loginInteractor.execute(new LoginInputData("username", "password"));
@@ -99,6 +97,6 @@ public class LoginInteractorTest {
 
     @Before
     public void setUpTest() {
-        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
+        mockDAO = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }
