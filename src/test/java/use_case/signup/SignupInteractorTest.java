@@ -6,6 +6,7 @@ import data_access.MongoDBDataAccessObjectBuilder;
 import static org.junit.Assert.*;
 
 import entity.User;
+import entity.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.signup.application_business_rules.*;
@@ -194,7 +195,7 @@ public class SignupInteractorTest {
             public void goToLogin() {fail();}
         };
         signupInteractor = new SignupInteractor(mongoDBDataAccessObject, signupPresenter);
-        mongoDBDataAccessObject.addUser(new User("username", "password", "name", "email", "phone", "city", "field"));
+        mongoDBDataAccessObject.addUser(new UserFactory().create("username", "password", "name", "email", "phone", "city", "field"));
         SignupInputData signupInputData = new SignupInputData("username", "password", "password", "name", "email", "phone", "city", "field");
         signupInteractor.execute(signupInputData);
     }
