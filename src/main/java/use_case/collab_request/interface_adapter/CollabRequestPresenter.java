@@ -3,6 +3,8 @@ package use_case.collab_request.interface_adapter;
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
 import view.ViewManagerModel;
 
+import javax.swing.*;
+
 public class CollabRequestPresenter implements CollabRequestOutputBoundary {
     private final ViewManagerModel viewManagerModel;
 
@@ -13,7 +15,6 @@ public class CollabRequestPresenter implements CollabRequestOutputBoundary {
     @Override
     public void prepareSuccessView() {
         String message = "Collab request sent!";
-
-
+        JOptionPane.showMessageDialog(null, message);
     }
 }
