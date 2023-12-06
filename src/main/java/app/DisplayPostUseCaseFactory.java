@@ -1,5 +1,6 @@
 package app;
 
+import data_access.CollabRequestDataAccessInterface;
 import data_access.DisplayCommentDataAccessInterface;
 import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.display_post.application_business_rules.DisplayPostInteractor;
@@ -20,9 +21,9 @@ public class DisplayPostUseCaseFactory {
      * @param createCommentUseCaseBuilder  the create comment use case builder
      * @return a PostAndCommentsView object
      */
-    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, CollabRequestController collabRequestController) {
+    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, CollabRequestController collabRequestController, CollabRequestDataAccessInterface collabRequestDataAccessObject) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
-        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, collabRequestController);
+        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, collabRequestController, collabRequestDataAccessObject);
     }
 
     private static DisplayPostController createDisplayCommentUseCase(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject) {
