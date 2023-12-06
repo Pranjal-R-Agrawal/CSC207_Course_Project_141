@@ -55,14 +55,14 @@ public class MongoDBDataAccessObjectTest {
 
     @Test
     public void testGetCommentsByParentPostID() {
-        Comment comment = new CommentFactory().create(new ObjectId(), new ObjectId(), new ObjectId(), null, null);
+        Comment comment = (Comment) new CommentFactory().create(new ObjectId(), new ObjectId(), new ObjectId(), null, null);
         dataAccessObject.addComment(comment);
         assertEquals(comment.getId(), dataAccessObject.getCommentsByParentPostID(comment.getParentPostId()).get(0).getId());
     }
 
     @Test
     public void testGetCommentByCommentID() {
-        Comment comment = new CommentFactory().create(new ObjectId(), new ObjectId(), new ObjectId(), null, null);
+        Comment comment = (Comment) new CommentFactory().create(new ObjectId(), new ObjectId(), new ObjectId(), null, null);
         dataAccessObject.addComment(comment);
         assertEquals(comment.getId(), dataAccessObject.getCommentByCommentID(comment.getId()).getId());
     }
