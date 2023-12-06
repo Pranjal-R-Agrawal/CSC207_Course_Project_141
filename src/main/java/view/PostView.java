@@ -71,7 +71,7 @@ public class PostView extends AbstractGridBagLayoutView {
 
         JButton viewAuthorInformationButton = new JButton("View Poster's Information");
         viewAuthorInformationButton.addActionListener(e -> {
-            // TODO: implement similar to comment button
+            // TODO Need to implement button logic to call view user info controller
         });
 
         JButton refreshButton = new JButton("Refresh");
