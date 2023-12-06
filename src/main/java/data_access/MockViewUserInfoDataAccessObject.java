@@ -5,16 +5,23 @@ import entity.UserFactory;
 import entity.UserInterface;
 import org.bson.types.ObjectId;
 
+import java.util.HashMap;
+
 public class MockViewUserInfoDataAccessObject implements ViewUserInfoDataAccessInterface{
 
-    ObjectId userId = new ObjectId();
+    HashMap<Integer, User> users;
 
     public MockViewUserInfoDataAccessObject() {
-        UserInterface user = new UserFactory().create("testusername", "testpwd", "testname", "test@email.com", "0000000000", "testcity", "testexpertise");
+        User user = (User) new UserFactory().create("testusername", "testpwd", "testname", "test@email.com", "0000000000", "testcity", "testexpertise");
+        users.put(0, user);
     }
 
     @Override
     public User getUserById(ObjectId userId) {
-        return null;
+        return users.get(0);
+    }
+
+    public void drop(){
+        users.clear();
     }
 }
