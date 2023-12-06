@@ -22,11 +22,11 @@ public class CollabRequestInteractor implements CollabRequestInputBoundary{
         String author = collabRequestDataAccessObject.getUserById(authorId).getUsername();
 
 
-        ObjectId collabId = collabRequestDataAccessObject.getPostByPostId(postId).getId();
+       // ObjectId collabId = collabRequestDataAccessObject.getPostByPostId(postId).getId();
 
-        CollabRequest collabRequest = collabRequestFactory.create(collabId, author, postTitle);
+        CollabRequest collabRequest = collabRequestFactory.create(postId, author, postTitle);
         collabRequestDataAccessObject.addCollabRequest(collabRequest);
-        commenter.addCollaborationRequestId(collabId);
+        commenter.addCollabRequest(postId);
         collabRequestPresenter.prepareSuccessView();
     }
 }
