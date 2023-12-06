@@ -75,6 +75,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
                     if (e.getSource().equals(viewProfileButton)) {
                         viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
+                        viewProfileViewModel.firePropertyChanged("display_user");
                     }
                 }
         );
