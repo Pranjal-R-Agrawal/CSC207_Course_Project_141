@@ -1,5 +1,7 @@
 package view;
 
+import data_access.ViewProfileDataAccessInterface;
+import entity.CollabRequest;
 import use_case.view_profile.interface_adapter.ViewProfileController;
 import use_case.view_profile.interface_adapter.ViewProfileState;
 
@@ -19,6 +21,7 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
     private final ViewProfileViewModel viewProfileViewModel;
     //private final HomePageViewModel homePageViewModel;
     private final ViewProfileController viewProfileController;
+    private final ViewProfileDataAccessInterface viewProfileDataAccessObject;
     private final JTextField usernameDisplayField = new JTextField(20);
     private final JTextField nameDisplayField = new JTextField(20);
     private final JTextField emailDisplayField = new JTextField(20);
@@ -28,10 +31,11 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
     private final JButton logoutButton = new JButton();
 
     public ViewProfileView(ViewProfileViewModel viewProfileViewModel, ViewProfileController viewProfileController,
-                           ViewManagerModel viewManagerModel) {
+                           ViewManagerModel viewManagerModel, ViewProfileDataAccessInterface viewProfileDataAccessObject) {
         this.viewProfileViewModel = viewProfileViewModel;
         this.viewProfileController = viewProfileController;
         this.viewManagerModel = viewManagerModel;
+       this.viewProfileDataAccessObject = viewProfileDataAccessObject;
 
         viewName = viewProfileViewModel.getViewName();
         setName(viewName);
@@ -51,13 +55,17 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
 
             acceptButton.addActionListener( e -> {
                 if (e.getSource().equals(acceptButton)) {
+                    collabRequestsDisplayField.setText(collabRequest.getTitle());
+                    projectsPanel.add(collabRequestsDisplayField);
+                    collabRequestsPanel.remove(collabRequestsDisplayField);
+                    // viewProfileDataAccessObject. add collab request to data base here
 
                 }
             });
 
             rejectButton.addActionListener( e -> {
                 if (e.getSource().equals(rejectButton)) {
-                    generateIdeaController.execute(false);
+
                 }
             });
 

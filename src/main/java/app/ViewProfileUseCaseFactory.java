@@ -15,7 +15,7 @@ public class ViewProfileUseCaseFactory {
 
     public static ViewProfileView create(ViewManagerModel viewManagerModel, ViewProfileViewModel viewProfileViewModel, ViewProfileDataAccessInterface viewProfileDataAccessObject) {
         ViewProfileController viewProfileController = createViewProfileUseCase(viewManagerModel, viewProfileViewModel, viewProfileDataAccessObject);
-        return new ViewProfileView(viewProfileViewModel, viewProfileController, viewManagerModel);
+        return new ViewProfileView(viewProfileViewModel, viewProfileController, viewManagerModel,viewProfileDataAccessObject);
     }
 
     private static ViewProfileController createViewProfileUseCase(ViewManagerModel viewManagerModel, ViewProfileViewModel viewProfileViewModel, ViewProfileDataAccessInterface viewProfileDataAccessObject) {

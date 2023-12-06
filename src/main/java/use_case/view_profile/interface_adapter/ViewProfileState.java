@@ -1,5 +1,7 @@
 package use_case.view_profile.interface_adapter;
 
+import entity.CollabRequest;
+
 import java.util.List;
 
 public class ViewProfileState {
