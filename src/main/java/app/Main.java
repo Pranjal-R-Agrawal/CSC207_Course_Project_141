@@ -92,6 +92,8 @@ public class Main {
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
+
+
         application.pack();
         application.setVisible(true);
     }
