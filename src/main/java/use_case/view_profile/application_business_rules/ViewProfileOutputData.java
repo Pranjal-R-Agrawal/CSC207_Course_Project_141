@@ -12,13 +12,13 @@ public class ViewProfileOutputData {
     private final String projects;
     private final ArrayList<String> collabRequests;
 
-    private final double rating;
 
-    public ViewProfileOutputData(String username, String name, String email, double rating, String projects, ArrayList<String> collabRequests) {
+
+    public ViewProfileOutputData(String username, String name, String email, String projects, ArrayList<String> collabRequests) {
         this.username = username;
         this.name = name;
         this.email = email;
-        this.rating = rating;
+
         this.projects = projects;
         this.collabRequests = collabRequests;
     }
@@ -35,9 +35,7 @@ public class ViewProfileOutputData {
         return email;
     }
 
-    public String getRating() {
-        return (String.valueOf(rating));
-    }
+
     public String getProjects() {
         return projects;
     }

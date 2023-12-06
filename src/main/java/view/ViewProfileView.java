@@ -3,6 +3,7 @@ package view;
 import data_access.MongoDBDataAccessObject;
 import data_access.ViewProfileDataAccessInterface;
 import entity.CollabRequest;
+import entity.User;
 import use_case.view_profile.interface_adapter.ViewProfileController;
 import use_case.view_profile.interface_adapter.ViewProfileState;
 
@@ -59,7 +60,12 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
                     collabRequestsDisplayField.setText(collabRequest.getTitle());
                     projectsPanel.add(collabRequestsDisplayField);
                     collabRequestsPanel.remove(collabRequestsDisplayField);
-                   viewProfileDataAccessObject
+                   viewProfileDataAccessObject.addCollabRequest(collabRequest);
+                   //TODO: remove collab request from database
+                  User commenter = viewProfileDataAccessObject.getUserByUsername(viewProfileViewModel.getState().getUsername());
+                  commenter.addCollabRequest(collabRequest.getPostId());
+                  // TODO:remove from state
+                    // TODO:remove from commenter
 
                 }
             });
@@ -72,7 +78,7 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
 
             // Create a panel for each collab request with accept and reject buttons
             JPanel requestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Use FlowLayout
-            requestPanel.add(new JLabel(collabRequest));
+            requestPanel.add(new JLabel(collabRequest.getTitle()));
             requestPanel.add(acceptButton);
             requestPanel.add(rejectButton);
 
@@ -144,7 +150,6 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
         this.usernameDisplayField.setText("username");
         this.nameDisplayField.setText("name");
         this.emailDisplayField.setText("email");
-        this.ratingsDisplayField.setText("rating");
         this.projectsDisplayField.setText("projects");
         this.collabRequestsDisplayField.setText("collabRequests");
         return panel;
@@ -165,7 +170,6 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
             usernameDisplayField.setText(currentState.getUsername());
             nameDisplayField.setText(currentState.getName());
             emailDisplayField.setText(currentState.getEmail());
-            ratingsDisplayField.setText(String.valueOf(currentState.getRating()));
             projectsDisplayField.setText(String.valueOf(currentState.getProjects()));
             collabRequestsDisplayField.setText(String.valueOf(currentState.getCollabRequests()));
            // updateCollabRequestsPanel(collabRequestpanel);

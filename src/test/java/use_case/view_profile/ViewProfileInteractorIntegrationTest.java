@@ -22,11 +22,11 @@ public class ViewProfileInteractorIntegrationTest {
                 assertTrue(viewProfileOutputData.getUsername() instanceof String);
                 assertTrue(viewProfileOutputData.getName() instanceof String);
                 assertTrue(viewProfileOutputData.getEmail() instanceof String);
-                assertTrue(viewProfileOutputData.getRating() instanceof String);
+
                 assertEquals("testuser1", viewProfileOutputData.getUsername());
                 assertEquals("test1", viewProfileOutputData.getName());
                 assertEquals("test1@email.com", viewProfileOutputData.getEmail());
-                assertEquals("0.0", viewProfileOutputData.getRating());
+
             }
         };
         ViewProfileInputBoundary interactor = new ViewProfileInteractor(viewProfileDataAccessInterface,

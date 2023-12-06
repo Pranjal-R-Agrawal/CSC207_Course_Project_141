@@ -18,7 +18,7 @@ public class ViewProfilePresenter implements ViewProfileOutputBoundary {
 
     @Override
     public void prepareSuccessView(ViewProfileOutputData viewProfileOutputData) {
-        viewProfileViewModel.setState(viewProfileViewModel.getState().setUsername(viewProfileOutputData.getUsername()).setName(viewProfileOutputData.getName()).setEmail(viewProfileOutputData.getEmail()).setRating(viewProfileOutputData.getRating()));
+        viewProfileViewModel.setState(viewProfileViewModel.getState().setUsername(viewProfileOutputData.getUsername()).setName(viewProfileOutputData.getName()).setEmail(viewProfileOutputData.getEmail()));
         viewProfileViewModel.firePropertyChanged("display_profile");
         viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

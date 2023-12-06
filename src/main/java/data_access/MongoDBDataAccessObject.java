@@ -21,7 +21,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, SearchPostsByTitleDataAccessInterface,CollabRequestDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, SearchPostsByTitleDataAccessInterface,CollabRequestDataAccessInterface, ViewProfileDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -147,6 +147,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         collabRequests.insertOne(collabRequest);
 
     }
+//    @Override
+//    public void removeCollabRequest(CollabRequest collabRequest) {
+//        collabRequests = getCollabRequests();
+//        collabRequests.deleteOne(collabRequ)
+//
+//    }
 
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
@@ -171,6 +177,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public Post getPostByPostID(ObjectId id) {
         posts = getPostsCollection();
         return posts.find(Filters.eq("_id", id)).first();
+    }
+
+    @Override
+    public CollabRequest getCollabRequestById(ObjectId id) {
+        return null;
     }
 
     @Override

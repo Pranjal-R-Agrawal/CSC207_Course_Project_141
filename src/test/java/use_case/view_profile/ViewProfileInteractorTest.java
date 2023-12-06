@@ -38,11 +38,11 @@ public class ViewProfileInteractorTest {
                 assertTrue(viewProfileOutputData.getUsername() instanceof String);
                 assertTrue(viewProfileOutputData.getName() instanceof String);
                 assertTrue(viewProfileOutputData.getEmail() instanceof String);
-                assertTrue(viewProfileOutputData.getRating() instanceof String);
+
                 assertEquals("testuser", viewProfileOutputData.getUsername());
                 assertEquals("test", viewProfileOutputData.getName());
                 assertEquals("test@email.com", viewProfileOutputData.getEmail());
-                assertEquals("0.0", viewProfileOutputData.getRating());
+
 
             }
         };

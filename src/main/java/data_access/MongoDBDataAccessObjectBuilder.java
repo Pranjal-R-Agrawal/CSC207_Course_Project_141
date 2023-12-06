@@ -9,6 +9,7 @@ public class MongoDBDataAccessObjectBuilder {
     private String usersCollectionName;
     private String postsCollectionName;
     private String commentsCollectionName;
+    private String collabRequestsCollectionName;
 
     public MongoDBDataAccessObjectBuilder setDatabaseConnectionPath(String databaseConnectionPath) {
         this.databaseConnectionPath = databaseConnectionPath;
@@ -34,6 +35,10 @@ public class MongoDBDataAccessObjectBuilder {
         this.commentsCollectionName = commentsCollectionName;
         return this;
     }
+    public MongoDBDataAccessObjectBuilder setcollabRequestsCollectionName(String commentsCollectionName) {
+        this.collabRequestsCollectionName = collabRequestsCollectionName;
+        return this;
+    }
 
     public MongoDBDataAccessObjectBuilder setStandadParameters() {
         setDatabaseConnectionPath("src/main/java/data_access/database_connection.txt");
@@ -41,6 +46,7 @@ public class MongoDBDataAccessObjectBuilder {
         setUsersCollectionName("users");
         setPostsCollectionName("posts");
         setCommentsCollectionName("comments");
+        setcollabRequestsCollectionName("collabRequests");
         return this;
     }
 
@@ -50,12 +56,13 @@ public class MongoDBDataAccessObjectBuilder {
         setUsersCollectionName("users_test");
         setPostsCollectionName("posts_test");
         setCommentsCollectionName("comments_test");
+        setCommentsCollectionName("collabRequests_test");
         return this;
     }
 
     public MongoDBDataAccessObject build() throws FileNotFoundException, NoSuchElementException {
         return new MongoDBDataAccessObject(
-                databaseConnectionPath, databaseName, usersCollectionName, postsCollectionName, commentsCollectionName
+                databaseConnectionPath, databaseName, usersCollectionName, postsCollectionName, commentsCollectionName, collabRequestsCollectionName
         );
     }
 }

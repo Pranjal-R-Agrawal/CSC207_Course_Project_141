@@ -22,8 +22,6 @@ public class User implements UserInterface{
     private String city;
     private String fieldOfExpertise;
 
-    private int numRatings;
-
     public User() {}
     /**
      * Initializes a User containing username, password, name, email, phone number(optionally),city and field of expertise.
@@ -46,7 +44,6 @@ public class User implements UserInterface{
         this.phoneNumber = (phoneNumber == null) ? "" : phoneNumber.trim();
         this.city = (city == null) ? "" : city.trim();
         this.fieldOfExpertise = (fieldOfExpertise == null) ? "" : fieldOfExpertise.trim();
-        this.numRatings = 0;
     }
     /**
      * @return Retrieves the id of user
@@ -208,5 +205,6 @@ public class User implements UserInterface{
     public void addCollabRequest(ObjectId postId) {
         this.collaborationRequestIDs.add(postId);
     }
+
 }
 

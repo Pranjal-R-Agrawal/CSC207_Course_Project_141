@@ -26,7 +26,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
         String username = viewProfileDataAccessObject.getLoggedInUser().getUsername();
         String name = viewProfileDataAccessObject.getLoggedInUser().getName();
         String email = viewProfileDataAccessObject.getLoggedInUser().getEmail();
-        double rating = viewProfileDataAccessObject.getLoggedInUser().getRating();
+
         String projects = "";
         List<ObjectId> projectIds = viewProfileDataAccessObject.getLoggedInUser().getPostIDs();
         for (ObjectId postId : projectIds) {
@@ -41,7 +41,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
             collabRequests.add(collabRequest);
         }
 
-        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, rating, projects,
+        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, projects,
                 collabRequests);
         viewProfilePresenter.prepareSuccessView(viewProfileOutputData);
 

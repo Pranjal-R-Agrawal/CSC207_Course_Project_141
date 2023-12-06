@@ -10,6 +10,6 @@ public interface ViewProfileDataAccessInterface {
     Post getPostByPostID(ObjectId id);
     CollabRequest getCollabRequestById(ObjectId id);
     void addCollabRequest(CollabRequest collabRequest);
-
+    User getUserByUsername(String username);
 
 }
