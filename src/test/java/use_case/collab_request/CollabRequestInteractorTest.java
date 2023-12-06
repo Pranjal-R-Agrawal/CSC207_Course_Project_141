@@ -3,10 +3,12 @@ package use_case.collab_request;
 import data_access.CollabRequestDataAccessInterface;
 import data_access.MockCollabRequestDataAccessObject;
 import entity.CollabRequestFactory;
+import entity.ConcreteCollabRequestFactory;
 import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import use_case.collab_request.application_business_rules.CollabRequestInputBoundary;
+import use_case.collab_request.application_business_rules.CollabRequestInputData;
 import use_case.collab_request.application_business_rules.CollabRequestInteractor;
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
 
@@ -21,7 +23,7 @@ public class CollabRequestInteractorTest {
     @Test
     public void successTest() {
         MockCollabRequestDataAccessObject collabRequestDataAccessObject = new MockCollabRequestDataAccessObject();
-        CollabRequestFactory collabRequestFactory = new CollabRequestFactory();
+        CollabRequestFactory collabRequestFactory = new ConcreteCollabRequestFactory();
         ObjectId postid = collabRequestDataAccessObject.getIdPost();
         ObjectId userid = collabRequestDataAccessObject.getIdUser();
         CollabRequestOutputBoundary successPresenter = new CollabRequestOutputBoundary() {
@@ -31,8 +33,10 @@ public class CollabRequestInteractorTest {
             }
         };
 
+
         CollabRequestInputBoundary interactor = new CollabRequestInteractor(collabRequestDataAccessObject, successPresenter, collabRequestFactory);
-        interactor.execute(postid, userid,null);
+        CollabRequestInputData collabRequestInputData = new CollabRequestInputData(postid,userid);
+        interactor.execute(collabRequestInputData, null);
 
     }
 

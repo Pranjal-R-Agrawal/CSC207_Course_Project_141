@@ -6,8 +6,11 @@ import data_access.GenerateIdeaDataAccessInterface;
 import data_access.IdeaDataFileDataAccessObject;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
+import entity.CollabRequestFactory;
+import entity.ConcreteCollabRequestFactory;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
+import use_case.collab_request.interface_adapter.CollabRequestController;
 import view.*;
 import javax.swing.*;
 import java.awt.*;
@@ -81,6 +84,8 @@ public class Main {
         views.add(generateIdeaView,generateIdeaView.viewName);
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
+        CollabRequestFactory collabRequestFactory = new ConcreteCollabRequestFactory();
+        CollabRequestController collabRequestController = CollabRequestUseCaseFactory.create(viewManagerModel,mongoDBDataAccessObject,collabRequestFactory);
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
         viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);

@@ -15,16 +15,17 @@ public class CollabRequestInteractor implements CollabRequestInputBoundary{
         this.collabRequestFactory = collabRequestFactory;
     }
     @Override
-    public void execute(ObjectId postId , ObjectId userId, User actualCommenterForTests) {
-        User commenter = collabRequestDataAccessObject.getUserById(userId);
+    public void execute(CollabRequestInputData collabRequestInputData, User actualCommenterForTests) {
+        ObjectId commenterId = collabRequestInputData.getCommenterId();
+        ObjectId postId = collabRequestInputData.getPostId();
+        User commenter = collabRequestDataAccessObject.getUserById(commenterId);
         String postTitle = collabRequestDataAccessObject.getPostByPostId(postId).getTitle();
         ObjectId authorId = collabRequestDataAccessObject.getPostByPostId(postId).getAuthorID();
         String author = collabRequestDataAccessObject.getUserById(authorId).getUsername();
 
 
        // ObjectId collabId = collabRequestDataAccessObject.getPostByPostId(postId).getId();
-
-        CollabRequest collabRequest = collabRequestFactory.create(postId, author, postTitle);
+        CollabRequest collabRequest = collabRequestFactory.create(postId, commenter.getUsername(), author, postTitle);
         collabRequestDataAccessObject.addCollabRequest(collabRequest);
         if(actualCommenterForTests != null) {
             commenter = actualCommenterForTests;

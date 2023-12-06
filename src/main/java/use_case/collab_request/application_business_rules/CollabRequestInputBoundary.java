@@ -4,5 +4,5 @@ import entity.User;
 import org.bson.types.ObjectId;
 
 public interface CollabRequestInputBoundary {
-    void execute(ObjectId postId, ObjectId userId, User actualCommenterForTests);
+    void execute(CollabRequestInputData collabRequestInputData, User actualCommenterForTests);
 }

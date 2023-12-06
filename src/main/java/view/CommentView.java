@@ -102,7 +102,10 @@ public class CommentView extends AbstractGridBagLayoutView {
 
         JButton collaborationRequestButton = new JButton("Request Collaboration");
         collaborationRequestButton.addActionListener(e -> {
-            // TODO: Implement similar to reply button
+            if (e.getSource().equals(collaborationRequestButton)) {
+
+            }
+
         });
 
         initialiseConstraints(constraints);

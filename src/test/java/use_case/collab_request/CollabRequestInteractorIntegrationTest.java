@@ -8,6 +8,7 @@ import entity.*;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import use_case.collab_request.application_business_rules.CollabRequestInputBoundary;
+import use_case.collab_request.application_business_rules.CollabRequestInputData;
 import use_case.collab_request.application_business_rules.CollabRequestInteractor;
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
 
@@ -24,8 +25,10 @@ public class CollabRequestInteractorIntegrationTest {
         MongoDBDataAccessObject mongoDBDataAccessObject;
 
         try {
+
             mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
-            mongoDBDataAccessObject.addCollabRequest(new CollabRequest());
+            CollabRequest collabRequest = new ConcreteCollabRequest();
+            mongoDBDataAccessObject.addCollabRequest(collabRequest);
             mongoDBDataAccessObject.resetDatabase();
 
         } catch (Exception e) {
@@ -49,7 +52,7 @@ public class CollabRequestInteractorIntegrationTest {
         User commenter = (User) userFactory.create("testuser", "testpassword", "testname", "test@email.com", "123-456-7890", "Test city", "coding");
         mongoDBDataAccessObject.addUser(commenter); // assume ids have been created
         User testCommenter = mongoDBDataAccessObject.getUserByUsername("testuser");
-        CollabRequestFactory collabRequestFactory = new CollabRequestFactory();
+        CollabRequestFactory collabRequestFactory = new ConcreteCollabRequestFactory();
 
         CollabRequestOutputBoundary successPresenter = new CollabRequestOutputBoundary() {
             @Override
@@ -57,9 +60,9 @@ public class CollabRequestInteractorIntegrationTest {
                 assertEquals(testPost.getId(), testCommenter.getCollaborationRequestIDs().get(0));
             }
         };
-
+        CollabRequestInputData collabRequestInputData = new CollabRequestInputData(testPost.getId(),testCommenter.getId());
         CollabRequestInputBoundary interactor = new CollabRequestInteractor(mongoDBDataAccessObject, successPresenter, collabRequestFactory);
-        interactor.execute(testPost.getId(), testCommenter.getId(),testCommenter);
+        interactor.execute(collabRequestInputData, testCommenter);
 
     }
 }
