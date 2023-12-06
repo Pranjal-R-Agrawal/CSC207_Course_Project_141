@@ -18,6 +18,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * The UI that displays changes in the SearchPostViewModel
+ * @author Tanmay Shinde
+ */
 public class SearchPostView extends AbstractGridBagLayoutView implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private final ViewManagerModel viewManagerModel;
@@ -27,6 +31,14 @@ public class SearchPostView extends AbstractGridBagLayoutView implements Propert
     private final JButton searchButton = new JButton("Search");
     private final JPanel resultsPanel = new JPanel(new GridBagLayout());
 
+    /**
+     * Initializes the UI template and provides functionality to its components.
+     * @param viewManagerModel Manages which view is displayed
+     * @param searchPostViewModel Observable that stores the state useful to the SearchPostView
+     * @param homePageViewModel Observable that stores the state useful to Home Page View.
+     * @param searchPostController Controller to trigger the SearchPostInputBoundary to perform application logic
+     * @param createPostView The UI object that displays the changes in the CreatePostViewModel
+     */
     public SearchPostView(ViewManagerModel viewManagerModel, SearchPostViewModel searchPostViewModel, HomePageViewModel homePageViewModel, SearchPostController searchPostController, CreatePostView createPostView) {
         super(searchPostViewModel.getViewName());
         this.viewManagerModel = viewManagerModel;
@@ -99,6 +111,11 @@ public class SearchPostView extends AbstractGridBagLayoutView implements Propert
         addPanel(constraints, this, resultsPanel, 0, 2);
     }
 
+    /**
+     * Updates the UI when a change is made in the SearchPostViewModel
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("search_error")) {
@@ -122,6 +139,11 @@ public class SearchPostView extends AbstractGridBagLayoutView implements Propert
         }
     }
 
+    /**
+     * Main method for this class, implements various components of the search post use case and sets the view
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         JFrame frame = new JFrame("Search Post View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,10 +161,40 @@ public class SearchPostView extends AbstractGridBagLayoutView implements Propert
         frame.setVisible(true);
     }
 
+    /**
+     * Returns the preferred size of the viewport for viewing this component.
+     * @return A Dimension object representing the preferred size of the viewport
+     */
     public Dimension getPreferredScrollableViewportSize() {return getPreferredSize();}
+
+    /**
+     * Returns the unit increment for scrolling in the specified direction along the specified orientation for this component.
+     * @param visibleRect The view area visible within the viewport
+     * @param orientation Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
+     * @param direction Less than zero to scroll up/left, greater than zero for down/right.
+     * @return unit increment as an int value
+     */
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {return 1;}
+
+    /**
+     * Returns the block increment for scrolling in the specified direction along the specified orientation for this component.
+     * @param visibleRect The view area visible within the viewport
+     * @param orientation Either SwingConstants.VERTICAL or SwingConstants.HORIZONTAL.
+     * @param direction Less than zero to scroll up/left, greater than zero for down/right.
+     * @return block increment as an int value
+     */
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height : visibleRect.width) - 10;}
+
+    /**
+     * Returns whether this component's width should be tracked by the viewport.
+     * @return a boolean value which is true if the component's width should be tracked by the viewport and false otherwise
+     */
     public boolean getScrollableTracksViewportWidth() {return true;}
+
+    /**
+     * Returns whether this component's height should be tracked by the viewport.
+     * @return a boolean value which is true if the component's height should be tracked by the viewport and false otherwise
+     */
     public boolean getScrollableTracksViewportHeight() {return false;}
 
     private class SearchPostResultView extends AbstractGridBagLayoutView {
