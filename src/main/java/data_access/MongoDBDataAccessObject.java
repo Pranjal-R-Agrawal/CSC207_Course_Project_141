@@ -31,7 +31,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
-    protected MongoCollection<CollabRequest> collabRequests;
+    protected MongoCollection<CollabRequest> collabRequests ;
     private ObjectId loggedInUserID;
     private final String usersCollectionName;
     private final String postsCollectionName;
@@ -194,6 +194,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
     }
+
 
 
 
