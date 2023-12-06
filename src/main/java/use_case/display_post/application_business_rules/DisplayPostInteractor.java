@@ -19,6 +19,10 @@ public class DisplayPostInteractor implements DisplayPostInputBoundary {
         this.displayCommentPresenter = displayPostOutputBoundary;
     }
 
+    /**
+     * Fetches the post and comments from the database and packages the data for the view
+     * @param displayPostInputData contains the id of the post or comment to be displayed and a config value indicating whether the id is for a comment (0) or a post (1)
+     */
     public void execute(DisplayPostInputData displayPostInputData) {
         ObjectId id = displayPostInputData.getId();
         int config = displayPostInputData.getConfig();
