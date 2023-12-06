@@ -19,6 +19,7 @@ public class Post implements PostInterface{
     public Post() {}
 
     public Post(ObjectId authorID, String title, String body, List<String> suggestedCollaboratorQualifications) {
+
         this.childrenId = new ArrayList<ObjectId>();
         this.authorID = authorID;
         this.collaboratorIDs = new ArrayList<ObjectId>();
