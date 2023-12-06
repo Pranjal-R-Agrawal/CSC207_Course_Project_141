@@ -8,5 +8,6 @@ public interface CollabRequestDataAccessInterface {
     Post getPostByPostId(ObjectId id);
     User getUserById(ObjectId id);
     void addCollabRequest(CollabRequest collabRequest);
+    Comment getCommentByCommentID(ObjectId id);
 
 }

@@ -36,7 +36,13 @@ public class MockCollabRequestDataAccessObject implements CollabRequestDataAcces
     public void addCollabRequest(CollabRequest collabRequest) {
         users.get(0).addCollabRequest(collabRequest.getPostId());
     }
-//    public ObjectId getIdPost()
+
+    @Override
+    public Comment getCommentByCommentID(ObjectId id) {
+        return null;
+    }
+
+    //    public ObjectId getIdPost()
 //    {
 //        return idPost;
 //    }

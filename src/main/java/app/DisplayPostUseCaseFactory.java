@@ -1,6 +1,7 @@
 package app;
 
 import data_access.DisplayCommentDataAccessInterface;
+import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.display_post.application_business_rules.DisplayPostInteractor;
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.interface_adapter.DisplayPostController;
@@ -19,9 +20,9 @@ public class DisplayPostUseCaseFactory {
      * @param createCommentUseCaseBuilder  the create comment use case builder
      * @return a PostAndCommentsView object
      */
-    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
+    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, CollabRequestController collabRequestController) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
-        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder);
+        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, collabRequestController);
     }
 
     private static DisplayPostController createDisplayCommentUseCase(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject) {
