@@ -18,7 +18,7 @@ public class ViewProfileViewTest {
     private static String message_name="";
 
     private static String message_email="";
-    private static String message_rating="";
+
     private static ViewProfileView viewProfileView;
     private ViewProfileDataFileAccessObject viewProfileDataFileAccessObject;
     private ViewProfileViewModel viewProfileViewModel;
@@ -49,7 +49,7 @@ public class ViewProfileViewTest {
 
     @Test
     public void testViewProfileDisplayStatic() {
-        viewProfileViewModel.getState().setUsername("testuser").setName("test").setEmail("test@email.com").setRating("0.0");
+        viewProfileViewModel.getState().setUsername("testuser").setName("test").setEmail("test@email.com");
         viewProfileViewModel.firePropertyChanged("display_profile");
         createCloseTimer().start();
         // TODO: Finish implementing this test after main page is implemented
@@ -61,7 +61,7 @@ public class ViewProfileViewTest {
         assertEquals("testuser", message_username);
         assertEquals("test", message_name);
         assertEquals("test@email.com", message_email);
-        assertEquals("0.0", message_rating);
+
 
 
     }
@@ -78,7 +78,7 @@ public class ViewProfileViewTest {
         assertEquals("testuser1", message_username);
         assertEquals("test1", message_name);
         assertEquals("test1@email.com", message_email);
-        assertEquals("0.0", message_rating);
+
 
 
     }
@@ -97,13 +97,12 @@ public class ViewProfileViewTest {
                                 .getContentPane().getLayout()).getLayoutComponent(BorderLayout.CENTER)).getViewProfileViewModel().getState().getName();
                         message_email = ((ViewProfileView) ((BorderLayout) jFrame.getRootPane()
                                 .getContentPane().getLayout()).getLayoutComponent(BorderLayout.CENTER)).getViewProfileViewModel().getState().getEmail();
-                        message_rating = ((ViewProfileView) ((BorderLayout) jFrame.getRootPane()
-                                .getContentPane().getLayout()).getLayoutComponent(BorderLayout.CENTER)).getViewProfileViewModel().getState().getRating();
+
 
                         System.out.println(message_username);
                         System.out.println(message_name);
                         System.out.println(message_email);
-                        System.out.println(message_rating);
+
 
                     }
                 }

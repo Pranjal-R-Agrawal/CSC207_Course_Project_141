@@ -181,7 +181,8 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
     @Override
     public CollabRequest getCollabRequestById(ObjectId id) {
-        return null;
+        collabRequests = getCollabRequests();
+        return collabRequests.find(Filters.eq("_id", id)).first();
     }
 
     @Override

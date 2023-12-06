@@ -1,6 +1,11 @@
 package use_case.view_profile;
+import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import data_access.ViewProfileDataAccessInterface;
 import data_access.ViewProfileDataFileAccessObject;
+import entity.User;
+import entity.UserFactory;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import use_case.view_profile.application_business_rules.ViewProfileInputBoundary;
 import use_case.view_profile.application_business_rules.ViewProfileInteractor;
@@ -14,8 +19,17 @@ import static org.junit.Assert.assertTrue;
 public class ViewProfileInteractorIntegrationTest {
     @Test
     public void successTest() throws Exception {
-        ViewProfileDataAccessInterface viewProfileDataAccessInterface = new ViewProfileDataFileAccessObject(
-                "src/main/java/data_access/users.csv");
+        MongoDBDataAccessObject mongoDBDataAccessObject;
+        try {mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+            User user = (User) new UserFactory().create("testuser1","testpass1", "test1","test1@email.com","123-456-781","testcity1", "t" +
+                    "coding");
+            mongoDBDataAccessObject.addUser(user);
+            mongoDBDataAccessObject.setLoggedInUserID(user.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
         ViewProfileOutputBoundary successPresenter = new ViewProfileOutputBoundary() {
             @Override
             public void prepareSuccessView(ViewProfileOutputData viewProfileOutputData) {
@@ -29,7 +43,7 @@ public class ViewProfileInteractorIntegrationTest {
 
             }
         };
-        ViewProfileInputBoundary interactor = new ViewProfileInteractor(viewProfileDataAccessInterface,
+        ViewProfileInputBoundary interactor = new ViewProfileInteractor(mongoDBDataAccessObject,
                 successPresenter);
         interactor.execute();
 
