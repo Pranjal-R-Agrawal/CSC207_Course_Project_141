@@ -18,7 +18,15 @@ public class MockViewUserInfoDataAccessObject implements ViewUserInfoDataAccessI
 
     @Override
     public User getUserById(ObjectId userId) {
-        return users.get(0);
+
+        if (users.isEmpty()) {
+            return null;
+        }
+
+        else {
+            return users.get(0);
+        }
+
     }
 
     public void drop(){

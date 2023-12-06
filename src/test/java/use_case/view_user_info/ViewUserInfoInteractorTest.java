@@ -86,6 +86,7 @@ public class ViewUserInfoInteractorTest {
     public void testFailView() {
         ViewUserInfoInputData inputData = new ViewUserInfoInputData(new ObjectId(), false);
         ViewUserInfoDataAccessInterface mockDataAccessObject = new MockViewUserInfoDataAccessObject();
+        mockDataAccessObject.drop();
 
         ViewUserInfoOutputBoundary viewUserInfoPresenter = new ViewUserInfoOutputBoundary() {
             @Override
@@ -104,7 +105,6 @@ public class ViewUserInfoInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-
                 assertEquals("Failed to retreive User", error);
 
             }
