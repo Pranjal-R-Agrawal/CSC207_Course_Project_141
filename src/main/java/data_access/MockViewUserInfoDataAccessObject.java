@@ -12,6 +12,7 @@ public class MockViewUserInfoDataAccessObject implements ViewUserInfoDataAccessI
     HashMap<Integer, User> users;
 
     public MockViewUserInfoDataAccessObject() {
+        users = new HashMap<>();
         User user = (User) new UserFactory().create("testusername", "testpwd", "testname", "test@email.com", "0000000000", "testcity", "testexpertise");
         users.put(0, user);
     }
@@ -31,5 +32,6 @@ public class MockViewUserInfoDataAccessObject implements ViewUserInfoDataAccessI
 
     public void drop(){
         users.clear();
+        users = new HashMap<>();
     }
 }
