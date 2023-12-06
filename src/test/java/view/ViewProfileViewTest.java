@@ -1,8 +1,11 @@
 package view;
 import app.ViewProfileUseCaseFactory;
+import data_access.MongoDBDataAccessObject;
+import data_access.MongoDBDataAccessObjectBuilder;
 import data_access.ViewProfileDataAccessInterface;
 import data_access.ViewProfileDataFileAccessObject;
 import entity.User;
+import entity.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,10 +33,19 @@ public class ViewProfileViewTest {
     @Before
     public void setUpTest() throws Exception {
 
-        viewProfileDataFileAccessObject = new ViewProfileDataFileAccessObject(
-                "src/main/java/data_access/users.csv");
+        MongoDBDataAccessObject mongoDBDataAccessObject;
+        try {mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+            User user = (User) new UserFactory().create("testuser1","testpass1", "test1","test1@email.com","123-456-781","testcity1", "t" +
+                    "coding");
+            mongoDBDataAccessObject.addUser(user);
+            mongoDBDataAccessObject.setLoggedInUserID(user.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
         viewProfileViewModel = new ViewProfileViewModel();
-        viewProfileView = ViewProfileUseCaseFactory.create(new ViewManagerModel(), viewProfileViewModel, viewProfileDataFileAccessObject);
+        viewProfileView = ViewProfileUseCaseFactory.create(new ViewManagerModel(), viewProfileViewModel, mongoDBDataAccessObject);
         backButton = (JButton) viewProfileView.getComponent(4);
         logoutButton = (JButton) viewProfileView.getComponent(5);
 
