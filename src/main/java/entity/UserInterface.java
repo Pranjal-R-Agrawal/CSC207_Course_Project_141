@@ -98,20 +98,5 @@ public interface UserInterface {
      * @return Sets the field of expertise of the user
      */
      void setFieldOfExpertise(String fieldOfExpertise);
-    /**
-     * @return Gets the rating of the user
-     */
-    double getRating();
-    /**
-     * @return Sets the rating of the user
-     */
-     void setRating(double rating);
-    /**
-     * @return Gets the number of ratings of the user
-     */
-  int getNumRatings();
-    /**
-     * @return Sets the number of ratings of the user
-     */
-     void setNumRatings(int numRatings);
+    void addCollabRequest(ObjectId postId);
 }
