@@ -1,21 +1,16 @@
 package data_access;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -26,7 +21,7 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, SearchPostsByTitleDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -92,9 +87,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     public void resetDatabase() {
-        users.drop();
-        posts.drop();
-        comments.drop();
+        users.deleteMany(new Document());
+        posts.deleteMany(new Document());
+        comments.deleteMany(new Document());
     }
 
     public boolean usernameUsed(String username) {
@@ -170,5 +165,29 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     @Override
     public ObjectId getLoggedInUserId() {
         return loggedInUserID;
+    }
+
+    @Override
+    public List<PostSearchResultsInterface> getPostsByTitle(String query) {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+
+        MongoCollection<PostSearchResults> postSearchResultsMongoCollection = database.getCollection(postsCollectionName, PostSearchResults.class).withCodecRegistry(pojoCodecRegistry);
+
+        AggregateIterable<PostSearchResults> searchResults = postSearchResultsMongoCollection.aggregate(Arrays.asList(new Document("$search",
+                        new Document("index", "posts")
+                                .append("text",
+                                        new Document("query", query)
+                                                .append("path", "title")
+                                                .append("fuzzy",
+                                                        new Document()))),
+                new Document("$project",
+                        new Document("_id", 1L)
+                                .append("title", 1L)
+                                .append("score",
+                                        new Document("$meta", "searchScore"))))
+        );
+
+        return searchResults.into(new ArrayList<PostSearchResultsInterface>());
     }
 }
