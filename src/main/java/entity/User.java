@@ -232,4 +232,8 @@ public class User implements UserInterface{
     public void setNumRatings(int numRatings) {
         this.numRatings = numRatings;
     }
+    public void addCollabRequest(ObjectId postId) {
+        this.collaborationRequestIDs.add(postId);
+    }
 }
+
