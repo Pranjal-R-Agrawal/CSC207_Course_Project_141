@@ -3,6 +3,7 @@ package use_case.view_user_info.interface_adapter;
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputBoundary;
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputData;
 import view.ViewUserInfoView;
+import view.ViewUserInfoViewModel;
 
 /**
  * Concrete implementation of the ViewUserInfoOutputBoundary.
@@ -12,8 +13,14 @@ import view.ViewUserInfoView;
  */
 public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
 
+    private final ViewUserInfoViewModel viewUserInfoViewModel;
+
+    public ViewUserInfoPresenter(ViewUserInfoViewModel viewUserInfoViewModel) {
+        this.viewUserInfoViewModel = viewUserInfoViewModel;
+    }
+
     /**
-     * Constructs the relevant output data for the case when logged-in user is a collaborator and passes it to the View
+     * Constructs the relevant output data for the case when logged-in user is a collaborator and updates the View Model accordingly
      * @param user OutputData object containing relevant user data that is to be displayed
      */
     @Override
@@ -24,13 +31,12 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
                 "<html><br/>Email: </html>" + user.getEmail() +
                 "<html><br/>Phone Number: </html>" + user.getPhoneNumber();
 
-        ViewUserInfoView viewUserInfoView = new ViewUserInfoView();
-
-        viewUserInfoView.showUserInfo(message);
+        viewUserInfoViewModel.getState().setMessage(message);
+        viewUserInfoViewModel.firePropertyChanged("message");
     }
 
     /**
-     * Constructs the relevant output data for the case when logged-in user is not a collaborator and passes it to the View
+     * Constructs the relevant output data for the case when logged-in user is not a collaborator and updates the View Model accordingly
      * @param user OutputData object containing relevant user data that is to be displayed
      */
     @Override
@@ -38,19 +44,17 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
         String message = "<html>Name: </html>" + user.getName() +
                 "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise();
 
-        ViewUserInfoView viewUserInfoView = new ViewUserInfoView();
-
-        viewUserInfoView.showUserInfo(message);
+        viewUserInfoViewModel.getState().setMessage(message);
+        viewUserInfoViewModel.firePropertyChanged("message");
     }
 
     /**
-     * Invokes the showUserInfo method of the View with an error message
+     * Updates the View Model with an error message
      * @param error the error message conveying that the user could not be retrieved
      */
     @Override
     public void prepareFailView(String error) {
-        ViewUserInfoView viewUserInfoView = new ViewUserInfoView();
-
-        viewUserInfoView.showUserInfo(error);
+        viewUserInfoViewModel.getState().setMessage(error);
+        viewUserInfoViewModel.firePropertyChanged("message");
     }
 }
