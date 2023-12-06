@@ -32,7 +32,7 @@ public class CollabRequestInteractorTest {
         };
 
         CollabRequestInputBoundary interactor = new CollabRequestInteractor(collabRequestDataAccessObject, successPresenter, collabRequestFactory);
-        interactor.execute(postid, userid);
+        interactor.execute(postid, userid,null);
 
     }
 
