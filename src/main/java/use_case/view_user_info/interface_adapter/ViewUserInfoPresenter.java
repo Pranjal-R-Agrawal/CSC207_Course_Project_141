@@ -2,7 +2,6 @@ package use_case.view_user_info.interface_adapter;
 
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputBoundary;
 import use_case.view_user_info.application_business_rules.ViewUserInfoOutputData;
-import view.ViewUserInfoView;
 import view.ViewUserInfoViewModel;
 
 /**
