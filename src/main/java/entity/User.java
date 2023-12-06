@@ -204,34 +204,7 @@ public class User implements UserInterface{
     public void setFieldOfExpertise(String fieldOfExpertise) {
         this.fieldOfExpertise = fieldOfExpertise;
     }
-    /**
-     * @return Gets the rating of the user
-     */
     @Override
-    public double getRating() {
-        return rating;
-    }
-    /**
-     * @return Sets the rating of the user
-     */
-    @Override
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-    /**
-     * @return Gets the number of ratings of the user
-     */
-    @Override
-    public int getNumRatings() {
-        return numRatings;
-    }
-    /**
-     * @return Sets the number of ratings of the user
-     */
-    @Override
-    public void setNumRatings(int numRatings) {
-        this.numRatings = numRatings;
-    }
     public void addCollabRequest(ObjectId postId) {
         this.collaborationRequestIDs.add(postId);
     }
