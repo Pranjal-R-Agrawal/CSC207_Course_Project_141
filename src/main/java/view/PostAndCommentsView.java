@@ -12,6 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is responsible for displaying a post and its comments.
+ * It contains a PostView and a list of CommentViews.
+ */
 public class PostAndCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private ObjectId postId;
@@ -24,8 +28,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     public String title;
 
     /**
-     * This class is responsible for displaying a post and its comments.
-     * It contains a PostView and a list of CommentViews.
+     * Constructor for PostAndCommentsView.
      * @param postAndCommentsViewModel The view model for this view
      * @param viewManagerModel The view manager model
      * @param displayPostController The controller for displaying posts

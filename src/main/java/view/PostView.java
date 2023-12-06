@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is responsible for displaying a post.
+ */
 public class PostView extends AbstractGridBagLayoutView {
     final ObjectId id;
     final ObjectId authorId;
@@ -17,7 +20,8 @@ public class PostView extends AbstractGridBagLayoutView {
     final List<String> qualifications;
 
     /**
-     * This class is responsible for displaying a post.
+     * Constructor for PostView.
+     * Extracts the information of the post from the map and displays it.
      * @param post The map containing the information of the post to display
      * @param postAndCommentsViewModel The view model for this view
      */

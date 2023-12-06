@@ -10,6 +10,9 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * Displays the signup form, sends the input to the controller, creates  popup window if there is an error
+ */
 public class SignupView extends JPanel implements PropertyChangeListener {
     public final String viewName;
     private final SignupViewModel signupViewModel;
@@ -27,7 +30,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
 
     /**
      * Constructor for SignupView
-     * Displays the signup form, sends the input to the controller, creates  popup window if there is an error
+     * Initialises the view and adds listeners to the buttons and input fields
      * @param signupViewModel SignupViewModel
      * @param signupController SignupController
      */
