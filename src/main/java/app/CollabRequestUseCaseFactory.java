@@ -19,7 +19,17 @@ import view.LoginViewModel;
 import view.PostAndCommentsViewModel;
 import view.ViewManagerModel;
 
+/**
+ * This class is responsible for creating a CollabRequestController object.
+ */
 public class CollabRequestUseCaseFactory {
+    /**
+     * Creates and returns a CollabRequestController object.
+     * @param viewManagerModel the view manager model
+     * @param collabRequestDataAccessObject the collab request data access object
+     * @param collabRequestFactory the collab request factory
+     * @return a CollabRequestController object
+     */
     public static CollabRequestController  create(ViewManagerModel viewManagerModel,CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestFactory collabRequestFactory) {
         CollabRequestController collabRequestController = createCollabRequestUseCase(viewManagerModel, collabRequestDataAccessObject,collabRequestFactory);
         return collabRequestController;

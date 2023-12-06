@@ -3,17 +3,29 @@ package use_case.collab_request.application_business_rules;
 import data_access.CollabRequestDataAccessInterface;
 import entity.*;
 import org.bson.types.ObjectId;
-
+/**
+ * Represents a CollabRequestInteractor
+ */
 public class CollabRequestInteractor implements CollabRequestInputBoundary{
     final CollabRequestDataAccessInterface collabRequestDataAccessObject;
     final CollabRequestOutputBoundary collabRequestPresenter;
     final CollabRequestFactory collabRequestFactory;
-
+    /**
+     * Constructor for CollabRequestInteractor
+     * @param collabRequestDataAccessObject
+     * @param collabPresenter
+     * @param collabRequestFactory
+     */
     public CollabRequestInteractor(CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestOutputBoundary collabPresenter, CollabRequestFactory collabRequestFactory) {
         this.collabRequestDataAccessObject = collabRequestDataAccessObject;
         this.collabRequestPresenter = collabPresenter;
         this.collabRequestFactory = collabRequestFactory;
     }
+    /**
+     * Executes the CollabRequestInteractor
+     * @param collabRequestInputData
+     * @param actualCommenterForTests
+     */
     @Override
     public void execute(CollabRequestInputData collabRequestInputData, User actualCommenterForTests) {
         ObjectId commenterId = collabRequestInputData.getCommenterId();
