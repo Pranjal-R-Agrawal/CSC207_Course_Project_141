@@ -11,7 +11,8 @@ public class CollabRequestController {
         this.collabRequestInteractor = collabRequestInteractor;
     }
 
-    public void execute(ObjectId postId, ObjectId userId) {
-        collabRequestInteractor.execute(postId, userId,null);
+    public void execute(ObjectId postId, ObjectId commenterId) {
+        CollabRequestInputData collabRequestInputData = new CollabRequestInputData(postId,commenterId);
+        collabRequestInteractor.execute(collabRequestInputData,null);
     }
 }
