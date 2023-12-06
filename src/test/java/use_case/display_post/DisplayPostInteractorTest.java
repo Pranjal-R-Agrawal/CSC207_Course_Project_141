@@ -1,5 +1,6 @@
 package use_case.display_post;
 
+import data_access.MockSignupLoginDisplayPostDataAccessObject;
 import entity.Comment;
 import entity.Post;
 import entity.User;
@@ -17,7 +18,7 @@ import data_access.MongoDBDataAccessObjectBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 public class DisplayPostInteractorTest {
-    MongoDBDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
 
     @Test
     public void testInvalidCommentID() {
@@ -167,12 +168,6 @@ public class DisplayPostInteractorTest {
 
     @Before
     public void setUpTest() {
-        try {
-            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-        mongoDBDataAccessObject.resetDatabase();
+        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }

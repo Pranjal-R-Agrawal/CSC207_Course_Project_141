@@ -1,6 +1,7 @@
 package use_case.login;
 import static org.junit.Assert.*;
 
+import data_access.MockSignupLoginDisplayPostDataAccessObject;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.User;
@@ -12,7 +13,7 @@ import use_case.login.application_business_rules.LoginOutputBoundary;
 
 
 public class LoginInteractorTest {
-    MongoDBDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
     LoginInteractor loginInteractor;
 
     @Test
@@ -98,12 +99,6 @@ public class LoginInteractorTest {
 
     @Before
     public void setUpTest() {
-        try {
-            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-        mongoDBDataAccessObject.resetDatabase();
+        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }

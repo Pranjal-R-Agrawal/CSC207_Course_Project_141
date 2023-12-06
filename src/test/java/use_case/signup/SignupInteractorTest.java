@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import data_access.MockSignupLoginDisplayPostDataAccessObject;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import static org.junit.Assert.*;
@@ -12,7 +13,7 @@ import view.SignupViewModel;
 
 public class SignupInteractorTest {
     SignupInputBoundary signupInteractor;
-    MongoDBDataAccessObject mongoDBDataAccessObject;
+    MockSignupLoginDisplayPostDataAccessObject mongoDBDataAccessObject;
 
     @Test
     public void testAllFieldsEmpty() {
@@ -215,12 +216,6 @@ public class SignupInteractorTest {
 
     @Before
     public void setUpTest() {
-        try {
-            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-        mongoDBDataAccessObject.resetDatabase();
+        mongoDBDataAccessObject = new MockSignupLoginDisplayPostDataAccessObject();
     }
 }
