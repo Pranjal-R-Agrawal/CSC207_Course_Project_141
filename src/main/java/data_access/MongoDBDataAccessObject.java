@@ -127,6 +127,10 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.eq("_id", id)).first();
     }
 
+    public void drop(){
+
+    }
+
     public void setLoggedInUserID(ObjectId id) {
         loggedInUserID = id;
     }
