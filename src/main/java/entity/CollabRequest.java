@@ -3,42 +3,33 @@ package entity;
 import org.bson.types.ObjectId;
 
 public class CollabRequest {
-    private ObjectId id;
-    private ObjectId collabRequestId;
+    private ObjectId postId;
     private String author;
     private String title;
 
     public CollabRequest() {}
 
-    public CollabRequest(ObjectId collabRequestId, String author, String title) {
-        this.collabRequestId = collabRequestId;
+    public CollabRequest(ObjectId postId, String author, String title) {
+        this.postId = postId;
         this.author = author;
         this.title = title;
     }
-    public ObjectId getId() {
-        return id;
+    public ObjectId getPostId() {
+        return postId;
     }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public ObjectId getCollabRequestId() {
-        return collabRequestId;
-    }
-    public void setCollabRequestId() {
-        this.collabRequestId = collabRequestId;
+    public void setPostId(ObjectId postId) {
+        this.postId =  postId;
     }
     public String getAuthor() {
         return author;
     }
-    public void setAuthor() {
+    public void setAuthor(String author) {
         this.author = author;
     }
     public String getTitle() {
         return title;
     }
-    public void setTitle() {
+    public void setTitle(String title) {
         this.title = title;
     }
 
