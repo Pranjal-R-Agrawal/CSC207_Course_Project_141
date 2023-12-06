@@ -20,7 +20,7 @@ public class MainViewTest {
     @Test
     public void opensLoginView() {
         signupViewModel.getState().setUsername("username").setPassword("password")
-                .setRepeatPassword("password").setName("name").setEmail("email").setPhoneNumber("phone");
+                .setRepeatPassword("password").setName("name").setEmail("email").setPhoneNumber("phone").setCity("city").setFieldOfExpertise("field");
         signupViewModel.firePropertyChanged("update_fields");
         assert signupButton != null;
         signupButton.doClick();
@@ -38,6 +38,6 @@ public class MainViewTest {
         MainTester.main(null);
         signupViewModel = MainTester.getSignupViewModel();
         signupView = (MainTester.getCurrentView() instanceof SignupView)? (SignupView) MainTester.getCurrentView() : null;
-        if (signupView != null) signupButton = (JButton) signupView.getComponent(7);
+        if (signupView != null) signupButton = signupView.getSignupButton();
     }
 }

@@ -1,7 +1,6 @@
 package view;
 
 import org.bson.types.ObjectId;
-import view.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +24,11 @@ public class CommentView extends AbstractGridBagLayoutView {
     private boolean qualificationsVisibility = false;
     private boolean childrenVisibility = false;
 
+    /**
+     * This class is responsible for displaying a comment.
+     * @param comment The map containing the information of the comment to display
+     * @param postAndCommentsViewModel The view model for this view
+     */
     public CommentView(Map<String, Object> comment, PostAndCommentsViewModel postAndCommentsViewModel) {
         super("Comment" + (ObjectId) comment.get("id"));
 
@@ -148,6 +152,10 @@ public class CommentView extends AbstractGridBagLayoutView {
         children.setVisible(childrenVisibility);
     }
 
+    /**
+     * The comment view instance is actually in a container, so this function returns the container.
+     * @return The JPanel containing the comment
+     */
     public Container getComment() {
         return commentContainerHorizontal;
     }
@@ -166,6 +174,10 @@ public class CommentView extends AbstractGridBagLayoutView {
         numChildren++;
     }
 
+    /**
+     * This function adds a comment to the list of children of this comment.
+     * @param child The view of the comment to add
+     */
     public void addChild(CommentView child) {
         addChild(child.getComment());
     }
