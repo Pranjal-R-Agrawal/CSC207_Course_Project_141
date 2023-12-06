@@ -8,7 +8,7 @@ public interface SearchPostOutputBoundary {
 
     /**
      * Directs components of the Interface Adapters to display the output data when search query is empty or null
-     * @param errorMessage - Output data (the Idea object) to be displayed
+     * @param errorMessage - the relevant error message to be displayed
      */
     void prepareFailView(String errorMessage);
 
