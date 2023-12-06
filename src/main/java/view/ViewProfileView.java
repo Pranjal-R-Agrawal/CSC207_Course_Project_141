@@ -1,5 +1,6 @@
 package view;
 
+import data_access.MongoDBDataAccessObject;
 import data_access.ViewProfileDataAccessInterface;
 import entity.CollabRequest;
 import use_case.view_profile.interface_adapter.ViewProfileController;
@@ -58,7 +59,7 @@ public class ViewProfileView extends JPanel implements PropertyChangeListener {
                     collabRequestsDisplayField.setText(collabRequest.getTitle());
                     projectsPanel.add(collabRequestsDisplayField);
                     collabRequestsPanel.remove(collabRequestsDisplayField);
-                    // viewProfileDataAccessObject. add collab request to data base here
+                   viewProfileDataAccessObject
 
                 }
             });
