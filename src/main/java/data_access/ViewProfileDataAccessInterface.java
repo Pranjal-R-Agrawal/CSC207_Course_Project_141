@@ -1,4 +1,5 @@
 package data_access;
+import entity.CollabRequest;
 import entity.Post;
 import entity.User;
 import org.bson.types.ObjectId;
