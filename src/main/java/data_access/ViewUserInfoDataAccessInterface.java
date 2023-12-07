@@ -16,5 +16,8 @@ public interface ViewUserInfoDataAccessInterface {
      */
     User getUserById(ObjectId userId);
 
+    /**
+     * Used to clear the HashMap that is the mock DAO for interactor tests
+     */
     void drop();
 }

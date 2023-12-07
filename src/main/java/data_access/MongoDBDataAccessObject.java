@@ -127,6 +127,9 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.eq("_id", id)).first();
     }
 
+    /**
+     * Void Implementation of the drop function from the interface
+     */
     public void drop(){
 
     }
