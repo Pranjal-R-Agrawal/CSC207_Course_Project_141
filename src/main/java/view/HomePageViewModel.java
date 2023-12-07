@@ -2,6 +2,7 @@ package view;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.security.PublicKey;
 
 /**
  * The Observable containing state which HomePageView will observe.
@@ -14,6 +15,8 @@ public class HomePageViewModel extends ViewModel {
     public static final String POST_BUTTON_LABEL = "Create Post";
 
     public static final String PROFILE_BUTTON_LABEL = "View Profile";
+
+    public static final String LOGOUT_BUTTON_LABEL = "Logout";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

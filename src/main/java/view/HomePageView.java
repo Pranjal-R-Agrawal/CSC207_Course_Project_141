@@ -1,5 +1,7 @@
 package view;
 
+import data_access.MongoDBDataAccessObject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -21,11 +23,17 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     private final CreatePostViewModel createPostViewModel;
 
+    private final SignupViewModel signupViewModel;
+
     private final ViewProfileViewModel viewProfileViewModel;
+
+    private final MongoDBDataAccessObject mongoDBDataAccessObject;
 
     private final JButton generateIdeaButton = new JButton();
     private final JButton postButton = new JButton();
     private final JButton viewProfileButton = new JButton();
+
+    private final JButton logoutButton = new JButton();
     
     /**
      * Initializes the UI for the Home Page and provides functionality to its components.
@@ -34,13 +42,16 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
      * @param generateIdeaViewModel Observable that stores the state of the Generate Idea View.
      * @param createPostViewModel Observable that stores the state of the Create Post View.
      * @param viewProfileViewModel Observable that stores the state of the View Profile View.
+     * @param mongoDBDataAccessObject the DAO for accessing the database form HomePageView
      */
-    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, ViewProfileViewModel viewProfileViewModel) {
+    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, ViewProfileViewModel viewProfileViewModel, MongoDBDataAccessObject mongoDBDataAccessObject) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.createPostViewModel = createPostViewModel;
+        this.signupViewModel = signupViewModel;
         this.viewProfileViewModel = viewProfileViewModel;
+        this.mongoDBDataAccessObject = mongoDBDataAccessObject;
 
         viewName = homePageViewModel.getViewName();
         setName(viewName);
@@ -49,6 +60,8 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         postButton.setText(HomePageViewModel.POST_BUTTON_LABEL);
 
         viewProfileButton.setText(HomePageViewModel.PROFILE_BUTTON_LABEL);
+
+        logoutButton.setText(HomePageViewModel.LOGOUT_BUTTON_LABEL);
 
         homePageViewModel.addPropertyChangeListener(this);
 
@@ -76,16 +89,29 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
                         viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                         viewProfileViewModel.firePropertyChanged("display_user");
+                        // System.out.println("Click View Profile"); - for testing
                     }
                 }
         );
 
-        setLayout(new GridLayout(7, 5));
+        logoutButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(logoutButton)) {
+                        mongoDBDataAccessObject.setLoggedInUserID(null);
+                        signupViewModel.firePropertyChanged("reset_input_fields");
+                        viewManagerModel.setActiveView(signupViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
+
+        setLayout(new GridLayout(9, 5));
 
         JPanel emptyPanel1 = new JPanel();
         JPanel emptyPanel2 = new JPanel();
         JPanel emptyPanel3 = new JPanel();
         JPanel emptyPanel4 = new JPanel();
+        JPanel emptyPanel5 = new JPanel();
 
         add(emptyPanel4);
         add(viewProfileButton);
@@ -94,6 +120,9 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         add(emptyPanel2);
         add(postButton);
         add(emptyPanel3);
+        add(logoutButton);
+        add(emptyPanel5);
+
     }
 
     /**
