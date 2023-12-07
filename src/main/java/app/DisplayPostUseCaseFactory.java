@@ -5,6 +5,7 @@ import use_case.display_post.application_business_rules.DisplayPostInteractor;
 import use_case.display_post.application_business_rules.DisplayPostOutputBoundary;
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.display_post.interface_adapter.DisplayPostPresenter;
+import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.ViewManagerModel;
 import view.PostAndCommentsView;
 import view.PostAndCommentsViewModel;
@@ -12,9 +13,16 @@ import view.PostAndCommentsViewModel;
 public class DisplayPostUseCaseFactory {
     private DisplayPostUseCaseFactory() {}
 
-    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
+    /**
+     * Creates and returns a PostAndCommentsView object
+     * @param displayCommentViewModel the display comment view model
+     * @param displayCommentDataAccessObject the display comment data access object
+     * @param createCommentUseCaseBuilder  the create comment use case builder
+     * @return a PostAndCommentsView object
+     */
+    public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
-        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder);
+        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, viewUserInfoController);
     }
 
     private static DisplayPostController createDisplayCommentUseCase(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject) {

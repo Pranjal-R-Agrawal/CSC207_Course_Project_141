@@ -11,12 +11,18 @@ public class DisplayPostPresenter implements DisplayPostOutputBoundary {
         this.displayCommentViewModel = displayCommentViewModel;
     }
 
+    /**
+     * Sets the appropriate config value and calls the use case interactor
+     */
     @Override
     public void prepareFailView(String errorMessage) {
         displayCommentViewModel.getState().setErrorMessage(errorMessage);
         displayCommentViewModel.firePropertyChanged("display_error");
     }
 
+    /**
+     * Stores the comment and post data in the view model
+     */
     @Override
     public void prepareSuccessView(DisplayPostOutputData displayPostOutputData) {
         displayCommentViewModel.getState().setComments(displayPostOutputData.getComments());

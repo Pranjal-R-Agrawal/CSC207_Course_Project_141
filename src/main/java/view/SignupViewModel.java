@@ -14,6 +14,9 @@ public class SignupViewModel extends ViewModel {
     public static final String EMAIL_LABEL = "Enter Email ID";
     public static final String OPTIONAL_LABEL = "Entering Phone Number is optional";
     public static final String SIGNUP_BUTTON_LABEL = "Sign Up";
+    public static final String LOGIN_BUTTON_LABEL = "Already have an account? Login";
+    public static final String CITY_LABEL = "Enter City";
+    public static final String FIELD_OF_EXPERTISE_LABEL = "Enter Field of Expertise";
     private SignupState state = new SignupState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

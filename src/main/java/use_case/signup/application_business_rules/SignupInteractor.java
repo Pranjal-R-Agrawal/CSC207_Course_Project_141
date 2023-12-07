@@ -2,38 +2,57 @@ package use_case.signup.application_business_rules;
 
 import data_access.SignupUserDataAccessInterface;
 import entity.User;
+import entity.UserFactory;
+import entity.UserFactoryInterface;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
 
+    /**
+     * Constructor for SignupInteractor
+     * @param userDataAccessObject the data access object
+     * @param userPresenter the presenter
+     */
     public SignupInteractor(SignupUserDataAccessInterface userDataAccessObject, SignupOutputBoundary userPresenter) {
         this.userDataAccessObject = userDataAccessObject;
         this.userPresenter = userPresenter;
     }
 
+    /**
+     * Executes the use case
+     * Checks the validity of the input data (whether it is null or contains only whitespace) and signs up the user if valid
+     * @param signupInputData the input data
+     */
     public void execute(SignupInputData signupInputData) {
-        // TODO: Validate input data better.
-        if (signupInputData.getUsername() == null) {
+        if (signupInputData.getUsername() == null ||signupInputData.getUsername().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a username.");
-        } else if (signupInputData.getPassword() == null || signupInputData.getRepeatPassword() == null) {
+        } else if (signupInputData.getPassword() == null || signupInputData.getPassword().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter a password.");
-        } else if (signupInputData.getName() == null) {
+        } else if (signupInputData.getRepeatPassword() == null || signupInputData.getRepeatPassword().trim().isEmpty()) {
+            userPresenter.prepareFailView("Please repeat the password.");
+        } else if (signupInputData.getName() == null || signupInputData.getName().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter your name.");
-        } else if (signupInputData.getEmail() == null) {
+        } else if (signupInputData.getEmail() == null || signupInputData.getEmail().trim().isEmpty()) {
             userPresenter.prepareFailView("Please enter your email-id.");
+        } else if (signupInputData.getCity() == null || signupInputData.getCity().trim().isEmpty()) {
+            userPresenter.prepareFailView("Please enter your city.");
+        } else if (signupInputData.getFieldOfExpertise() == null || signupInputData.getFieldOfExpertise().trim().isEmpty()) {
+            userPresenter.prepareFailView("Please enter your field of expertise.");
         } else if (userDataAccessObject.usernameUsed(signupInputData.getUsername())) {
             userPresenter.prepareFailView("Username already used.");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match.");
         } else {
-            User user = new User(signupInputData.getUsername(),
-                    signupInputData.getPassword(),
-                    signupInputData.getName(),
-                    signupInputData.getEmail(),
+            UserFactoryInterface userFactoryInterface = new UserFactory();
+            User user = (User) userFactoryInterface.create(
+                    signupInputData.getUsername().trim(),
+                    signupInputData.getPassword().trim(),
+                    signupInputData.getName().trim(),
+                    signupInputData.getEmail().trim(),
                     signupInputData.getPhoneNumber(),
-                    "",
-                    ""
+                    signupInputData.getCity().trim(),
+                    signupInputData.getFieldOfExpertise().trim()
             );
             userDataAccessObject.addUser(user);
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());

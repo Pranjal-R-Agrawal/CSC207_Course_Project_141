@@ -3,9 +3,7 @@ package view;
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
-import view.CommentView;
-import view.PostAndCommentsViewModel;
-import view.PostView;
+import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This class is responsible for displaying a post and its comments.
+ * It contains a PostView and a list of CommentViews.
+ */
 public class PostAndCommentsView extends JPanel implements PropertyChangeListener, Scrollable {
     public final String viewName;
     private ObjectId postId;
@@ -23,10 +25,18 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     private final DisplayPostController displayPostController;
     private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
     private final Map<ObjectId, view.CommentView> comments = new HashMap<>();
+    private final ViewUserInfoController viewUserInfoController;
     boolean postAdded = false;
     public String title;
 
-    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
+    /**
+     * Constructor for PostAndCommentsView.
+     * @param postAndCommentsViewModel The view model for this view
+     * @param viewManagerModel The view manager model
+     * @param displayPostController The controller for displaying posts
+     * @param createCommentUseCaseBuilder The use case builder for creating comments
+     */
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
@@ -38,6 +48,8 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
         postAndCommentsViewModel.addPropertyChangeListener(this);
 
         this.createCommentUseCaseBuilder = createCommentUseCaseBuilder;
+
+        this.viewUserInfoController = viewUserInfoController;
 
         this.viewName = postAndCommentsViewModel.getViewName();
         setName(viewName);
@@ -93,9 +105,15 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             comments.clear();
         } else if (evt.getPropertyName().equals("resize_reply_frame")) {
             viewManagerModel.resize("create_comment");
+        } else if (evt.getPropertyName().equals("show_more_info")) {
+            viewUserInfoController.execute(
+                    postAndCommentsViewModel.getState().getShowMoreInfoOfID(),
+                    postAndCommentsViewModel.getState().getMoreInfo()
+            );
         }
     }
 
+    // Functions for making this view scrollable
     public Dimension getPreferredScrollableViewportSize() {return getPreferredSize();}
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {return 1;}
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height : visibleRect.width) - 10;}

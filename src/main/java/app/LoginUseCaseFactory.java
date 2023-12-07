@@ -9,6 +9,7 @@ import use_case.login.interface_adapter.LoginPresenter;
 import view.HomePageViewModel;
 import view.LoginView;
 import view.LoginViewModel;
+import view.SignupViewModel;
 import view.ViewManagerModel;
 
 import javax.swing.*;
@@ -22,20 +23,22 @@ public class LoginUseCaseFactory {
     private LoginUseCaseFactory() {}
 
     /**
-     * Creates a LoginView object
-     * @param viewManagerModel the view manager model for use case
-     * @param loginViewModel the login view model for the use case
-     * @param loginUserDataAccessObject the data access object for the use case
-     * @param homePageViewModel the home page view model object for the use case
+     * Creates and returns a LoginView object
+     * @param viewManagerModel the view manager model
+     * @param signupViewModel the signup view model
+     * @param loginViewModel the login view model
+     * @param loginUserDataAccessObject the login user data access object
+     * @return a LoginView object
      */
-    public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, HomePageViewModel homePageViewModel) {
-        LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, loginUserDataAccessObject, homePageViewModel);
+     
+    public static LoginView create(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, HomePageViewModel homePageViewModel) {
+        LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, signupViewModel, loginUserDataAccessObject, homePageViewModel);
         return new LoginView(loginViewModel, loginController);
     }
 
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, HomePageViewModel homePageViewModel) {
-        LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, homePageViewModel);
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, HomePageViewModel homePageViewModel) {
+        LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, signupViewModel, homePageViewModel);
         LoginInputBoundary loginInteractor = new LoginInteractor(loginUserDataAccessObject, loginPresenter);
-        return new LoginController(loginInteractor);
+        return new LoginController(loginInteractor, loginPresenter);
     }
 }

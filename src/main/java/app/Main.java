@@ -8,11 +8,17 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
+import entity.Post;
+import entity.User;
+import org.bson.types.ObjectId;
+import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.*;
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
 public class Main {
+    static final JFrame application = new JFrame("Startup Generator");
     protected static SignupViewModel signupViewModel;
 
     protected static LoginViewModel loginViewModel;
@@ -21,7 +27,6 @@ public class Main {
     protected static HomePageViewModel homePageViewModel;
 
     public static void main(String[] args) {
-        JFrame application = new JFrame("Startup Generator");
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -31,6 +36,7 @@ public class Main {
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
+        viewManagerModel.addPropertyChangeListener(Main::propertyChange);
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
@@ -63,7 +69,7 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
 
         HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, mongoDBDataAccessObject);
@@ -91,17 +97,30 @@ public class Main {
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
-        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        ViewUserInfoViewModel viewUserInfoViewModel = new ViewUserInfoViewModel();
+        ViewUserInfoController viewUserInfoController = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel, mongoDBDataAccessObject);
+        ViewUserInfoView viewUserInfoView = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder, viewUserInfoController);
         viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
         NewWindow newPostAndCommentsWindow = new NewWindow(true, postAndCommentsView.viewName);
         NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
         NewWindow newCreatePostWindow = new NewWindow(false, "Post");
         viewManager.setupNewWindows(newPostAndCommentsWindow, newCreateCommentWindow, newCreatePostWindow);
 
-        viewManagerModel.setActiveView(signupView.viewName);
-        viewManagerModel.firePropertyChanged();
+        SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
+        SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
+        views.add(searchPostView, searchPostView.viewName);
 
         application.pack();
+        application.setLocationRelativeTo(null);
         application.setVisible(true);
+    }
+
+    public static void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("resize")) {
+            if (((String) evt.getNewValue()).equals("main")) {
+                application.pack();
+            }
+        }
     }
 }
