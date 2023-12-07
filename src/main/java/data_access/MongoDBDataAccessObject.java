@@ -22,23 +22,26 @@ import org.bson.types.ObjectId;
 import javax.swing.*;
 
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface ,SearchPostsByTitleDataAccessInterface{
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface ,SearchPostsByTitleDataAccessInterface,CollabRequestDataAccessInterface, ViewProfileDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
+    protected MongoCollection<ConcreteCollabRequest> collabRequests ;
     private ObjectId loggedInUserID;
     private final String usersCollectionName;
     private final String postsCollectionName;
     private final String commentsCollectionName;
+    private final String collabRequestsCollectionName;
 
     public MongoDBDataAccessObject(
-            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName
+            String databaseConnectionPath, String databaseName, String usersCollectionName, String postsCollectionName, String commentsCollectionName, String collabRequestsCollectionName
     ) throws FileNotFoundException, NoSuchElementException {
         String uri;
         this.usersCollectionName = usersCollectionName;
         this.postsCollectionName = postsCollectionName;
         this.commentsCollectionName = commentsCollectionName;
+        this.collabRequestsCollectionName = collabRequestsCollectionName;
         try {
             File databaseConnection = new File(databaseConnectionPath);
             Scanner scanner = new Scanner(databaseConnection);
@@ -86,6 +89,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
+    private MongoCollection<ConcreteCollabRequest> getCollabRequests() {
+        CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+        CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+        return database.getCollection(collabRequestsCollectionName, ConcreteCollabRequest.class).withCodecRegistry(pojoCodecRegistry);
+
+    }
 
     public void resetDatabase() {
         users.deleteMany(new Document());
@@ -122,9 +131,41 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         return users.find(Filters.text(username)).first();
     }
 
+    @Override
+    public List<Post> getPostByAuthorId(ObjectId id) {
+        posts = getPostsCollection();
+        posts.createIndex(Indexes.text("authorID"));
+        return posts.find(Filters.eq("authorID", id)).into(new ArrayList<Post>());
+    }
+
+    @Override
+    public List<ConcreteCollabRequest> getCollabRequestByUsername(String username) {
+        collabRequests = getCollabRequests();
+        collabRequests.createIndex(Indexes.text("username"));
+        return collabRequests.find(Filters.eq("username", username)).into(new ArrayList<ConcreteCollabRequest>());
+    }
+
+    @Override
+    public Post getPostByPostId(ObjectId id) {
+        posts = getPostsCollection();
+        return posts.find(Filters.eq("_id", id)).first();
+    }
+
     public User getUserById(ObjectId id) {
         users = getUsersCollection();
         return users.find(Filters.eq("_id", id)).first();
+    }
+    @Override
+    public void addCollabRequest(CollabRequest collabRequest) {
+        collabRequests = getCollabRequests();
+        collabRequests.insertOne((ConcreteCollabRequest) collabRequest);
+    }
+
+    @Override
+    public void addCollabRequest(ConcreteCollabRequest collabRequest) {
+        collabRequests = getCollabRequests();
+        collabRequests.insertOne(collabRequest);
+
     }
 
     /**
@@ -157,6 +198,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public Post getPostByPostID(ObjectId id) {
         posts = getPostsCollection();
         return posts.find(Filters.eq("_id", id)).first();
+    }
+
+    @Override
+    public CollabRequest getCollabRequestById(ObjectId id) {
+        collabRequests = getCollabRequests();
+        return collabRequests.find(Filters.eq("_id", id)).first();
     }
 
     @Override

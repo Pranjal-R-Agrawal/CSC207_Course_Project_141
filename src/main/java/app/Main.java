@@ -22,6 +22,7 @@ public class Main {
     protected static GenerateIdeaViewModel generateIdeaViewModel;
     protected static CreatePostViewModel createPostViewModel;
     protected static HomePageViewModel homePageViewModel;
+    protected static ViewProfileDialogViewModel viewProfileDialogViewModel;
 
     public static void main(String[] args) {
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,11 +38,11 @@ public class Main {
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
-      
-        
+
         homePageViewModel = new HomePageViewModel();
         generateIdeaViewModel = new GenerateIdeaViewModel();
         createPostViewModel = new CreatePostViewModel();
+        viewProfileDialogViewModel = new ViewProfileDialogViewModel();
 
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
@@ -68,7 +69,7 @@ public class Main {
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
-      
+
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
         CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
 
@@ -87,7 +88,6 @@ public class Main {
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
-
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         ViewUserInfoViewModel viewUserInfoViewModel = new ViewUserInfoViewModel();
@@ -102,7 +102,11 @@ public class Main {
 
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
+
         views.add(searchPostView, searchPostView.viewName);
+
+        ViewProfileDialogView viewProfileDialogView = ViewProfileDialogUseCaseFactory.createView(viewProfileDialogViewModel);
+        ViewProfileController viewProfileController = ViewProfileDialogUseCaseFactory.createController(viewManagerModel, viewProfileDialogViewModel, mongoDBDataAccessObject);
 
         HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView, searchPostViewModel);
         views.add(homePageView, homePageView.viewName);

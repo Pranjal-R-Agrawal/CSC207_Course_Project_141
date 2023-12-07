@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Mock Database for testing interactors in isolation
  */
-public class MockMongoDBDataAccessObject implements CreatePostDataAccessInterface, CreateCommentDataAccessInterface{
+public class MockCreatePostDataAccessObject implements CreatePostDataAccessInterface, CreateCommentDataAccessInterface{
     private Map<ObjectId, Post> postsMap = new HashMap<>();
     private Map<ObjectId, Comment> commentMap = new HashMap<>();
     private ObjectId loggedInUserID;

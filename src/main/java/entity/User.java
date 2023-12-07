@@ -21,8 +21,6 @@ public class User implements UserInterface{
     private String phoneNumber;
     private String city;
     private String fieldOfExpertise;
-    private double rating;
-    private int numRatings;
 
     public User() {}
     /**
@@ -46,13 +44,11 @@ public class User implements UserInterface{
         this.phoneNumber = (phoneNumber == null) ? "" : phoneNumber.trim();
         this.city = (city == null) ? "" : city.trim();
         this.fieldOfExpertise = (fieldOfExpertise == null) ? "" : fieldOfExpertise.trim();
-        this.rating = 0.0d;
-        this.numRatings = 0;
     }
     /**
      * @return Retrieves the id of user
      */
-@Override
+    @Override
     public ObjectId getId() {
         return id;
     }
@@ -204,32 +200,11 @@ public class User implements UserInterface{
     public void setFieldOfExpertise(String fieldOfExpertise) {
         this.fieldOfExpertise = fieldOfExpertise;
     }
-    /**
-     * @return Gets the rating of the user
-     */
-    @Override
-    public double getRating() {
-        return rating;
+
+   @Override
+    public void addCollabRequest(ObjectId postId) {
+        this.collaborationRequestIDs.add(postId);
     }
-    /**
-     * @return Sets the rating of the user
-     */
-    @Override
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-    /**
-     * @return Gets the number of ratings of the user
-     */
-    @Override
-    public int getNumRatings() {
-        return numRatings;
-    }
-    /**
-     * @return Sets the number of ratings of the user
-     */
-    @Override
-    public void setNumRatings(int numRatings) {
-        this.numRatings = numRatings;
-    }
+
 }
+
