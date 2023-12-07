@@ -64,6 +64,7 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
                     if (e.getSource().equals(backButton)) {
                         generateIdeaViewModel.getState().setIdea(null).setBusinessModel(""); // resets the current state to default values
                         generateIdeaViewModel.setState(new GenerateIdeaState()); // updates the view model to have a fresh state
+                        textArea.setText("");
                         viewManagerModel.setActiveView(homePageViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
                     }
@@ -130,6 +131,8 @@ public class GenerateIdeaView extends JPanel implements PropertyChangeListener {
         this.textArea.setLineWrap(true);
         this.textArea.setWrapStyleWord(true);
         this.textArea.setEditable(false); // read only mode
+        textArea.setCaretColor(textArea.getBackground());
+        textArea.setBackground(this.getBackground());
         JScrollPane scrollPane = new JScrollPane(this.textArea);
         panel.add(scrollPane);
         return panel;
