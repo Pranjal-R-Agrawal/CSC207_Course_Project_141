@@ -1,17 +1,13 @@
 package use_case.view_profile;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
-import data_access.ViewProfileDataAccessInterface;
-import data_access.ViewProfileDataFileAccessObject;
 import entity.User;
 import entity.UserFactory;
-import org.bson.types.ObjectId;
 import org.junit.Test;
 import use_case.view_profile.application_business_rules.ViewProfileInputBoundary;
 import use_case.view_profile.application_business_rules.ViewProfileInteractor;
 import use_case.view_profile.application_business_rules.ViewProfileOutputBoundary;
 import use_case.view_profile.application_business_rules.ViewProfileOutputData;
-import use_case.view_profile.interface_adapter.ViewProfileController;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

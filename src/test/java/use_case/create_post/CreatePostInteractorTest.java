@@ -1,7 +1,7 @@
 package use_case.create_post;
 
 import data_access.CreatePostDataAccessInterface;
-import data_access.MockMongoDBDataAccessObject;
+import data_access.MockCreatePostDataAccessObject;
 import entity.ConcretePostFactory;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class CreatePostInteractorTest {
     @Test
     public void testTitleEmpty(){
         CreatePostInputData inputData = new CreatePostInputData("", "test body", "test;qualifications");
-        CreatePostDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreatePostDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreatePostOutputBoundary createPostPresenter = new CreatePostOutputBoundary() {
             @Override
@@ -38,7 +38,7 @@ public class CreatePostInteractorTest {
     @Test
     public void testBodyEmpty(){
         CreatePostInputData inputData = new CreatePostInputData("test title", "", "test;qualifications");
-        CreatePostDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreatePostDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreatePostOutputBoundary createPostPresenter = new CreatePostOutputBoundary() {
             @Override
@@ -57,7 +57,7 @@ public class CreatePostInteractorTest {
     @Test
     public void testColabEmpty(){
         CreatePostInputData inputData = new CreatePostInputData("test title", "test body", "");
-        CreatePostDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreatePostDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreatePostOutputBoundary createPostPresenter = new CreatePostOutputBoundary() {
             @Override
@@ -76,7 +76,7 @@ public class CreatePostInteractorTest {
     @Test
     public void testValidInput(){
         CreatePostInputData inputData = new CreatePostInputData("test title", "test body", "test;qualifications");
-        CreatePostDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreatePostDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
         dataAccessObject.setLoggedInUserID(new ObjectId());
 
         CreatePostOutputBoundary createPostPresenter = new CreatePostOutputBoundary() {
