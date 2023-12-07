@@ -43,29 +43,4 @@ public class NewWindow {
     public void resize(){
         frame.pack();
     }
-
-
-    //TODO: Remove tester code and unneeded imports
-//    public static void main(String[] args) {
-//        CardLayout cardLayout = new CardLayout();
-//
-//        JPanel views = new JPanel(cardLayout);
-//        ViewManagerModel viewManagerModel = new ViewManagerModel();
-//        ViewManager viewManager = new ViewManager(views, cardLayout, viewManagerModel);
-//
-//        SignupViewModel signupViewModel = new SignupViewModel();
-//        LoginViewModel loginViewModel = new LoginViewModel();
-//        MongoDBDataAccessObject mongoDBDataAccessObject;
-//        try {
-//            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            throw new RuntimeException(e);
-//        }
-//        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
-//        views.add(signupView, signupView.viewName);
-//
-//        NewWindow test = new NewWindow(signupView, false, "Sign Up");
-//        test.createWindow();
-//    }
 }

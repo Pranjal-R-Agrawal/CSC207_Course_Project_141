@@ -59,7 +59,10 @@ public class ViewManager implements PropertyChangeListener {
         if (evt.getPropertyName().equals("view")) {
             String viewModelName = (String) evt.getNewValue();
             for (Component component : views.getComponents()) {
-                component.setVisible(component.getName().equals(viewModelName));
+                try {
+                    component.setVisible(component.getName().equals(viewModelName));
+                } catch (Exception ignored) {
+                }
             }
             cardLayout.show(views, viewModelName);
         } else if (evt.getPropertyName().equals("display_post")) {

@@ -109,7 +109,12 @@ public class Main {
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
 
-        views.add(searchPostView, searchPostView.viewName);
+        JScrollPane scrollPane = new JScrollPane(searchPostView);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        JPanel searchPostPanel = new JPanel();
+        searchPostPanel.setLayout(new BoxLayout(searchPostPanel, BoxLayout.Y_AXIS)); searchPostPanel.add(scrollPane);
+        views.add(searchPostPanel, searchPostView.viewName);
 
         ViewProfileDialogView viewProfileDialogView = ViewProfileDialogUseCaseFactory.createView(viewProfileDialogViewModel);
         ViewProfileController viewProfileController = ViewProfileDialogUseCaseFactory.createController(viewManagerModel, viewProfileDialogViewModel, mongoDBDataAccessObject);
