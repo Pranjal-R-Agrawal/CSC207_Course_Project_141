@@ -1,6 +1,8 @@
-package view;
+package use_case.generate_idea.interface_adapter;
 
 import use_case.generate_idea.interface_adapter.GenerateIdeaState;
+import view.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

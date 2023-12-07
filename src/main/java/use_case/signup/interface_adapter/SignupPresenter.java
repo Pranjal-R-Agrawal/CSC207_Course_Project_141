@@ -3,8 +3,7 @@ package use_case.signup.interface_adapter;
 import use_case.signup.application_business_rules.SignupOutputBoundary;
 import use_case.signup.application_business_rules.SignupOutputData;
 
-import view.LoginViewModel;
-import view.SignupViewModel;
+import use_case.login.interface_adapter.LoginViewModel;
 import view.ViewManagerModel;
 
 public class SignupPresenter implements SignupOutputBoundary {

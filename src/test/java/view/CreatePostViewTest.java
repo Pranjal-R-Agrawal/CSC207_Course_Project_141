@@ -5,6 +5,7 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
 
 import javax.swing.*;
 import java.awt.*;

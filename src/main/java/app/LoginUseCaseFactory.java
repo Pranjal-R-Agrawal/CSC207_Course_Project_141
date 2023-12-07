@@ -8,11 +8,9 @@ import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginPresenter;
 import view.HomePageViewModel;
 import view.LoginView;
-import view.LoginViewModel;
-import view.SignupViewModel;
+import use_case.login.interface_adapter.LoginViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 import view.ViewManagerModel;
-
-import javax.swing.*;
 
 /**
  * A static factory for the Login use case

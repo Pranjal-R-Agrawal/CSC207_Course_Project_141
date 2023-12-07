@@ -1,7 +1,8 @@
-package view;
+package use_case.search_post.interface_adapter;
 
 import org.bson.types.ObjectId;
 import use_case.search_post.interface_adapter.SearchPostState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

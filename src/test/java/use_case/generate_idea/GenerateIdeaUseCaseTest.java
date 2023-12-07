@@ -11,7 +11,7 @@ import use_case.generate_idea.application_business_rules.GenerateIdeaInteractor;
 import use_case.generate_idea.interface_adapter.GenerateIdeaController;
 import static org.junit.Assert.*;
 import use_case.generate_idea.interface_adapter.GenerateIdeaPresenter;
-import view.GenerateIdeaViewModel;
+import use_case.generate_idea.interface_adapter.GenerateIdeaViewModel;
 import view.ViewManagerModel;
 
 public class GenerateIdeaUseCaseTest {

@@ -2,7 +2,6 @@ package use_case.generate_idea.interface_adapter;
 
 import use_case.generate_idea.application_business_rules.GenerateIdeaOutputBoundary;
 import use_case.generate_idea.application_business_rules.GenerateIdeaOutputData;
-import view.GenerateIdeaViewModel;
 import view.ViewManagerModel;
 
 /**

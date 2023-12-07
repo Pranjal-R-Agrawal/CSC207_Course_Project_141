@@ -2,11 +2,13 @@ package app;
 
 import api.GenerativeAIAPI;
 import data_access.GenerateIdeaDataAccessInterface;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
 import use_case.generate_idea.application_business_rules.GenerateIdeaInputBoundary;
 import use_case.generate_idea.application_business_rules.GenerateIdeaInteractor;
 import use_case.generate_idea.application_business_rules.GenerateIdeaOutputBoundary;
 import use_case.generate_idea.interface_adapter.GenerateIdeaController;
 import use_case.generate_idea.interface_adapter.GenerateIdeaPresenter;
+import use_case.generate_idea.interface_adapter.GenerateIdeaViewModel;
 import view.*;
 
 /**
@@ -30,7 +32,7 @@ public class GenerateIdeaUseCaseFactory {
      * @param createPostView the UI responsible for allowing the user to format a post
      * @return the View for the Generate Idea Use Case
      */
-    public static GenerateIdeaView create(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI, HomePageViewModel homePageViewModel,CreatePostView createPostView) {
+    public static GenerateIdeaView create(ViewManagerModel viewManagerModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, GenerateIdeaDataAccessInterface generateIdeaDataAccessObject, GenerativeAIAPI generativeAIAPI, HomePageViewModel homePageViewModel, CreatePostView createPostView) {
         GenerateIdeaController generateIdeaController = createGenerateIdeaUseCase(viewManagerModel, generateIdeaViewModel, generateIdeaDataAccessObject, generativeAIAPI);
         return new GenerateIdeaView(viewManagerModel, generateIdeaViewModel, createPostViewModel, generateIdeaController, homePageViewModel,createPostView);
     }

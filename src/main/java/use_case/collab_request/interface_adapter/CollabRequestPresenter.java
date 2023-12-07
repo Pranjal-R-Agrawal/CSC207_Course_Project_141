@@ -1,7 +1,7 @@
 package use_case.collab_request.interface_adapter;
 
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
-import view.PostAndCommentsViewModel;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 import view.ViewManagerModel;
 
 import javax.swing.*;

@@ -14,8 +14,8 @@ import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginPresenter;
 
 import view.HomePageViewModel;
-import view.LoginViewModel;
-import view.SignupViewModel;
+import use_case.login.interface_adapter.LoginViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 import view.ViewManagerModel;
 
 public class LoginUseCaseTest {

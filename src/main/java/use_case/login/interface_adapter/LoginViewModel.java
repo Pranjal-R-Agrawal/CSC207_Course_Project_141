@@ -1,6 +1,7 @@
-package view;
+package use_case.login.interface_adapter;
 
 import use_case.login.interface_adapter.LoginState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

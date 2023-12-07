@@ -16,8 +16,8 @@ import use_case.signup.application_business_rules.SignupOutputBoundary;
 import use_case.signup.interface_adapter.SignupController;
 import use_case.signup.interface_adapter.SignupPresenter;
 
-import view.LoginViewModel;
-import view.SignupViewModel;
+import use_case.login.interface_adapter.LoginViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 import view.ViewManagerModel;
 
 public class SignupUseCaseTest {

@@ -9,8 +9,8 @@ import use_case.create_comment.application_business_rules.CreateCommentOutputBou
 import use_case.create_comment.interface_adapter.CreateCommentController;
 import use_case.create_comment.interface_adapter.CreateCommentPresenter;
 import view.CreateCommentView;
-import view.CreateCommentViewModel;
-import view.PostAndCommentsViewModel;
+import use_case.create_comment.interface_adapter.CreateCommentViewModel;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 
 public class CreateCommentUseCaseBuilder {
     private final PostAndCommentsViewModel postAndCommentsViewModel;

@@ -2,6 +2,7 @@ package view;
 
 import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginState;
+import use_case.login.interface_adapter.LoginViewModel;
 
 import javax.swing.*;
 import java.awt.*;

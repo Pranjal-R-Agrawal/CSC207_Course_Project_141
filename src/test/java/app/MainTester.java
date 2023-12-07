@@ -1,6 +1,6 @@
 package app;
 
-import view.SignupViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;

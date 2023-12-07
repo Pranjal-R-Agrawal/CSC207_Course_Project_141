@@ -4,6 +4,7 @@ import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.display_post.interface_adapter.DisplayPostController;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 
 import javax.swing.*;

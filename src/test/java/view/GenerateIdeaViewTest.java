@@ -9,6 +9,8 @@ import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import org.junit.Before;
 import org.junit.Test;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
+import use_case.generate_idea.interface_adapter.GenerateIdeaViewModel;
 
 import javax.swing.*;
 import java.awt.*;

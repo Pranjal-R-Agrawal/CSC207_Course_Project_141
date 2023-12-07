@@ -1,6 +1,7 @@
 package view;
 
 import use_case.view_user_info.interface_adapter.ViewUserInfoState;
+import use_case.view_user_info.interface_adapter.ViewUserInfoViewModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;

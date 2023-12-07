@@ -2,7 +2,6 @@ package use_case.create_post.interface_adapter;
 
 import org.bson.types.ObjectId;
 import use_case.create_post.application_business_rules.CreatePostOutputBoundary;
-import view.CreatePostViewModel;
 import view.ViewManagerModel;
 
 /**

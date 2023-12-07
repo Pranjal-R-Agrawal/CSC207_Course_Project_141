@@ -1,6 +1,7 @@
-package view;
+package use_case.create_post.interface_adapter;
 
 import use_case.create_post.interface_adapter.CreatePostState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,7 +10,7 @@ import java.beans.PropertyChangeSupport;
  * The observable that contains what the CreatePostView will observe
  * @author Yathusan Koneswararajah
  */
-public class CreatePostViewModel extends ViewModel{
+public class CreatePostViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Enter Title";
     public static final String BODY_LABEL = "Enter Project Description";
     public static final String COLLABORATOR_ROLES_LABEL = "Enter Suggested Collaborator Roles Seperated By Semi-Colons (;)";

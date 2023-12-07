@@ -7,6 +7,8 @@ import entity.User;
 
 import org.junit.Before;
 import org.junit.Test;
+import use_case.login.interface_adapter.LoginViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;

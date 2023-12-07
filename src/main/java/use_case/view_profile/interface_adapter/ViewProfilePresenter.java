@@ -3,7 +3,6 @@ package use_case.view_profile.interface_adapter;
 import use_case.view_profile.application_business_rules.ViewProfileOutputBoundary;
 import use_case.view_profile.application_business_rules.ViewProfileOutputData;
 
-import view.ViewProfileDialogViewModel;
 import view.ViewManagerModel;
 /**
  * Concrete implementation of the ViewProfileOutputBoundary.

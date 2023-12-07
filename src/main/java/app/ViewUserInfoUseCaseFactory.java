@@ -7,7 +7,7 @@ import use_case.view_user_info.application_business_rules.ViewUserInfoOutputBoun
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import use_case.view_user_info.interface_adapter.ViewUserInfoPresenter;
 import view.ViewUserInfoView;
-import view.ViewUserInfoViewModel;
+import use_case.view_user_info.interface_adapter.ViewUserInfoViewModel;
 
 /**
  * Static factory for assembling components for the ViewUserInfo use case

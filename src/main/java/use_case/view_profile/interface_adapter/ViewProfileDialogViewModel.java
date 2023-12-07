@@ -1,31 +1,34 @@
-package view;
+package use_case.view_profile.interface_adapter;
 
-import use_case.view_user_info.interface_adapter.ViewUserInfoState;
+
+
+import use_case.view_profile.interface_adapter.ViewProfileDialogState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
  * Observable which is observed by the ViewUserInfoView class which stores the current state and handles property changes
- * @author Tanmay Shinde
+ * @author Anbuselvan Ragunathan
  */
-public class ViewUserInfoViewModel extends ViewModel{
+public class ViewProfileDialogViewModel extends ViewModel {
 
-    private ViewUserInfoState state = new ViewUserInfoState();
+    private ViewProfileDialogState state = new ViewProfileDialogState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     /**
      * Initializes the view model using the parent constructor
      */
-    public ViewUserInfoViewModel() {
-        super("view_user_info");
+    public ViewProfileDialogViewModel() {
+        super("view_profile_dialog");
     }
 
     /**
      * Getter for state
      * @return Returns a ViewUserInfoState object which has the current state (message) that needs to be displayed
      */
-    public ViewUserInfoState getState() {
+    public ViewProfileDialogState getState() {
         return state;
     }
 
@@ -33,7 +36,7 @@ public class ViewUserInfoViewModel extends ViewModel{
      * Setter for state
      * @param state the state value to be assigned to the ViewModel's state attribute
      */
-    public void setState(ViewUserInfoState state) {
+    public void setState(ViewProfileDialogState state) {
         this.state = state;
     }
 

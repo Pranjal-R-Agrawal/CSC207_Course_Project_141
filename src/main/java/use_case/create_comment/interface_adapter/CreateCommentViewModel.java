@@ -1,11 +1,12 @@
-package view;
+package use_case.create_comment.interface_adapter;
 
 import use_case.create_comment.interface_adapter.CreateCommentState;
+import view.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CreateCommentViewModel extends ViewModel{
+public class CreateCommentViewModel extends ViewModel {
     public static final String BODY_LABEL = "Enter Comment";
     public static final String QUALIFICATIONS_LABEL = "Enter Qualifications Seperated By Semi-Colons (;)";
     public static final String COMMENT_BUTTON_LABEL = "Comment";

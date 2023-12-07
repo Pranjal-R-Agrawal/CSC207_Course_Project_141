@@ -1,5 +1,9 @@
 package view;
 
+import use_case.create_post.interface_adapter.CreatePostViewModel;
+import use_case.generate_idea.interface_adapter.GenerateIdeaViewModel;
+import use_case.search_post.interface_adapter.SearchPostViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 import use_case.view_profile.interface_adapter.ViewProfileController;
 
 import javax.swing.*;

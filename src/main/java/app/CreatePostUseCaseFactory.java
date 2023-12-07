@@ -8,7 +8,7 @@ import use_case.create_post.application_business_rules.CreatePostOutputBoundary;
 import use_case.create_post.interface_adapter.CreatePostController;
 import use_case.create_post.interface_adapter.CreatePostPresenter;
 import view.CreatePostView;
-import view.CreatePostViewModel;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
 import view.ViewManagerModel;
 
 /**

@@ -2,8 +2,7 @@ package use_case.create_comment.interface_adapter;
 
 import org.bson.types.ObjectId;
 import use_case.create_comment.application_business_rules.CreateCommentOutputBoundary;
-import view.CreateCommentViewModel;
-import view.PostAndCommentsViewModel;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 
 /**
  * Concrete implementation of the CreateCommentOutputBoundary which updates the CreateCommentViewModel

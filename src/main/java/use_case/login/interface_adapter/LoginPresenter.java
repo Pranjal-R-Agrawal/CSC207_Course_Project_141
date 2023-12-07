@@ -3,8 +3,7 @@ package use_case.login.interface_adapter;
 import use_case.login.application_business_rules.LoginOutputBoundary;
 
 import view.HomePageViewModel;
-import view.LoginViewModel;
-import view.SignupViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 import view.ViewManagerModel;
 
 /**

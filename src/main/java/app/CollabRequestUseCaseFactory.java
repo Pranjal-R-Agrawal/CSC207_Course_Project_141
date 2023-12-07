@@ -7,7 +7,7 @@ import use_case.collab_request.application_business_rules.CollabRequestInteracto
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
 import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.collab_request.interface_adapter.CollabRequestPresenter;
-import view.PostAndCommentsViewModel;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 import view.ViewManagerModel;
 
 /**

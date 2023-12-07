@@ -2,7 +2,6 @@ package use_case.search_post.interface_adapter;
 
 import use_case.search_post.application_business_rules.SearchPostOutputBoundary;
 import use_case.search_post.application_business_rules.SearchPostOutputData;
-import view.SearchPostViewModel;
 
 /**
  * Concrete implementation of the SearchPostOutputBoundary.

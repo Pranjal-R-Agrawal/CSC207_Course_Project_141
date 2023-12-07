@@ -1,8 +1,8 @@
 package view;
 
-import data_access.CollabRequestDataAccessInterface;
 import org.bson.types.ObjectId;
 import use_case.collab_request.interface_adapter.CollabRequestController;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 
 import javax.swing.*;
 import java.awt.*;

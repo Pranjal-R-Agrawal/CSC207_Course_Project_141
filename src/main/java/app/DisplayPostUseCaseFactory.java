@@ -10,7 +10,7 @@ import use_case.display_post.interface_adapter.DisplayPostPresenter;
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.ViewManagerModel;
 import view.PostAndCommentsView;
-import view.PostAndCommentsViewModel;
+import use_case.display_post.interface_adapter.PostAndCommentsViewModel;
 
 public class DisplayPostUseCaseFactory {
     private DisplayPostUseCaseFactory() {}

@@ -2,6 +2,7 @@ package view;
 
 import use_case.signup.interface_adapter.SignupController;
 import use_case.signup.interface_adapter.SignupState;
+import use_case.signup.interface_adapter.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;

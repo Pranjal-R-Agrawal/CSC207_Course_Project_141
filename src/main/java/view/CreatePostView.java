@@ -2,6 +2,7 @@ package view;
 
 import use_case.create_post.interface_adapter.CreatePostController;
 import use_case.create_post.interface_adapter.CreatePostState;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
 
 import javax.swing.*;
 import java.awt.*;

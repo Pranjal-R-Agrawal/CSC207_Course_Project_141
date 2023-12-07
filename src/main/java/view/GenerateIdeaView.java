@@ -1,8 +1,10 @@
 package view;
 
-import app.CreatePostUseCaseFactory;
+import use_case.create_post.interface_adapter.CreatePostViewModel;
 import use_case.generate_idea.interface_adapter.GenerateIdeaController;
 import use_case.generate_idea.interface_adapter.GenerateIdeaState;
+import use_case.generate_idea.interface_adapter.GenerateIdeaViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;

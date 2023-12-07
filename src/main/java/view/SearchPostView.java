@@ -7,6 +7,7 @@ import use_case.search_post.application_business_rules.SearchPostInteractor;
 import use_case.search_post.application_business_rules.SearchPostOutputBoundary;
 import use_case.search_post.interface_adapter.SearchPostController;
 import use_case.search_post.interface_adapter.SearchPostPresenter;
+import use_case.search_post.interface_adapter.SearchPostViewModel;
 
 import javax.swing.*;
 import java.awt.*;

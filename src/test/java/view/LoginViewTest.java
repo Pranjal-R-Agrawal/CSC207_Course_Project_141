@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import app.LoginUseCaseFactory;
 import data_access.MongoDBDataAccessObject;
+import use_case.login.interface_adapter.LoginViewModel;
+import use_case.signup.interface_adapter.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -2,6 +2,7 @@ package view;
 
 
 import use_case.view_profile.interface_adapter.ViewProfileDialogState;
+import use_case.view_profile.interface_adapter.ViewProfileDialogViewModel;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
