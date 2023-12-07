@@ -21,7 +21,8 @@ import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, SearchPostsByTitleDataAccessInterface {
+
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface ,SearchPostsByTitleDataAccessInterface{
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -124,6 +125,13 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     public User getUserById(ObjectId id) {
         users = getUsersCollection();
         return users.find(Filters.eq("_id", id)).first();
+    }
+
+    /**
+     * Void Implementation of the drop function from the interface
+     */
+    public void drop(){
+
     }
 
     public void setLoggedInUserID(ObjectId id) {
