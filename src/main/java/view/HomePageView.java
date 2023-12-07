@@ -1,6 +1,6 @@
 package view;
 
-import data_access.MongoDBDataAccessObject;
+import use_case.view_profile.interface_adapter.ViewProfileController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +27,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     private final CreatePostView createPostView;
     private final SearchPostViewModel searchPostViewModel;
+    private final ViewProfileController viewProfileController;
 
     private final JButton generateIdeaButton = new JButton();
     private final JButton postButton = new JButton();
@@ -43,7 +44,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
      * @param createPostViewModel     Observable that stores the state of the Create Post View.
      * @param createPostView         UI for the Create Post View.
      */
-    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, CreatePostView createPostView, SearchPostViewModel searchPostViewModel) {
+    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, CreatePostView createPostView, SearchPostViewModel searchPostViewModel, ViewProfileController viewProfileController) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
@@ -51,6 +52,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         this.signupViewModel = signupViewModel;
         this.createPostView = createPostView;
         this.searchPostViewModel = searchPostViewModel;
+        this.viewProfileController = viewProfileController;
 
         viewName = homePageViewModel.getViewName();
         setName(viewName);
@@ -85,8 +87,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         viewProfileButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(viewProfileButton)) {
-                        // TODO: call controller here
-                        // System.out.println("Click View Profile"); - for testing
+                        viewProfileController.execute();
                     }
                 }
         );

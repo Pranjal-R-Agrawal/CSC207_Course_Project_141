@@ -8,6 +8,7 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
+import use_case.view_profile.interface_adapter.ViewProfileController;
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.*;
 import javax.swing.*;
@@ -108,7 +109,7 @@ public class Main {
         ViewProfileDialogView viewProfileDialogView = ViewProfileDialogUseCaseFactory.createView(viewProfileDialogViewModel);
         ViewProfileController viewProfileController = ViewProfileDialogUseCaseFactory.createController(viewManagerModel, viewProfileDialogViewModel, mongoDBDataAccessObject);
 
-        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView, searchPostViewModel);
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView, searchPostViewModel, viewProfileController);
         views.add(homePageView, homePageView.viewName);
 
         application.pack();
