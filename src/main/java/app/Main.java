@@ -20,6 +20,7 @@ import java.beans.PropertyChangeEvent;
 public class Main {
     static final JFrame application = new JFrame("Startup Generator");
     protected static SignupViewModel signupViewModel;
+
     protected static LoginViewModel loginViewModel;
     protected static GenerateIdeaViewModel generateIdeaViewModel;
     protected static CreatePostViewModel createPostViewModel;
@@ -39,9 +40,12 @@ public class Main {
 
         signupViewModel = new SignupViewModel();
         loginViewModel = new LoginViewModel();
-        generateIdeaViewModel = new GenerateIdeaViewModel();
+      
+        
         homePageViewModel = new HomePageViewModel();
+        generateIdeaViewModel = new GenerateIdeaViewModel();
         createPostViewModel = new CreatePostViewModel();
+
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         try {
@@ -65,11 +69,15 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
 
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, mongoDBDataAccessObject);
+        views.add(homePageView, homePageView.viewName);
+      
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
         CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
+        views.add(createPostView);
 
         GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
@@ -85,6 +93,7 @@ public class Main {
 
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
         views.add(generateIdeaView,generateIdeaView.viewName);
+
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);

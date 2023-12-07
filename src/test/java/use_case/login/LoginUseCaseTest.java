@@ -13,12 +13,15 @@ import use_case.login.application_business_rules.LoginOutputBoundary;
 import use_case.login.interface_adapter.LoginController;
 import use_case.login.interface_adapter.LoginPresenter;
 
+import view.HomePageViewModel;
 import view.LoginViewModel;
 import view.SignupViewModel;
 import view.ViewManagerModel;
 
 public class LoginUseCaseTest {
     LoginViewModel loginViewModel;
+
+    HomePageViewModel homePageViewModel;
     MongoDBDataAccessObject mongoDBDataAccessObject;
     LoginController loginController;
 
@@ -65,16 +68,15 @@ public class LoginUseCaseTest {
     public void setUpTest() {
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         loginViewModel = new LoginViewModel();
+        homePageViewModel = new HomePageViewModel();
         try {
             mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, new SignupViewModel());
-        loginController = new LoginController(
-                new LoginInteractor(mongoDBDataAccessObject, loginPresenter), loginPresenter
-        );
+        LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, new SignupViewModel(), homePageViewModel);
+        loginController = new LoginController(new LoginInteractor(mongoDBDataAccessObject, loginPresenter));
 
         mongoDBDataAccessObject.resetDatabase();
     }
