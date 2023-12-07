@@ -13,9 +13,21 @@ import view.ViewManagerModel;
 
 import javax.swing.*;
 
+/**
+ * A static factory for the Login use case
+ * @author Tanmay Shinde
+ */
 public class LoginUseCaseFactory {
+    
     private LoginUseCaseFactory() {}
 
+    /**
+     * Creates a LoginView object
+     * @param viewManagerModel the view manager model for use case
+     * @param loginViewModel the login view model for the use case
+     * @param loginUserDataAccessObject the data access object for the use case
+     * @param homePageViewModel the home page view model object for the use case
+     */
     public static LoginView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, HomePageViewModel homePageViewModel) {
         LoginController loginController = createUserLoginUseCase(viewManagerModel, loginViewModel, loginUserDataAccessObject, homePageViewModel);
         return new LoginView(loginViewModel, loginController);
