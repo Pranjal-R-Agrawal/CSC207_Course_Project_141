@@ -67,11 +67,12 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
 
-        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, viewProfileViewModel);
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, viewProfileViewModel, mongoDBDataAccessObject);
         views.add(homePageView, homePageView.viewName);
       
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
         CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
+        views.add(createPostView);
 
         GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
