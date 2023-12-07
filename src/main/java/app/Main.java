@@ -8,6 +8,10 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
+import entity.Post;
+import entity.User;
+import org.bson.types.ObjectId;
+import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.*;
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +88,10 @@ public class Main {
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
-        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
+        ViewUserInfoViewModel viewUserInfoViewModel = new ViewUserInfoViewModel();
+        ViewUserInfoController viewUserInfoController = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel, mongoDBDataAccessObject);
+        ViewUserInfoView viewUserInfoView = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder, viewUserInfoController);
         viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
         NewWindow newPostAndCommentsWindow = new NewWindow(true, postAndCommentsView.viewName);
         NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
