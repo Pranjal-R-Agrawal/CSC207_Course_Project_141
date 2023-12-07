@@ -72,9 +72,6 @@ public class Main {
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
         CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
 
-        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView);
-        views.add(homePageView, homePageView.viewName);
-
         GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;
         IdeaFactory ideaFactory = new ConcreteIdeaFactory();
@@ -106,6 +103,9 @@ public class Main {
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
         views.add(searchPostView, searchPostView.viewName);
+
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView, searchPostViewModel);
+        views.add(homePageView, homePageView.viewName);
 
         application.pack();
         application.setLocationRelativeTo(null);

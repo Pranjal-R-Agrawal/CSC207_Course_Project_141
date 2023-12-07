@@ -26,12 +26,13 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     private final SignupViewModel signupViewModel;
 
     private final CreatePostView createPostView;
+    private final SearchPostViewModel searchPostViewModel;
 
     private final JButton generateIdeaButton = new JButton();
     private final JButton postButton = new JButton();
     private final JButton viewProfileButton = new JButton();
-
     private final JButton logoutButton = new JButton();
+    private final JButton searchButton = new JButton();
     
     /**
      * Initializes the UI for the Home Page and provides functionality to its components.
@@ -42,13 +43,14 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
      * @param createPostViewModel     Observable that stores the state of the Create Post View.
      * @param createPostView         UI for the Create Post View.
      */
-    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, CreatePostView createPostView) {
+    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, CreatePostView createPostView, SearchPostViewModel searchPostViewModel) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.createPostViewModel = createPostViewModel;
         this.signupViewModel = signupViewModel;
         this.createPostView = createPostView;
+        this.searchPostViewModel = searchPostViewModel;
 
         viewName = homePageViewModel.getViewName();
         setName(viewName);
@@ -59,6 +61,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         viewProfileButton.setText(HomePageViewModel.PROFILE_BUTTON_LABEL);
 
         logoutButton.setText(HomePageViewModel.LOGOUT_BUTTON_LABEL);
+        searchButton.setText("Search Posts");
 
         homePageViewModel.addPropertyChangeListener(this);
 
@@ -98,24 +101,25 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
                 }
         );
 
-        setLayout(new GridLayout(9, 5));
+        searchButton.addActionListener(
+                e -> {
+                    if (e.getSource().equals(searchButton)) {
+                        viewManagerModel.setActiveView(searchPostViewModel.getViewName());
+                        viewManagerModel.firePropertyChanged();
+                    }
+                }
+        );
 
-        JPanel emptyPanel1 = new JPanel();
-        JPanel emptyPanel2 = new JPanel();
-        JPanel emptyPanel3 = new JPanel();
-        JPanel emptyPanel4 = new JPanel();
-        JPanel emptyPanel5 = new JPanel();
-
-        add(emptyPanel4);
-        add(viewProfileButton);
-        add(emptyPanel1);
-        add(generateIdeaButton);
-        add(emptyPanel2);
-        add(postButton);
-        add(emptyPanel3);
-        add(logoutButton);
-        add(emptyPanel5);
-
+        setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.insets = new Insets(5, 5, 5, 5);
+        constraints.gridx = 0; constraints.gridy = GridBagConstraints.RELATIVE;
+        add(viewProfileButton, constraints);
+        add(generateIdeaButton, constraints);
+        add(postButton, constraints);
+        add(searchButton, constraints);
+        add(logoutButton, constraints);
     }
 
     /**
