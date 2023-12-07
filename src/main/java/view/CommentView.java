@@ -39,6 +39,7 @@ public class CommentView extends AbstractGridBagLayoutView {
         this.username = (String) comment.get("username");
         this.body = (String) comment.get("body");
         this.qualifications = (comment.get("qualifications") != null)? (ArrayList<String>) comment.get("qualifications") : new ArrayList<String>();
+        boolean moreInfo = comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button");
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -101,7 +102,8 @@ public class CommentView extends AbstractGridBagLayoutView {
 
         JButton viewMoreInfoButton = new JButton("More Info");
         viewMoreInfoButton.addActionListener(e -> {
-            // TODO: Implement similar to reply button
+            postAndCommentsViewModel.getState().setShowMoreInfoOfID(authorId).setMoreInfo(moreInfo);
+            postAndCommentsViewModel.firePropertyChanged("show_more_info");
         });
 
         JButton collaborationRequestButton = new JButton("Request Collaboration");
@@ -132,7 +134,7 @@ public class CommentView extends AbstractGridBagLayoutView {
 
         qualificationsButton.setVisible(!qualifications.isEmpty());
         collaborationRequestButton.setVisible(comment.get("logged_in_user_is_post_author") != null && (boolean) comment.get("logged_in_user_is_post_author"));
-        viewMoreInfoButton.setVisible(comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button"));
+//        viewMoreInfoButton.setVisible(comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button"));
         qualificationsRow.setVisible(qualificationsVisibility);
 
         JSeparator verticalSeparator = new JSeparator();

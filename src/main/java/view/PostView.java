@@ -37,7 +37,7 @@ public class PostView extends AbstractGridBagLayoutView {
         this.qualifications.add(0, "Suggested collaborator qualifications:");
 
         boolean qualificationsVisibility = qualifications.size() > 1;
-        boolean viewAuthorInformationButtonVisibility = (boolean) post.get("logged_in_user_is_post_author") || (boolean) post.get("logged_in_user_is_collaborator");
+        boolean showMoreAuthorInformation = (boolean) post.get("logged_in_user_is_post_author") || (boolean) post.get("logged_in_user_is_collaborator");
 
         setLayout(new GridBagLayout());
 
@@ -79,7 +79,8 @@ public class PostView extends AbstractGridBagLayoutView {
 
         JButton viewAuthorInformationButton = new JButton("View Poster's Information");
         viewAuthorInformationButton.addActionListener(e -> {
-            // TODO Need to implement button logic to call view user info controller
+            postAndCommentsViewModel.getState().setShowMoreInfoOfID(authorId).setMoreInfo(showMoreAuthorInformation);
+            postAndCommentsViewModel.firePropertyChanged("show_more_info");
         });
 
         JButton refreshButton = new JButton("Refresh");
@@ -98,7 +99,7 @@ public class PostView extends AbstractGridBagLayoutView {
         setConstraintInset(constraints, 0, 3, 0, 0);
         addComponent(constraints, buttonRow, refreshButton, GridBagConstraints.RELATIVE, 0);
 
-        viewAuthorInformationButton.setVisible(viewAuthorInformationButtonVisibility);
+//        viewAuthorInformationButton.setVisible(viewAuthorInformationButtonVisibility);
 
         initialiseConstraints(constraints);
         setConstraintWeight(constraints, 1, 0.1);
