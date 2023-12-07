@@ -26,7 +26,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
     protected MongoCollection<Comment> comments;
-    protected MongoCollection<CollabRequest> collabRequests ;
+    protected MongoCollection<ConcreteCollabRequest> collabRequests ;
     private ObjectId loggedInUserID;
     private final String usersCollectionName;
     private final String postsCollectionName;
@@ -88,10 +88,10 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
         return database.getCollection(commentsCollectionName, Comment.class).withCodecRegistry(pojoCodecRegistry);
     }
-    private MongoCollection<CollabRequest> getCollabRequests() {
+    private MongoCollection<ConcreteCollabRequest> getCollabRequests() {
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-        return database.getCollection(collabRequestsCollectionName, CollabRequest.class).withCodecRegistry(pojoCodecRegistry);
+        return database.getCollection(collabRequestsCollectionName, ConcreteCollabRequest.class).withCodecRegistry(pojoCodecRegistry);
 
     }
 
@@ -131,6 +131,20 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
 
     @Override
+    public List<Post> getPostByAuthorId(ObjectId id) {
+        posts = getPostsCollection();
+        posts.createIndex(Indexes.text("authorID"));
+        return posts.find(Filters.eq("authorID", id)).into(new ArrayList<Post>());
+    }
+
+    @Override
+    public List<ConcreteCollabRequest> getCollabRequestByUsername(String username) {
+        collabRequests = getCollabRequests();
+        collabRequests.createIndex(Indexes.text("username"));
+        return collabRequests.find(Filters.eq("username", username)).into(new ArrayList<ConcreteCollabRequest>());
+    }
+
+    @Override
     public Post getPostByPostId(ObjectId id) {
         posts = getPostsCollection();
         return posts.find(Filters.eq("_id", id)).first();
@@ -143,6 +157,12 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
     @Override
     public void addCollabRequest(CollabRequest collabRequest) {
+        collabRequests = getCollabRequests();
+        collabRequests.insertOne((ConcreteCollabRequest) collabRequest);
+    }
+
+    @Override
+    public void addCollabRequest(ConcreteCollabRequest collabRequest) {
         collabRequests = getCollabRequests();
         collabRequests.insertOne(collabRequest);
 
@@ -228,4 +248,6 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
 
         return searchResults.into(new ArrayList<PostSearchResultsInterface>());
     }
+
+
 }

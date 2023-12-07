@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MockMongoDBDataAccessObject implements CreatePostDataAccessInterface{
+public class MockCreatePostDataAccessObject implements CreatePostDataAccessInterface{
     private Map<ObjectId, Post> postsMap = new HashMap<>();
     private ObjectId loggedInUserID;
     @Override

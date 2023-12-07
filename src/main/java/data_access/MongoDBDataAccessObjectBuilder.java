@@ -35,7 +35,7 @@ public class MongoDBDataAccessObjectBuilder {
         this.commentsCollectionName = commentsCollectionName;
         return this;
     }
-    public MongoDBDataAccessObjectBuilder setcollabRequestsCollectionName(String commentsCollectionName) {
+    public MongoDBDataAccessObjectBuilder setcollabRequestsCollectionName(String collabRequestsCollectionName) {
         this.collabRequestsCollectionName = collabRequestsCollectionName;
         return this;
     }
@@ -56,7 +56,7 @@ public class MongoDBDataAccessObjectBuilder {
         setUsersCollectionName("users_test");
         setPostsCollectionName("posts_test");
         setCommentsCollectionName("comments_test");
-        setCommentsCollectionName("collabRequests_test");
+        setcollabRequestsCollectionName("collabRequests_test");
         return this;
     }
 
