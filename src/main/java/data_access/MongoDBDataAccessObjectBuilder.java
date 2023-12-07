@@ -3,7 +3,7 @@ package data_access;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 
-public class MongoDBDataAccessObjectBuilder {
+public class MongoDBDataAccessObjectBuilder implements MongoDBDataAccessObjectBuilderInterface {
     private String databaseConnectionPath;
     private String databaseName;
     private String usersCollectionName;
@@ -11,36 +11,43 @@ public class MongoDBDataAccessObjectBuilder {
     private String commentsCollectionName;
     private String collabRequestsCollectionName;
 
-    public MongoDBDataAccessObjectBuilder setDatabaseConnectionPath(String databaseConnectionPath) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setDatabaseConnectionPath(String databaseConnectionPath) {
         this.databaseConnectionPath = databaseConnectionPath;
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setDatabaseName(String databaseName) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setDatabaseName(String databaseName) {
         this.databaseName = databaseName;
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setUsersCollectionName(String usersCollectionName) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setUsersCollectionName(String usersCollectionName) {
         this.usersCollectionName = usersCollectionName;
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setPostsCollectionName(String postsCollectionName) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setPostsCollectionName(String postsCollectionName) {
         this.postsCollectionName = postsCollectionName;
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setCommentsCollectionName(String commentsCollectionName) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setCommentsCollectionName(String commentsCollectionName) {
         this.commentsCollectionName = commentsCollectionName;
         return this;
     }
-    public MongoDBDataAccessObjectBuilder setcollabRequestsCollectionName(String collabRequestsCollectionName) {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setcollabRequestsCollectionName(String collabRequestsCollectionName) {
         this.collabRequestsCollectionName = collabRequestsCollectionName;
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setStandadParameters() {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setStandadParameters() {
         setDatabaseConnectionPath("src/main/java/data_access/database_connection.txt");
         setDatabaseName("forum");
         setUsersCollectionName("users");
@@ -50,7 +57,8 @@ public class MongoDBDataAccessObjectBuilder {
         return this;
     }
 
-    public MongoDBDataAccessObjectBuilder setTestParameters() {
+    @Override
+    public MongoDBDataAccessObjectBuilderInterface setTestParameters() {
         setDatabaseConnectionPath("src/main/java/data_access/database_connection.txt");
         setDatabaseName("forum_test");
         setUsersCollectionName("users_test");
@@ -60,6 +68,7 @@ public class MongoDBDataAccessObjectBuilder {
         return this;
     }
 
+    @Override
     public MongoDBDataAccessObject build() throws FileNotFoundException, NoSuchElementException {
         return new MongoDBDataAccessObject(
                 databaseConnectionPath, databaseName, usersCollectionName, postsCollectionName, commentsCollectionName, collabRequestsCollectionName
