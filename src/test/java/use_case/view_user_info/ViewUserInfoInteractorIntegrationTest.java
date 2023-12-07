@@ -75,25 +75,48 @@ public class ViewUserInfoInteractorIntegrationTest {
 
     @Test
     public void testIsGeneralUserCase() {
-        ViewUserInfoInputData inputData = new ViewUserInfoInputData(new ObjectId(), false);
-        ViewUserInfoDataAccessInterface mockDataAccessObject = new MockViewUserInfoDataAccessObject();
+        MongoDBDataAccessObject mongoDBDataAccessObject;
+
+        try {
+
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+            mongoDBDataAccessObject.resetDatabase();
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+
+        }
+
+        UserFactory userFactory = new UserFactory();
+        User user = (User) userFactory.create("testusername", "testpwd", "testname", "test@email.com", "0000000000", "testcity", "testexpertise");
+
+        mongoDBDataAccessObject.addUser(user);
+
+        User testUser = mongoDBDataAccessObject.getUserByUsername("testusername");
+        ObjectId testUserId = testUser.getId();
+
+        ViewUserInfoInputData inputData = new ViewUserInfoInputData(testUserId, false);
 
         ViewUserInfoOutputBoundary viewUserInfoPresenter = new ViewUserInfoOutputBoundary() {
             @Override
             public void prepareCollabView(ViewUserInfoOutputData user) {
 
-                fail("Collaborator View is not expected");
+                fail("Collaborator view is not expected");
 
             }
 
             @Override
             public void prepareGeneralView(ViewUserInfoOutputData user) {
+
                 // "testname", "test@email.com", "0000000000", "testcity", "testexpertise"
                 assertEquals("testname", user.getName());
                 assertEquals("testexpertise", user.getFieldOfExpertise());
                 assertEquals("", user.getCity());
                 assertEquals("", user.getEmail());
                 assertEquals("", user.getPhoneNumber());
+
             }
 
             @Override
@@ -104,39 +127,61 @@ public class ViewUserInfoInteractorIntegrationTest {
             }
         };
 
-        ViewUserInfoInputBoundary interactor = new ViewUserInfoInteractor(mockDataAccessObject, viewUserInfoPresenter);
+        ViewUserInfoInputBoundary interactor = new ViewUserInfoInteractor(mongoDBDataAccessObject, viewUserInfoPresenter);
         interactor.execute(inputData);
     }
 
     @Test
     public void testFailView() {
-        ViewUserInfoInputData inputData = new ViewUserInfoInputData(new ObjectId(), false);
-        ViewUserInfoDataAccessInterface mockDataAccessObject = new MockViewUserInfoDataAccessObject();
-        mockDataAccessObject.drop();
+        MongoDBDataAccessObject mongoDBDataAccessObject;
+
+        try {
+
+            mongoDBDataAccessObject = new MongoDBDataAccessObjectBuilder().setTestParameters().build();
+            mongoDBDataAccessObject.resetDatabase();
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+
+        }
+
+        UserFactory userFactory = new UserFactory();
+        User user = (User) userFactory.create("testusername", "testpwd", "testname", "test@email.com", "0000000000", "testcity", "testexpertise");
+
+        // The user is not added to the database, so the user does not exist in the database
+        // mongoDBDataAccessObject.addUser(user);
+
+        // User testUser = mongoDBDataAccessObject.getUserByUsername("testusername");
+        // ObjectId testUserId = testUser.getId();
+
+        ViewUserInfoInputData inputData = new ViewUserInfoInputData(user.getId(), false);
 
         ViewUserInfoOutputBoundary viewUserInfoPresenter = new ViewUserInfoOutputBoundary() {
             @Override
             public void prepareCollabView(ViewUserInfoOutputData user) {
 
-                fail("Collaborator View is not expected");
+                fail("Collaborator view is not expected");
 
             }
 
             @Override
             public void prepareGeneralView(ViewUserInfoOutputData user) {
 
-                fail("General View is not expected.");
+                fail("General view is unexpected");
 
             }
 
             @Override
             public void prepareFailView(String error) {
+
                 assertEquals("Failed to retreive User", error);
 
             }
         };
 
-        ViewUserInfoInputBoundary interactor = new ViewUserInfoInteractor(mockDataAccessObject, viewUserInfoPresenter);
+        ViewUserInfoInputBoundary interactor = new ViewUserInfoInteractor(mongoDBDataAccessObject, viewUserInfoPresenter);
         interactor.execute(inputData);
     }
 }
