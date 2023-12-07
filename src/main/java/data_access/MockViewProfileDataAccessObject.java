@@ -89,4 +89,8 @@ public class MockViewProfileDataAccessObject implements ViewProfileDataAccessInt
     public List<ConcreteCollabRequest> getCollabRequestByUsername(String username) {
         return null;
     }
+
+    public List<Post> getPostByCollaboratorId(ObjectId id) {
+        return new ArrayList<>();
+    }
 }

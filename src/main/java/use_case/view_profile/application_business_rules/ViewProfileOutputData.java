@@ -14,7 +14,7 @@ public class ViewProfileOutputData {
     private final String email;
     private final String projects;
     private final ArrayList<String> collabRequests;
-
+    private final String collab;
 
     /**
      * Initializes a bundle storing the ViewProfile's output data
@@ -23,13 +23,14 @@ public class ViewProfileOutputData {
      * @param projects the projects of the logged in user
      * @param collabRequests the collab requests of the logged in user
      */
-    public ViewProfileOutputData(String username, String name, String email, String projects, ArrayList<String> collabRequests) {
+    public ViewProfileOutputData(String username, String name, String email, String projects, ArrayList<String> collabRequests, String collab) {
         this.username = username;
         this.name = name;
         this.email = email;
 
         this.projects = projects;
         this.collabRequests = collabRequests;
+        this.collab = collab;
     }
     /**
      * @return Returns the username
@@ -57,5 +58,8 @@ public class ViewProfileOutputData {
     }
     public ArrayList<String> getCollabRequests() {
         return collabRequests;
+    }
+    public String getCollab() {
+        return collab;
     }
 }

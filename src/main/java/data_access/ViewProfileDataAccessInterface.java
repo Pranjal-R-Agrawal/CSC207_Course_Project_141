@@ -40,4 +40,6 @@ public interface ViewProfileDataAccessInterface {
     List<Post> getPostByAuthorId(ObjectId id);
     List<ConcreteCollabRequest> getCollabRequestByUsername(String username);
 
+    List<Post> getPostByCollaboratorId(ObjectId id);
+
 }

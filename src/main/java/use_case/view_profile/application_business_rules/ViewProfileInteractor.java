@@ -39,6 +39,13 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
             String postTitle = post.getTitle();
             projects += "<p></p><p>" + (i++) + ". " + postTitle + "</p>";
         }
+        String collab = "";
+        List<Post> collabProjects = viewProfileDataAccessObject.getPostByCollaboratorId(viewProfileDataAccessObject.getLoggedInUser().getId());
+        i = 1;
+        for (Post post : collabProjects) {
+            String postTitle = post.getTitle();
+            collab += "<p></p><p>" + (i++) + ". " + postTitle + "</p>";
+        }
 //        List<ObjectId> collabRequestIds = viewProfileDataAccessObject.getLoggedInUser().getCollaborationRequestIDs();
 //        ArrayList<String> collabRequests = new ArrayList<>();
 //        for (ObjectId collabRequestId : collabRequestIds) {
@@ -47,7 +54,7 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
 //            collabRequests.add(collabRequest);
 //        }
 
-        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, projects, null);
+        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, projects, null, collab);
         viewProfilePresenter.prepareSuccessView(viewProfileOutputData);
 
         }

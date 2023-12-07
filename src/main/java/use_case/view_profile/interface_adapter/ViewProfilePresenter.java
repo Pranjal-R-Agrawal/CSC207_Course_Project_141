@@ -32,7 +32,10 @@ public class ViewProfilePresenter implements ViewProfileOutputBoundary {
     @Override
     public void prepareSuccessView(ViewProfileOutputData viewProfileOutputData) {
 
-        String message = "<html><p>Username: "+viewProfileOutputData.getUsername()+"</p><p>Name: "+viewProfileOutputData.getName()+"</p><p>Email: "+viewProfileOutputData.getEmail()+"</p><p>Projects: "+viewProfileOutputData.getProjects()+"</p></html>";
+        String message = "<html><p style=\"color:blue;\">Username: "+viewProfileOutputData.getUsername()+"</p><p></p><p style=\"color:blue;\">Name: "+viewProfileOutputData.getName()+"</p><p></p><p style=\"color:blue;\">Email: "+viewProfileOutputData.getEmail()+"</p><p></p><p style=\"color:blue;\">Projects: "+viewProfileOutputData.getProjects()+"</p>";
+        if (viewProfileOutputData.getCollab() != null && !viewProfileOutputData.getCollab().trim().isEmpty()) {
+            message += "<p></p><p style=\"color:blue;\">Collabotaror on: " + viewProfileOutputData.getCollab() + "</html>";
+        }
 
         viewProfileDialogViewModel.getState().setMessage(message);
         viewProfileDialogViewModel.firePropertyChanged("view_profile_display");

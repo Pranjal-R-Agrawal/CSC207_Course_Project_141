@@ -136,7 +136,7 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     @Override
     public List<Post> getPostByAuthorId(ObjectId id) {
         posts = getPostsCollection();
-        posts.createIndex(Indexes.text("authorID"));
+        // posts.createIndex(Indexes.text("authorID"));
         return posts.find(Filters.eq("authorID", id)).into(new ArrayList<Post>());
     }
 
@@ -252,5 +252,11 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
         );
 
         return searchResults.into(new ArrayList<PostSearchResultsInterface>());
+    }
+
+    public List<Post> getPostByCollaboratorId(ObjectId id) {
+        posts = getPostsCollection();
+        // posts.createIndex(Indexes.text("collaboratorIDs"));
+        return posts.find(Filters.in("collaboratorIDs", id)).into(new ArrayList<Post>());
     }
 }
