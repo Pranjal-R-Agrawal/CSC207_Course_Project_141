@@ -1,12 +1,9 @@
 package use_case.view_profile.application_business_rules;
 
 import data_access.ViewProfileDataAccessInterface;
-import java.util.ArrayList;
 import java.util.List;
 
-import entity.User;
 import entity.Post; // To get the needed Posts for collab requests?
-import org.bson.types.ObjectId;
 
 /**
  * Concrete implementation of ViweProfileInputBoundary responsible for structuring the things that will be displayed in the view and passing it to the output boundary
@@ -30,18 +27,17 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
     @Override
     public void execute() {
 
-        /**
-         * Structures the things that will need to be displayed in the view
-         */
+        // Structures the things that will need to be displayed in the view
         String username = viewProfileDataAccessObject.getLoggedInUser().getUsername();
         String name = viewProfileDataAccessObject.getLoggedInUser().getName();
         String email = viewProfileDataAccessObject.getLoggedInUser().getEmail();
 
         String projects = "";
         List<Post> projectIds = viewProfileDataAccessObject.getPostByAuthorId(viewProfileDataAccessObject.getLoggedInUser().getId());
+        int i = 1;
         for (Post post : projectIds) {
             String postTitle = post.getTitle();
-            projects += postTitle + " ";
+            projects += "<p></p><p>" + (i++) + ". " + postTitle + "</p>";
         }
 //        List<ObjectId> collabRequestIds = viewProfileDataAccessObject.getLoggedInUser().getCollaborationRequestIDs();
 //        ArrayList<String> collabRequests = new ArrayList<>();
