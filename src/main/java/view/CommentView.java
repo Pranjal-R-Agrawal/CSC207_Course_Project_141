@@ -15,7 +15,7 @@ public class CommentView extends AbstractGridBagLayoutView {
     final ObjectId parentId;
     final ObjectId parentPostId;
     final ObjectId authorId;
-    final String username;
+    String username;
     final String body;
     final List<String> qualifications;
     private final JPanel commentContainerVertical = new JPanel(new GridBagLayout());
@@ -68,8 +68,13 @@ public class CommentView extends AbstractGridBagLayoutView {
 
         JLabel usernameLabel = new JLabel(username);
         if (comment.get("comment_author_is_post_author") != null && (boolean) comment.get("comment_author_is_post_author")) {
+            usernameLabel.setText(usernameLabel.getText() + " (Post Author)");
+            usernameLabel.setForeground(Color.BLUE);
+        } if (comment.get("commentor_is_collaborator") != null && (boolean) comment.get("commentor_is_collaborator")) {
+            usernameLabel.setText(usernameLabel.getText() + " (Collaborator)");
             usernameLabel.setForeground(Color.BLUE);
         } if (comment.get("logged_in_user_is_comment_author") != null && (boolean) comment.get("logged_in_user_is_comment_author")) {
+            usernameLabel.setText(usernameLabel.getText() + " (You)");
             usernameLabel.setForeground(Color.RED);
         }
 
