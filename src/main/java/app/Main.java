@@ -8,9 +8,6 @@ import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.ConcreteIdeaFactory;
 import entity.IdeaFactory;
-import entity.Post;
-import entity.User;
-import org.bson.types.ObjectId;
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 import view.*;
 import javax.swing.*;
@@ -71,13 +68,12 @@ public class Main {
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, signupViewModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
-
-        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, mongoDBDataAccessObject);
-        views.add(homePageView, homePageView.viewName);
       
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();
         CreatePostView createPostView = CreatePostUseCaseFactory.create(viewManagerModel,createPostViewModel,mongoDBDataAccessObject);
-        views.add(createPostView);
+
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, createPostView);
+        views.add(homePageView, homePageView.viewName);
 
         GenerativeAIAPI generativeAIAPI = new MistralCodegenAIAPI();
         GenerateIdeaDataAccessInterface generateIdeaDataAccessObject = null;

@@ -25,7 +25,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     private final SignupViewModel signupViewModel;
 
-    private final MongoDBDataAccessObject mongoDBDataAccessObject;
+    private final CreatePostView createPostView;
 
     private final JButton generateIdeaButton = new JButton();
     private final JButton postButton = new JButton();
@@ -40,15 +40,15 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
      * @param homePageViewModel       Observable that stores the state useful to the Home Page View.
      * @param generateIdeaViewModel   Observable that stores the state of the Generate Idea View.
      * @param createPostViewModel     Observable that stores the state of the Create Post View.
-     * @param mongoDBDataAccessObject the DAO for accessing the database form HomePageView
+     * @param createPostView         UI for the Create Post View.
      */
-    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, MongoDBDataAccessObject mongoDBDataAccessObject) {
+    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, CreatePostView createPostView) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.createPostViewModel = createPostViewModel;
         this.signupViewModel = signupViewModel;
-        this.mongoDBDataAccessObject = mongoDBDataAccessObject;
+        this.createPostView = createPostView;
 
         viewName = homePageViewModel.getViewName();
         setName(viewName);
@@ -74,8 +74,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         postButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(postButton)) {
-                        viewManagerModel.setActiveView(createPostViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
+                        viewManagerModel.displayCreatePost(createPostView);
                     }
                 }
         );
@@ -92,7 +91,6 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         logoutButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(logoutButton)) {
-                        mongoDBDataAccessObject.setLoggedInUserID(null);
                         signupViewModel.firePropertyChanged("reset_input_fields");
                         viewManagerModel.setActiveView(signupViewModel.getViewName());
                         viewManagerModel.firePropertyChanged();
