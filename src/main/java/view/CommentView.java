@@ -1,6 +1,8 @@
 package view;
 
+import data_access.CollabRequestDataAccessInterface;
 import org.bson.types.ObjectId;
+import use_case.collab_request.interface_adapter.CollabRequestController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,17 +21,19 @@ public class CommentView extends AbstractGridBagLayoutView {
     private final JPanel commentContainerVertical = new JPanel(new GridBagLayout());
     private final JPanel commentContainerHorizontal = new JPanel(new GridBagLayout());
     private final JPanel children = new JPanel(new GridBagLayout());
+    private final CollabRequestController collabRequestController;
     private final JButton collapseButton;
     private int numChildren = 0;
     private boolean qualificationsVisibility = false;
     private boolean childrenVisibility = false;
+
 
     /**
      * This class is responsible for displaying a comment.
      * @param comment The map containing the information of the comment to display
      * @param postAndCommentsViewModel The view model for this view
      */
-    public CommentView(Map<String, Object> comment, PostAndCommentsViewModel postAndCommentsViewModel) {
+    public CommentView(Map<String, Object> comment, PostAndCommentsViewModel postAndCommentsViewModel, CollabRequestController collabRequestController) {
         super("Comment" + (ObjectId) comment.get("id"));
 
         this.id = (ObjectId) comment.get("id");
@@ -39,6 +43,7 @@ public class CommentView extends AbstractGridBagLayoutView {
         this.username = (String) comment.get("username");
         this.body = (String) comment.get("body");
         this.qualifications = (comment.get("qualifications") != null)? (ArrayList<String>) comment.get("qualifications") : new ArrayList<String>();
+        this.collabRequestController = collabRequestController;
         boolean moreInfo = comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button");
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -108,7 +113,9 @@ public class CommentView extends AbstractGridBagLayoutView {
 
         JButton collaborationRequestButton = new JButton("Request Collaboration");
         collaborationRequestButton.addActionListener(e -> {
-            // TODO: Implement similar to reply button
+            if (e.getSource().equals(collaborationRequestButton)) {
+                collabRequestController.execute(parentPostId, authorId);
+            }
         });
 
         initialiseConstraints(constraints);

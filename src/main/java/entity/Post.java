@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Post implements PostInterface{
     private ObjectId id;
-    private List<ObjectId> childrenId;
+    private List<ObjectId> childrenId; // TODO: TAKE THIS OUT
     private ObjectId authorID;
     private List<ObjectId> collaboratorIDs;
     private String title;
@@ -19,6 +19,7 @@ public class Post implements PostInterface{
     public Post() {}
 
     public Post(ObjectId authorID, String title, String body, List<String> suggestedCollaboratorQualifications) {
+
         this.childrenId = new ArrayList<ObjectId>();
         this.authorID = authorID;
         this.collaboratorIDs = new ArrayList<ObjectId>();

@@ -2,6 +2,7 @@ package view;
 
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
+import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.display_post.interface_adapter.DisplayPostController;
 import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 
@@ -23,6 +24,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     private final PostAndCommentsViewModel postAndCommentsViewModel;
     private final ViewManagerModel viewManagerModel;
     private final DisplayPostController displayPostController;
+    private final CollabRequestController collabRequestController;
     private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
     private final Map<ObjectId, view.CommentView> comments = new HashMap<>();
     private final ViewUserInfoController viewUserInfoController;
@@ -36,11 +38,12 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
      * @param displayPostController The controller for displaying posts
      * @param createCommentUseCaseBuilder The use case builder for creating comments
      */
-    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController) {
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController, CollabRequestController collabRequestController) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
         this.displayPostController = displayPostController;
+        this.collabRequestController = collabRequestController;
 
         this.viewManagerModel = viewManagerModel;
 
@@ -62,7 +65,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             Set<ObjectId> newCommentIds = newComments.keySet();
 
             for (ObjectId id : newCommentIds) {
-                comments.put(id, new CommentView(newComments.get(id), postAndCommentsViewModel));
+                comments.put(id, new CommentView(newComments.get(id), postAndCommentsViewModel, collabRequestController));
             }
 
             if (!postAdded) {
