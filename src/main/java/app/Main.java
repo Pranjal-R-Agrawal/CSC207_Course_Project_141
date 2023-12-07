@@ -39,7 +39,6 @@ public class Main {
         homePageViewModel = new HomePageViewModel();
         generateIdeaViewModel = new GenerateIdeaViewModel();
         createPostViewModel = new CreatePostViewModel();
-        viewProfileViewModel = new ViewProfileViewModel();
 
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
@@ -67,7 +66,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         views.add(loginView, loginView.viewName);
 
-        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, viewProfileViewModel, mongoDBDataAccessObject);
+        HomePageView homePageView = new HomePageView(viewManagerModel, homePageViewModel, generateIdeaViewModel, createPostViewModel, signupViewModel, mongoDBDataAccessObject);
         views.add(homePageView, homePageView.viewName);
       
         CreatePostViewModel createPostViewModel = new CreatePostViewModel();

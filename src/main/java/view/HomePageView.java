@@ -25,8 +25,6 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
 
     private final SignupViewModel signupViewModel;
 
-    private final ViewProfileViewModel viewProfileViewModel;
-
     private final MongoDBDataAccessObject mongoDBDataAccessObject;
 
     private final JButton generateIdeaButton = new JButton();
@@ -37,20 +35,19 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
     
     /**
      * Initializes the UI for the Home Page and provides functionality to its components.
-     * @param viewManagerModel View manager for managing which view is displayed
-     * @param homePageViewModel Observable that stores the state useful to the Home Page View.
-     * @param generateIdeaViewModel Observable that stores the state of the Generate Idea View.
-     * @param createPostViewModel Observable that stores the state of the Create Post View.
-     * @param viewProfileViewModel Observable that stores the state of the View Profile View.
+     *
+     * @param viewManagerModel        View manager for managing which view is displayed
+     * @param homePageViewModel       Observable that stores the state useful to the Home Page View.
+     * @param generateIdeaViewModel   Observable that stores the state of the Generate Idea View.
+     * @param createPostViewModel     Observable that stores the state of the Create Post View.
      * @param mongoDBDataAccessObject the DAO for accessing the database form HomePageView
      */
-    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, ViewProfileViewModel viewProfileViewModel, MongoDBDataAccessObject mongoDBDataAccessObject) {
+    public HomePageView(ViewManagerModel viewManagerModel, HomePageViewModel homePageViewModel, GenerateIdeaViewModel generateIdeaViewModel, CreatePostViewModel createPostViewModel, SignupViewModel signupViewModel, MongoDBDataAccessObject mongoDBDataAccessObject) {
         this.homePageViewModel = homePageViewModel;
         this.viewManagerModel = viewManagerModel;
         this.generateIdeaViewModel = generateIdeaViewModel;
         this.createPostViewModel = createPostViewModel;
         this.signupViewModel = signupViewModel;
-        this.viewProfileViewModel = viewProfileViewModel;
         this.mongoDBDataAccessObject = mongoDBDataAccessObject;
 
         viewName = homePageViewModel.getViewName();
@@ -86,9 +83,7 @@ public class HomePageView extends JPanel implements PropertyChangeListener {
         viewProfileButton.addActionListener(
                 e -> {
                     if (e.getSource().equals(viewProfileButton)) {
-                        viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
-                        viewManagerModel.firePropertyChanged();
-                        viewProfileViewModel.firePropertyChanged("display_user");
+                        // TODO: call controller here
                         // System.out.println("Click View Profile"); - for testing
                     }
                 }
