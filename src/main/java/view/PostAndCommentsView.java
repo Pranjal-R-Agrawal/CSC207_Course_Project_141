@@ -3,6 +3,7 @@ package view;
 import app.CreateCommentUseCaseBuilder;
 import org.bson.types.ObjectId;
 import use_case.display_post.interface_adapter.DisplayPostController;
+import use_case.view_user_info.interface_adapter.ViewUserInfoController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
     private final DisplayPostController displayPostController;
     private final CreateCommentUseCaseBuilder createCommentUseCaseBuilder;
     private final Map<ObjectId, view.CommentView> comments = new HashMap<>();
+    private final ViewUserInfoController viewUserInfoController;
     boolean postAdded = false;
     public String title;
 
@@ -34,7 +36,7 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
      * @param displayPostController The controller for displaying posts
      * @param createCommentUseCaseBuilder The use case builder for creating comments
      */
-    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder) {
+    public PostAndCommentsView(PostAndCommentsViewModel postAndCommentsViewModel, ViewManagerModel viewManagerModel, DisplayPostController displayPostController, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController) {
         setLayout (new BoxLayout (this, BoxLayout.Y_AXIS));
         setName("display_posts");
 
@@ -46,6 +48,8 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
         postAndCommentsViewModel.addPropertyChangeListener(this);
 
         this.createCommentUseCaseBuilder = createCommentUseCaseBuilder;
+
+        this.viewUserInfoController = viewUserInfoController;
 
         this.viewName = postAndCommentsViewModel.getViewName();
         setName(viewName);
@@ -101,6 +105,11 @@ public class PostAndCommentsView extends JPanel implements PropertyChangeListene
             comments.clear();
         } else if (evt.getPropertyName().equals("resize_reply_frame")) {
             viewManagerModel.resize("create_comment");
+        } else if (evt.getPropertyName().equals("show_more_info")) {
+            viewUserInfoController.execute(
+                    postAndCommentsViewModel.getState().getShowMoreInfoOfID(),
+                    postAndCommentsViewModel.getState().getMoreInfo()
+            );
         }
     }
 
