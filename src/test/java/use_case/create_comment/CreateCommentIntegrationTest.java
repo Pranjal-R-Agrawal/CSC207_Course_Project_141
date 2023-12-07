@@ -1,7 +1,6 @@
 package use_case.create_comment;
 
 import data_access.CreateCommentDataAccessInterface;
-import data_access.MockMongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
 import entity.CommentFactory;
 import org.bson.types.ObjectId;

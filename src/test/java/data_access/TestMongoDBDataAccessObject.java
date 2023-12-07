@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MongoDBDataAccessObjectTest {
+public class TestMongoDBDataAccessObject {
     MongoDBDataAccessObject dataAccessObject;
 
     @Test

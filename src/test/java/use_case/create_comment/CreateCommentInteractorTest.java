@@ -1,7 +1,7 @@
 package use_case.create_comment;
 
 import data_access.CreateCommentDataAccessInterface;
-import data_access.MockMongoDBDataAccessObject;
+import data_access.MockCreatePostDataAccessObject;
 import entity.CommentFactory;
 import org.bson.types.ObjectId;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class CreateCommentInteractorTest {
     @Test
     public void testBodyEmpty(){
         CreateCommentInputData inputData = new CreateCommentInputData(new ObjectId(), new ObjectId(), "", "testqualifications");
-        CreateCommentDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreateCommentDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreateCommentOutputBoundary createPostPresenter = new CreateCommentOutputBoundary() {
             @Override
@@ -37,7 +37,7 @@ public class CreateCommentInteractorTest {
     @Test
     public void testQualificationsEmpty(){
         CreateCommentInputData inputData = new CreateCommentInputData(new ObjectId(), new ObjectId(), "testbody", "");
-        CreateCommentDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreateCommentDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreateCommentOutputBoundary createPostPresenter = new CreateCommentOutputBoundary() {
             @Override
@@ -56,7 +56,7 @@ public class CreateCommentInteractorTest {
     @Test
     public void testValidInput(){
         CreateCommentInputData inputData = new CreateCommentInputData(new ObjectId(), new ObjectId(), "testbody", "test;qualifications");
-        CreateCommentDataAccessInterface dataAccessObject = new MockMongoDBDataAccessObject();
+        CreateCommentDataAccessInterface dataAccessObject = new MockCreatePostDataAccessObject();
 
         CreateCommentOutputBoundary createPostPresenter = new CreateCommentOutputBoundary() {
             @Override
