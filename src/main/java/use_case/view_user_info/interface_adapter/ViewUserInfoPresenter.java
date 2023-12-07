@@ -24,11 +24,17 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
      */
     @Override
     public void prepareCollabView(ViewUserInfoOutputData user) {
-        String message = "<html>Name: </html>" + user.getName() +
-                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise() +
-                "<html><br/>City: </html>" + user.getCity() +
-                "<html><br/>Email: </html>" + user.getEmail() +
-                "<html><br/>Phone Number: </html>" + user.getPhoneNumber();
+//        String message = "<html><p>Name: </html>" + user.getName() +
+//                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise() +
+//                "<html><br/>City: </html>" + user.getCity() +
+//                "<html><br/>Email: </html>" + user.getEmail() +
+//                "<html><br/>Phone Number: </html>" + user.getPhoneNumber();
+
+        String message = "<html><p>Name: " + user.getName() +
+                "</p><p>Field of Expertise: " + user.getFieldOfExpertise() +
+                "</p><p>City: " + user.getCity() +
+                "</p><p>Email: " + user.getEmail() +
+                "</p><p>Phone Number: " + user.getPhoneNumber() + "</p></html>";
 
         viewUserInfoViewModel.getState().setMessage(message);
         viewUserInfoViewModel.firePropertyChanged("message");
@@ -40,8 +46,11 @@ public class ViewUserInfoPresenter implements ViewUserInfoOutputBoundary {
      */
     @Override
     public void prepareGeneralView(ViewUserInfoOutputData user) {
-        String message = "<html>Name: </html>" + user.getName() +
-                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise();
+//        String message = "<html>Name: </html>" + user.getName() +
+//                "<html><br/>Field of Expertise: </html>" + user.getFieldOfExpertise();
+
+        String message = "<html><p>Name: " + user.getName() +
+                "</p><p>Field of Expertise: " + user.getFieldOfExpertise() + "</p></html>";
 
         viewUserInfoViewModel.getState().setMessage(message);
         viewUserInfoViewModel.firePropertyChanged("message");

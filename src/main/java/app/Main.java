@@ -100,7 +100,6 @@ public class Main {
 
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
-
         views.add(searchPostView, searchPostView.viewName);
 
         application.pack();
