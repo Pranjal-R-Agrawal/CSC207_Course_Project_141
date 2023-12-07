@@ -6,8 +6,12 @@ import data_access.GenerateIdeaDataAccessInterface;
 import data_access.IdeaDataFileDataAccessObject;
 import data_access.MongoDBDataAccessObject;
 import data_access.MongoDBDataAccessObjectBuilder;
-import entity.ConcreteIdeaFactory;
-import entity.IdeaFactory;
+import entity.*;
+import use_case.view_profile.application_business_rules.ViewProfileInputBoundary;
+import use_case.view_profile.application_business_rules.ViewProfileInteractor;
+import use_case.view_profile.application_business_rules.ViewProfileOutputBoundary;
+import use_case.view_profile.interface_adapter.ViewProfileController;
+import use_case.view_profile.interface_adapter.ViewProfilePresenter;
 import view.*;
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +24,7 @@ public class Main {
     protected static GenerateIdeaViewModel generateIdeaViewModel;
     protected static CreatePostViewModel createPostViewModel;
     protected static HomePageViewModel homePageViewModel;
+    protected static ViewProfileDialogViewModel viewProfileDialogViewModel;
 
     public static void main(String[] args) {
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,6 +43,7 @@ public class Main {
         generateIdeaViewModel = new GenerateIdeaViewModel();
         homePageViewModel = new HomePageViewModel();
         createPostViewModel = new CreatePostViewModel();
+        viewProfileDialogViewModel = new ViewProfileDialogViewModel();
 
         MongoDBDataAccessObject mongoDBDataAccessObject;
         try {
@@ -82,10 +88,6 @@ public class Main {
         GenerateIdeaView generateIdeaView = GenerateIdeaUseCaseFactory.create(viewManagerModel,generateIdeaViewModel,createPostViewModel,generateIdeaDataAccessObject,generativeAIAPI,homePageViewModel,createPostView);
         views.add(generateIdeaView,generateIdeaView.viewName);
 
-        ViewProfileViewModel viewProfileViewModel = new ViewProfileViewModel();
-        ViewProfileView viewProfileView = ViewProfileUseCaseFactory.create(viewManagerModel,viewProfileViewModel,mongoDBDataAccessObject);
-        views.add(viewProfileView,viewProfileView.viewName);
-
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder);
@@ -98,6 +100,9 @@ public class Main {
         SearchPostViewModel searchPostViewModel = new SearchPostViewModel();
         SearchPostView searchPostView = SearchPostUseCaseFactory.create(viewManagerModel, searchPostViewModel, homePageViewModel, mongoDBDataAccessObject, createPostView);
         views.add(searchPostView, searchPostView.viewName);
+
+        ViewProfileDialogView viewProfileDialogView = ViewProfileDialogUseCaseFactory.createView(viewProfileDialogViewModel);
+        ViewProfileController viewProfileController = ViewProfileDialogUseCaseFactory.createController(viewManagerModel, viewProfileDialogViewModel, mongoDBDataAccessObject);
 
         application.pack();
         application.setLocationRelativeTo(null);
