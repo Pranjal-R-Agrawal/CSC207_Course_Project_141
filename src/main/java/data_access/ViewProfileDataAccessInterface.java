@@ -1,8 +1,11 @@
 package data_access;
 import entity.CollabRequest;
+import entity.ConcreteCollabRequest;
 import entity.Post;
 import entity.User;
 import org.bson.types.ObjectId;
+
+import java.util.List;
 
 /**
  * Represents a Data Access Object to access data from the database for the View Profile Use Case
@@ -27,11 +30,14 @@ public interface ViewProfileDataAccessInterface {
     /**
      * Add collab request to database
      */
-    void addCollabRequest(CollabRequest collabRequest);
+    void addCollabRequest(ConcreteCollabRequest collabRequest);
     /**
      * Returns user from database
      * @return the post that corresponds to the username
      */
     User getUserByUsername(String username);
+
+    List<Post> getPostByAuthorId(ObjectId id);
+    List<ConcreteCollabRequest> getCollabRequestByUsername(String username);
 
 }

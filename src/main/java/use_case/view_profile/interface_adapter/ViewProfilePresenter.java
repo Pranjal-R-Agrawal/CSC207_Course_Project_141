@@ -3,7 +3,7 @@ package use_case.view_profile.interface_adapter;
 import use_case.view_profile.application_business_rules.ViewProfileOutputBoundary;
 import use_case.view_profile.application_business_rules.ViewProfileOutputData;
 
-import view.ViewProfileViewModel;
+import view.ViewProfileDialogViewModel;
 import view.ViewManagerModel;
 /**
  * Concrete implementation of the ViewProfileOutputBoundary.
@@ -12,15 +12,16 @@ import view.ViewManagerModel;
  */
 public class ViewProfilePresenter implements ViewProfileOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    private final ViewProfileViewModel viewProfileViewModel;
+
+    private final ViewProfileDialogViewModel viewProfileDialogViewModel;
 
     /**
      * Initializes the Presenter configured with the manager model to display appropriate screen and View Model to update its state
      * @param viewManagerModel Manages which view is displayed
-     * @param viewProfileViewModel This stores the state that is useful to the ViewProfileView.
+     * @param viewProfileDialogViewModel This stores the state that is useful to the ViewProfileDialogView.
      */
-    public ViewProfilePresenter(ViewManagerModel viewManagerModel, ViewProfileViewModel viewProfileViewModel) {
-        this.viewProfileViewModel = viewProfileViewModel;
+    public ViewProfilePresenter(ViewManagerModel viewManagerModel, ViewProfileDialogViewModel viewProfileDialogViewModel) {
+        this.viewProfileDialogViewModel = viewProfileDialogViewModel;
 
         this.viewManagerModel = viewManagerModel;
     }
@@ -30,10 +31,11 @@ public class ViewProfilePresenter implements ViewProfileOutputBoundary {
      */
     @Override
     public void prepareSuccessView(ViewProfileOutputData viewProfileOutputData) {
-        viewProfileViewModel.setState(viewProfileViewModel.getState().setUsername(viewProfileOutputData.getUsername()).setName(viewProfileOutputData.getName()).setEmail(viewProfileOutputData.getEmail()));
-        viewProfileViewModel.firePropertyChanged("display_profile");
-        viewManagerModel.setActiveView(viewProfileViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+
+        String message = "<html><p>Username: "+viewProfileOutputData.getUsername()+"</p><p>Name: "+viewProfileOutputData.getName()+"</p><p>Email: "+viewProfileOutputData.getEmail()+"</p><p>Projects: "+viewProfileOutputData.getProjects()+"</p></html>";
+
+        viewProfileDialogViewModel.getState().setMessage(message);
+        viewProfileDialogViewModel.firePropertyChanged("view_profile_display");
     }
 
 

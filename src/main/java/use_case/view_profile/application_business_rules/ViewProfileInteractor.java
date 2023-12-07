@@ -38,21 +38,20 @@ public class ViewProfileInteractor implements ViewProfileInputBoundary {
         String email = viewProfileDataAccessObject.getLoggedInUser().getEmail();
 
         String projects = "";
-        List<ObjectId> projectIds = viewProfileDataAccessObject.getLoggedInUser().getPostIDs();
-        for (ObjectId postId : projectIds) {
-            String post = viewProfileDataAccessObject.getPostByPostID(postId).getTitle();
-            projects += post + " ";
+        List<Post> projectIds = viewProfileDataAccessObject.getPostByAuthorId(viewProfileDataAccessObject.getLoggedInUser().getId());
+        for (Post post : projectIds) {
+            String postTitle = post.getTitle();
+            projects += postTitle + " ";
         }
-        List<ObjectId> collabRequestIds = viewProfileDataAccessObject.getLoggedInUser().getCollaborationRequestIDs();
-        ArrayList<String> collabRequests = new ArrayList<>();
-        for (ObjectId collabRequestId : collabRequestIds) {
-            String collabRequest = viewProfileDataAccessObject.getCollabRequestById(collabRequestId).getTitle();
+//        List<ObjectId> collabRequestIds = viewProfileDataAccessObject.getLoggedInUser().getCollaborationRequestIDs();
+//        ArrayList<String> collabRequests = new ArrayList<>();
+//        for (ObjectId collabRequestId : collabRequestIds) {
+//            String collabRequest = viewProfileDataAccessObject.getCollabRequestById(collabRequestId).getTitle();
+//
+//            collabRequests.add(collabRequest);
+//        }
 
-            collabRequests.add(collabRequest);
-        }
-
-        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, projects,
-                collabRequests);
+        ViewProfileOutputData viewProfileOutputData = new ViewProfileOutputData(username, name, email, projects, null);
         viewProfilePresenter.prepareSuccessView(viewProfileOutputData);
 
         }

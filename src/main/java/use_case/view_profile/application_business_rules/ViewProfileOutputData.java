@@ -52,10 +52,10 @@ public class ViewProfileOutputData {
     }
 
 
-//    public String getProjects() {
-//        return projects;
-//    }
-//    public ArrayList<String> getCollabRequests() {
-//        return collabRequests;
-//    }
+    public String getProjects() {
+        return projects;
+    }
+    public ArrayList<String> getCollabRequests() {
+        return collabRequests;
+    }
 }
