@@ -80,6 +80,7 @@ public class DisplayPostInteractor implements DisplayPostInputBoundary {
         processedComment.put("logged_in_user_is_comment_author", loggedInUserIsCommentAuthor);
         processedComment.put("logged_in_user_is_post_author", loggedInUserIsPostAuthor);
         processedComment.put("show_more_info_button", (commentAuthorIsPostAuthor || commentAuthorIsCollaborator) && (loggedInUserIsPostAuthor || loggedInUserIsCollaborator));
+        processedComment.put("commentor_is_collaborator", commentAuthorIsCollaborator);
 
         return processedComment;
     }

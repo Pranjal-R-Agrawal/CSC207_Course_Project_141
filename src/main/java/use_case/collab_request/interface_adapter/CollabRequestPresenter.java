@@ -10,20 +10,24 @@ import javax.swing.*;
  */
 public class CollabRequestPresenter implements CollabRequestOutputBoundary {
     private final ViewManagerModel viewManagerModel;
+    private final PostAndCommentsViewModel postAndCommentsViewModel;
 
     /**
      * Constructor for CollabRequestPresenter
      * @param viewManagerModel
      */
-    public CollabRequestPresenter(ViewManagerModel viewManagerModel) {
+    public CollabRequestPresenter(ViewManagerModel viewManagerModel, PostAndCommentsViewModel postAndCommentsViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.postAndCommentsViewModel = postAndCommentsViewModel;
     }
     /**
      * Prepares the success view
      */
     @Override
     public void prepareSuccessView() {
-        String message = "Collab request sent!";
+        String message = "Made Collaborator!";
         JOptionPane.showMessageDialog(null, message);
+        postAndCommentsViewModel.firePropertyChanged("reset_view");
+        postAndCommentsViewModel.firePropertyChanged("display_post");
     }
 }

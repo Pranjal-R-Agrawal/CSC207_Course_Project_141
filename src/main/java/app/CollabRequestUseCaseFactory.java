@@ -1,21 +1,12 @@
 package app;
 
 import data_access.CollabRequestDataAccessInterface;
-import data_access.LoginUserDataAccessInterface;
 import entity.CollabRequestFactory;
 import use_case.collab_request.application_business_rules.CollabRequestInputBoundary;
-import use_case.collab_request.application_business_rules.CollabRequestInputData;
 import use_case.collab_request.application_business_rules.CollabRequestInteractor;
 import use_case.collab_request.application_business_rules.CollabRequestOutputBoundary;
 import use_case.collab_request.interface_adapter.CollabRequestController;
 import use_case.collab_request.interface_adapter.CollabRequestPresenter;
-import use_case.login.application_business_rules.LoginInputBoundary;
-import use_case.login.application_business_rules.LoginInteractor;
-import use_case.login.application_business_rules.LoginOutputBoundary;
-import use_case.login.interface_adapter.LoginController;
-import use_case.login.interface_adapter.LoginPresenter;
-import view.LoginView;
-import view.LoginViewModel;
 import view.PostAndCommentsViewModel;
 import view.ViewManagerModel;
 
@@ -30,14 +21,14 @@ public class CollabRequestUseCaseFactory {
      * @param collabRequestFactory the collab request factory
      * @return a CollabRequestController object
      */
-    public static CollabRequestController  create(ViewManagerModel viewManagerModel,CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestFactory collabRequestFactory) {
-        CollabRequestController collabRequestController = createCollabRequestUseCase(viewManagerModel, collabRequestDataAccessObject,collabRequestFactory);
+    public static CollabRequestController  create(ViewManagerModel viewManagerModel,CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestFactory collabRequestFactory, PostAndCommentsViewModel postAndCommentsViewModel) {
+        CollabRequestController collabRequestController = createCollabRequestUseCase(viewManagerModel, collabRequestDataAccessObject,collabRequestFactory, postAndCommentsViewModel);
         return collabRequestController;
 
     }
 
-    private static CollabRequestController createCollabRequestUseCase(ViewManagerModel viewManagerModel, CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestFactory collabRequestFactory) {
-        CollabRequestOutputBoundary collabRequestPresenter = new CollabRequestPresenter(viewManagerModel);
+    private static CollabRequestController createCollabRequestUseCase(ViewManagerModel viewManagerModel, CollabRequestDataAccessInterface collabRequestDataAccessObject, CollabRequestFactory collabRequestFactory, PostAndCommentsViewModel postAndCommentsViewModel) {
+        CollabRequestOutputBoundary collabRequestPresenter = new CollabRequestPresenter(viewManagerModel, postAndCommentsViewModel);
         CollabRequestInputBoundary collabRequestInteractor = new CollabRequestInteractor(collabRequestDataAccessObject, collabRequestPresenter,collabRequestFactory );
         return new CollabRequestController(collabRequestInteractor);
     }

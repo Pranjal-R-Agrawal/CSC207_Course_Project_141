@@ -111,7 +111,7 @@ public class CommentView extends AbstractGridBagLayoutView {
             postAndCommentsViewModel.firePropertyChanged("show_more_info");
         });
 
-        JButton collaborationRequestButton = new JButton("Request Collaboration");
+        JButton collaborationRequestButton = new JButton("Make Collaborator");
         collaborationRequestButton.addActionListener(e -> {
             if (e.getSource().equals(collaborationRequestButton)) {
                 collabRequestController.execute(parentPostId, authorId);
@@ -140,7 +140,7 @@ public class CommentView extends AbstractGridBagLayoutView {
         addPanel(constraints, this, qualificationsRow, 0, GridBagConstraints.RELATIVE);
 
         qualificationsButton.setVisible(!qualifications.isEmpty());
-        collaborationRequestButton.setVisible(comment.get("logged_in_user_is_post_author") != null && (boolean) comment.get("logged_in_user_is_post_author"));
+        collaborationRequestButton.setVisible(comment.get("logged_in_user_is_post_author") != null && (boolean) comment.get("logged_in_user_is_post_author") && comment.get("commentor_is_collaborator") != null && !(boolean) comment.get("commentor_is_collaborator"));
 //        viewMoreInfoButton.setVisible(comment.get("show_more_info_button") != null && (boolean) comment.get("show_more_info_button"));
         qualificationsRow.setVisible(qualificationsVisibility);
 

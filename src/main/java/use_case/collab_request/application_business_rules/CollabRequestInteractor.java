@@ -42,7 +42,6 @@ public class CollabRequestInteractor implements CollabRequestInputBoundary{
         if(actualCommenterForTests != null) {
             commenter = actualCommenterForTests;
         }
-        commenter.addCollabRequest(postId);
         collabRequestPresenter.prepareSuccessView();
     }
 }

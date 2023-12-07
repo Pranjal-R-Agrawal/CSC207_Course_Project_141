@@ -24,7 +24,7 @@ public class DisplayPostUseCaseFactory {
      */
     public static PostAndCommentsView create(PostAndCommentsViewModel displayCommentViewModel, ViewManagerModel viewManagerModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject, CreateCommentUseCaseBuilder createCommentUseCaseBuilder, ViewUserInfoController viewUserInfoController, CollabRequestController collabRequestController, CollabRequestDataAccessInterface collabRequestDataAccessObject) {
         DisplayPostController displayPostController = createDisplayCommentUseCase(displayCommentViewModel, displayCommentDataAccessObject);
-        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, viewUserInfoController, collabRequestController, collabRequestDataAccessObject);
+        return new PostAndCommentsView(displayCommentViewModel, viewManagerModel, displayPostController, createCommentUseCaseBuilder, viewUserInfoController, collabRequestController);
     }
 
     private static DisplayPostController createDisplayCommentUseCase(PostAndCommentsViewModel displayCommentViewModel, DisplayCommentDataAccessInterface displayCommentDataAccessObject) {

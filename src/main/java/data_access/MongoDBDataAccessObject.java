@@ -3,6 +3,7 @@ package data_access;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -17,12 +18,13 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import entity.*;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import javax.swing.*;
 
 
-public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface ,SearchPostsByTitleDataAccessInterface,CollabRequestDataAccessInterface, ViewProfileDataAccessInterface, CollabRequestDataAccessInterface {
+public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface, CreateCommentDataAccessInterface, DisplayCommentDataAccessInterface, CreatePostDataAccessInterface, ViewUserInfoDataAccessInterface ,SearchPostsByTitleDataAccessInterface,CollabRequestDataAccessInterface, ViewProfileDataAccessInterface {
     private final MongoDatabase database;
     protected MongoCollection<User> users;
     protected MongoCollection<Post> posts;
@@ -157,8 +159,14 @@ public class MongoDBDataAccessObject implements SignupUserDataAccessInterface, L
     }
     @Override
     public void addCollabRequest(CollabRequest collabRequest) {
+        posts = getPostsCollection();
         collabRequests = getCollabRequests();
         collabRequests.insertOne((ConcreteCollabRequest) collabRequest);
+        ObjectId postId = collabRequest.getPostId();
+        ObjectId collaboratorId = getUserByUsername(collabRequest.getCommenter()).getId();
+        Bson filter = Filters.eq("_id", postId);
+        Bson update = Updates.push("collaboratorIDs", collaboratorId);
+        posts.updateOne(filter, update);
     }
 
     @Override

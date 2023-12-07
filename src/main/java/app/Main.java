@@ -94,12 +94,12 @@ public class Main {
 
         PostAndCommentsViewModel postAndCommentsViewModel = new PostAndCommentsViewModel();
         CollabRequestFactory collabRequestFactory = new ConcreteCollabRequestFactory();
-        CollabRequestController collabRequestController = CollabRequestUseCaseFactory.create(viewManagerModel,mongoDBDataAccessObject,collabRequestFactory);
+        CollabRequestController collabRequestController = CollabRequestUseCaseFactory.create(viewManagerModel,mongoDBDataAccessObject,collabRequestFactory, postAndCommentsViewModel);
         CreateCommentUseCaseBuilder createCommentUseCaseBuilder = new CreateCommentUseCaseBuilder(postAndCommentsViewModel, mongoDBDataAccessObject);
         ViewUserInfoViewModel viewUserInfoViewModel = new ViewUserInfoViewModel();
         ViewUserInfoController viewUserInfoController = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel, mongoDBDataAccessObject);
         ViewUserInfoView viewUserInfoView = ViewUserInfoUseCaseFactory.create(viewUserInfoViewModel);
-        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder, viewUserInfoController);
+        PostAndCommentsView postAndCommentsView = DisplayPostUseCaseFactory.create(postAndCommentsViewModel, viewManagerModel, mongoDBDataAccessObject, createCommentUseCaseBuilder, viewUserInfoController, collabRequestController, mongoDBDataAccessObject);
         viewManager.setupDisplayComments(postAndCommentsViewModel, postAndCommentsView);
         NewWindow newPostAndCommentsWindow = new NewWindow(true, postAndCommentsView.viewName);
         NewWindow newCreateCommentWindow = new NewWindow(false, "Reply");
