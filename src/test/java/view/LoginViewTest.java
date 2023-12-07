@@ -18,6 +18,7 @@ public class LoginViewTest {
     private static boolean popUpDiscovered;
     private MongoDBDataAccessObject mongoDBDataAccessObject;
     private LoginViewModel loginViewModel;
+    private HomePageViewModel homePageViewModel;
     private JButton loginButton;
 
     @Test
@@ -101,7 +102,8 @@ public class LoginViewTest {
             throw new RuntimeException(e);
         }
         loginViewModel = new LoginViewModel();
-        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), new SignupViewModel(), loginViewModel, mongoDBDataAccessObject);
+        homePageViewModel = new HomePageViewModel();
+        LoginView loginView = LoginUseCaseFactory.create(new ViewManagerModel(), new SignupViewModel(), loginViewModel, mongoDBDataAccessObject, homePageViewModel);
         loginButton = (JButton) loginView.getComponent(2);
 
         mongoDBDataAccessObject.resetDatabase();

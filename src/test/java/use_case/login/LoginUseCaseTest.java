@@ -76,7 +76,7 @@ public class LoginUseCaseTest {
             throw new RuntimeException(e);
         }
         LoginOutputBoundary loginPresenter = new LoginPresenter(viewManagerModel, loginViewModel, new SignupViewModel(), homePageViewModel);
-        loginController = new LoginController(new LoginInteractor(mongoDBDataAccessObject, loginPresenter));
+        loginController = new LoginController(new LoginInteractor(mongoDBDataAccessObject, loginPresenter), loginPresenter);
 
         mongoDBDataAccessObject.resetDatabase();
     }
