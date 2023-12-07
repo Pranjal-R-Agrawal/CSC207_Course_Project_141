@@ -11,6 +11,8 @@ public class DisplayPostState {
     private ObjectId replyParentId;
     private ObjectId replyParentPostId;
     private String errorMessage;
+    private ObjectId showMoreInfoOfID;
+    private boolean moreInfo;
 
     public Map<ObjectId, Map<String, Object>> getComments() {
         return comments;
@@ -63,6 +65,24 @@ public class DisplayPostState {
 
     public DisplayPostState setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+        return this;
+    }
+
+    public ObjectId getShowMoreInfoOfID() {
+        return showMoreInfoOfID;
+    }
+
+    public DisplayPostState setShowMoreInfoOfID(ObjectId showMoreInfoOfID) {
+        this.showMoreInfoOfID = showMoreInfoOfID;
+        return this;
+    }
+
+    public boolean getMoreInfo() {
+        return moreInfo;
+    }
+
+    public DisplayPostState setMoreInfo(boolean moreInfo) {
+        this.moreInfo = moreInfo;
         return this;
     }
 }
