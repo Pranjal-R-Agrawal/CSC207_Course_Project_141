@@ -45,7 +45,7 @@ ___
 
 * Generate a User Access Token on Hugging Face. After creating an account, go to Profile > Settings > Access Tokens. Click on the New Token Button with any desired name and a Write Role. Copy the token. Create a File type (this is not a .txt file) with the name **API_TOKEN** under the src/main/java/api folder of the repository and edit the first line of the file with **Bearer [paste your token here]** and save the file. Learn to create a File type from https://www.thewindowsclub.com/create-a-file-without-extension-in-windows
 
-* MongoDB Setup connection string for Pranjal.
+* To obtain the database connection string, start by creating or logging into your MongoDB Atlas account. Once you’re logged in, deploy a new cluster. After the cluster is deployed, navigate to Security > Network Access > Add IP Address, click on the ‘Allow Access from Anywhere’ button, and confirm your changes by clicking the ‘Confirm’ button. Next, go to Overview > Connect > Drivers and copy the connection string. Finally, in the directory ‘src/main/java/data_access’, create a .txt file titled ‘database_connection’ and paste the previously copied connection string into this file.
 
 * Now you are ready to run the Main file of the project!
 
